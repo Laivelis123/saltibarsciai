@@ -6,9 +6,15 @@ export default function Header() {
             <li>
                 <Link to="/">Pagrindinis</Link>
             </li>
-            
+          
             <li>
                 <a>Naujienos</a>
+            </li>
+            <li>
+                <Link to="/">Registracija</Link>
+            </li>
+            <li>
+                <Link to="/">Prisijungimas</Link>
             </li>
             <li>
                 <a>Kontaktai</a>
