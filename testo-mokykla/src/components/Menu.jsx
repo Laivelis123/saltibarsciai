@@ -16,11 +16,12 @@ export default function Header() {
                 <a>Registracija</a>
             </li>
             <li>
-                <a>Kontaktai</a>
-            </li>
-            <li>
                 <a>Apie</a>
             </li>
+            <li>
+                <a>Kontaktai</a>
+            </li>
+           
         </ul>
     );
 }
