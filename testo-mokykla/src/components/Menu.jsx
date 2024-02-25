@@ -10,6 +10,12 @@ export default function Header() {
                 <a>Naujienos</a>
             </li>
             <li>
+                <a>Prisijungimas</a>
+            </li>
+            <li>
+                <a>Registracija</a>
+            </li>
+            <li>
                 <a>Kontaktai</a>
             </li>
             <li>
