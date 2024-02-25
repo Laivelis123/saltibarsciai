@@ -1,18 +1,12 @@
 import { useState } from "react";
 import "./App.css";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
 import SideNav from "./components/SideNav";
-import Menu from "./components/Menu";
+import UI from "./components/UI"
+
 function App() {
-  return (
-    <>
-      <Header />
-      <Menu />
-      <SideNav />
-      <Footer />
-    </>
-  );
+    return (
+        <UI><SideNav></SideNav></UI>
+    );
 }
 
 export default App;
