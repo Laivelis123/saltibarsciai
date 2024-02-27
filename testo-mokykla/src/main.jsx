@@ -1,7 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
-import Page from "./Pages/Fizika";
+import Fizika from "./Pages/Fizika";
+import Anglu from "./Pages/Anglu";
+import Chemija from "./Pages/Chemija";
+import Lietuviu from "./Pages/Lietuviu";
+import Biologija from "./Pages/Biologija";
 
 import {
     createBrowserRouter,
@@ -15,7 +19,23 @@ const router = createBrowserRouter([
     },
     {
         path: "fizika",
-        element: <Page />,
+        element: <Fizika />,
+    },
+    {
+        path: "chemija",
+        element: <Chemija />,
+    },
+    {
+        path: "anglu",
+        element: <Anglu />,
+    },
+    {
+        path: "lietuviu",
+        element: <Lietuviu />,
+    },
+    {
+        path: "biologija",
+        element: <Biologija />,
     },
 ]);
 

@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\src"
+    "\\src",
+    "\\src\\components",
+    "\\src\\Pages"
   ],
+  "SelectedNode": "\\src\\Pages\\Anglu.jsx",
   "PreviewInSolutionExplorer": false
 }
