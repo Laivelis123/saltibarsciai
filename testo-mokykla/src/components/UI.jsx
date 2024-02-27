@@ -4,14 +4,14 @@ import Footer from "./Footer";
 import Menu from "./Menu";
 
 function UI({ children }) {
-	return (
-		<>
-			<Header />
-			<Menu />
-			<div>{children}</div>
-			<Footer />
-		</>
-	);
+  return (
+    <>
+      <Header />
+      <Menu />
+      {children}
+      <Footer />
+    </>
+  );
 }
 
 export default UI;
