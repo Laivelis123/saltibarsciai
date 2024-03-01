@@ -1,5 +1,6 @@
 import styles from "./menu.module.css";
 import { Link } from "react-router-dom";
+import { SearchBar } from "./SearchBar";
 export default function Header() {
     return (
         <ul>
@@ -20,6 +21,10 @@ export default function Header() {
             </li>
             <li>
                 <a>Kontaktai</a>
+            </li>
+            <li>
+                <SearchBar />
+                
             </li>
            
         </ul>
