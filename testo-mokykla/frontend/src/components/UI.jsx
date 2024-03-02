@@ -1,17 +1,17 @@
-import { useState } from "react";
+import React from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import Menu from "./Menu";
 
-function UI({ children }) {
-	return (
-		<>
-			<Header />
-			<Menu />
-			<div>{children}</div>
-			<Footer />
-		</>
-	);
-}
+const UI = ({ filterText, filterCategories, children }) => {
+  return (
+    <>
+      <Header />
+      <Menu filterText={filterText} handleFilterChange={filterCategories} />
+      {children}
+      <Footer />
+    </>
+  );
+};
 
 export default UI;

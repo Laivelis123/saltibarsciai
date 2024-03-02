@@ -1,11 +1,19 @@
 import React from "react";
-import "./SearchBar.css";
-export const SearchBar = ()=>{
-    return (
-        <div className="search_input">
-            <img  src="https://img.icons8.com/search" alt="Icon" />
-            <input id="input_" placeholder="Ieškoti"/>
-        </div>
+import styles from "./searchBar.module.css";
 
-    );
+export const SearchBar = ({ filterText, onChange }) => {
+  return (
+    <div>
+      <div className={styles.search_input}>
+        <img src="https://img.icons8.com/search" alt="Icon" />
+        <input
+          id="input_"
+          type="text"
+          placeholder="Ieškoti"
+          value={filterText}
+          onChange={(e) => onChange(e.target.value)}
+        />
+      </div>
+    </div>
+  );
 };

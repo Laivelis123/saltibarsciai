@@ -1,21 +1,38 @@
 .Snav {
   position: absolute; /* Position them relative to the browser window */
-  left: -80px; /* Position them outside of the screen */
+  left: -10%; /* Position them outside of the screen */
   transition: 0.3s; /* Add transition on hover */
   padding-top: 50px;
-  width: 300px; /* Set a specific width */
+  width: 30%; /* Set a specific width */
+  max-width: 400px;
   text-decoration: none; /* Remove underline */
   font-size: 20px; /* Increase font size */
-  color: black; /* White text color */
+  color: white; /* White text color */
   border-radius: 0 5px 5px 0; /* Rounded corners on the top right and bottom right side */
+  /* Break long words and wrap them to the next line */
+}
+.Snav:hover {
+  left: 0;
 }
 .side_block {
   display: block;
   margin-bottom: 5px;
   border-radius: 5%;
-  text-align: center;
-  background-color: rgb(144, 213, 173);
+  text-align: right;
+  background-color: #333;
+  word-wrap: break-word;
 }
-.Snav:hover {
-  left: 0; /* On mouse-over, make the elements appear as they should */
+.side_link {
+  text-decoration: none;
+  color: inherit;
+  margin-right: 5%;
+  width: 60%; /* Add this line */
+  display: inline-block; /* Add this line */
+  box-sizing: border-box; /* Add this line */
+}
+
+.side_block:hover {
+  background-color: #111;
+  color: rgb(144, 213, 173);
+  font-weight: bold;
 }
