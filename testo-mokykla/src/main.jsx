@@ -6,7 +6,7 @@ import Anglu from "./Pages/Anglu";
 import Chemija from "./Pages/Chemija";
 import Lietuviu from "./Pages/Lietuviu";
 import Biologija from "./Pages/Biologija";
-
+import Pav from "./Pages/Informaciniai/Pavyzdys.jsx";
 import {
     createBrowserRouter,
     RouterProvider,
@@ -20,6 +20,10 @@ const router = createBrowserRouter([
     {
         path: "fizika",
         element: <Fizika />,
+    },
+    {
+        path: "fizika/Pav",
+        element: <Pav/>,
     },
     {
         path: "chemija",

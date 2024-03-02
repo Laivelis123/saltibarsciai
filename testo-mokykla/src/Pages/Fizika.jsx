@@ -3,7 +3,6 @@ import UI from "../components/UI";
 import Accordion from "./Accordion";
 
 function Fizika() {
-
     return (
         <UI>
             <Accordion data={data}></Accordion>
@@ -15,7 +14,7 @@ const data = [
     {
         tema: 'Vidinė energija',
         potemes: [
-            ['1.1', '1.1l'],//pavadinmas matomas puslapy, linkas į puslapį
+            ['Pavyzdys', '/fizika/Pav'],//pavadinmas matomas puslapy, linkas į puslapį
             ['1.2', '1.2l'],
             ['1.3', '1.3l'],
             ['1.4', '1.4l']
