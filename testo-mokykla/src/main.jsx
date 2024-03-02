@@ -1,7 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
-import Page from "./Pages/Fizika";
+import Page from "./Pages/Fizika"
+import Login from './Pages/Prisijungimas.jsx'
+import Register from './Pages/Registracija.jsx';
 
 import {
     createBrowserRouter,
@@ -17,6 +19,14 @@ const router = createBrowserRouter([
         path: "fizika",
         element: <Page />,
     },
+    {
+        path: "prisijungimas",
+        element: <Login />,
+    },
+    {
+        path: "registracija",
+        element: <Register />,
+    }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

@@ -10,10 +10,10 @@ export default function Header() {
                 <a>Naujienos</a>
             </li>
             <li>
-                <a>Prisijungimas</a>
+                <Link to="/prisijungimas">Prisijungimas</Link>
             </li>
             <li>
-                <a>Registracija</a>
+                <Link to="/registracija">Registracija</Link>
             </li>
             <li>
                 <a>Apie</a>
