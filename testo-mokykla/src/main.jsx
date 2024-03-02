@@ -7,16 +7,33 @@ import Chemija from "./Pages/Chemija";
 import Lietuviu from "./Pages/Lietuviu";
 import Biologija from "./Pages/Biologija";
 import Pav from "./Pages/Informaciniai/Pavyzdys.jsx";
+import Naujienos from "./Pages/Naujienos";
+import Apie from "./Pages/Apie";
+import Kontaktai from "./Pages/Kontaktai";
 import {
     createBrowserRouter,
     RouterProvider,
 } from "react-router-dom";
 
 const router = createBrowserRouter([
+/*    Pagrindinis puslapis*/
     {
         path: "/",
         element: <App />,
     },
+    {
+        path: "/naujienos",
+        element: <Naujienos />,
+    },
+    {
+        path: "/apie",
+        element: <Apie />,
+    },
+    {
+        path: "/kontaktai",
+        element: <Kontaktai />,
+    },
+/*    Fizika*/
     {
         path: "fizika",
         element: <Fizika />,
