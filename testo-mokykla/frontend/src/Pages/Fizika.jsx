@@ -23,31 +23,31 @@ const data = [
     {
         tema: 'Medžiagos būsenų kitimas',
         potemes: [
-            ['2.1', '2.1l'],
-            ['2.2', '2.2l'],
-            ['2.3', '2.3l'],
+            ['2.1 Kietų kūnų savybės', '2.1l'],
+            ['2.2 Skystų kūnų savybės', '2.2l'],
+            ['2.3 Dujinių kūnų savybės', '2.3l'],
         ],
     },
     {
         tema: 'Atomo sandara',
         potemes: [
-            ['2.1', '2.1l'],
-            ['2.2', '2.2l'],
-            ['2.3', '2.3l'],
+            ['2.1 Elektronai', '2.1l'],
+            ['2.2 Protonai ir neutronai', '2.2l'],
+            ['2.3 ', '2.3l'],
         ],
     },
     {
         tema: 'Radioaktyvumas',
         potemes: [
-            ['2.1', '2.1l'],
-            ['2.2', '2.2l'],
-            ['2.3', '2.3l'],
+            ['2.1 Poveikis aplinkai', '2.1l'],
+            ['2.2 Poveikis žmogui', '2.2l'],
+            ['2.3 Spinduliuotės', '2.3l'],
         ],
     },
     {
         tema: 'Atomų branduolių virsmai',
         potemes: [
-            ['2.1', '2.1l'],
+            ['2.1 ', '2.1l'],
             ['2.2', '2.2l'],
             ['2.3', '2.3l'],
         ],
@@ -55,9 +55,9 @@ const data = [
     {
         tema: 'Visata ir jos evoliucija',
         potemes: [
-            ['2.1', '2.1l'],
-            ['2.2', '2.2l'],
-            ['2.3', '2.3l'],
+            ['2.1 Planetos', '2.1l'],
+            ['2.2 Visatos raida', '2.2l'],
+            ['2.3 Gyvybės atsiradimas', '2.3l'],
         ],
     },
     {
@@ -71,9 +71,9 @@ const data = [
     {
         tema: 'Nuolatinė elektros srovė',
         potemes: [
-            ['2.1', '2.1l'],
-            ['2.2', '2.2l'],
-            ['2.3', '2.3l'],
+            ['2.1  ', '2.1l'],
+            ['2.2 ', '2.2l'],
+            ['2.3 Taikymas pramonėje', '2.3l'],
         ],
     },
     {
