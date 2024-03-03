@@ -9,6 +9,9 @@ import {
   Biologija,
   Prisijungimas,
   Registracija,
+  Naujienos,
+  Apie,
+  Kontaktai,
 } from "./Pages";
 import Pav from "./Pages/Informaciniai/Pavyzdys.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -17,6 +20,18 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+  },
+  {
+    path: "/naujienos",
+    element: <Naujienos />,
+  },
+  {
+    path: "/apie",
+    element: <Apie />,
+  },
+  {
+    path: "/kontaktai",
+    element: <Kontaktai />,
   },
   {
     path: "fizika",

@@ -11,7 +11,7 @@ export default function Menu({ filterText, handleFilterChange }) {
           <Link to="/">Pagrindinis</Link>
         </li>
         <li>
-          <a>Naujienos</a>
+          <Link to="/naujienos">Naujienos</Link>
         </li>
         <li>
           <Link to="/prisijungimas">Prisijungimas</Link>
@@ -20,10 +20,10 @@ export default function Menu({ filterText, handleFilterChange }) {
           <Link to="/registracija">Registracija</Link>
         </li>
         <li>
-          <a>Apie</a>
+          <Link to="/apie">Apie</Link>
         </li>
         <li>
-          <a>Kontaktai</a>
+          <Link to="/kontaktai">Kontaktai</Link>
         </li>
       </ul>
       <SearchBar filterText={filterText} onChange={handleFilterChange} />

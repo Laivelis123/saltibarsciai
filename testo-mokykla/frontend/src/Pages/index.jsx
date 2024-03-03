@@ -5,3 +5,6 @@ export { default as Lietuviu } from "./Lietuviu";
 export { default as Biologija } from "./Biologija";
 export { default as Registracija } from "./Registracija";
 export { default as Prisijungimas } from "./Prisijungimas";
+export { default as Naujienos } from "./Naujienos";
+export { default as Kontaktai } from "./Kontaktai";
+export { default as Apie } from "./Apie";
