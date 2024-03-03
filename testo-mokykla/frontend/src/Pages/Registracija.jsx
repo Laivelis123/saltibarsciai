@@ -11,7 +11,7 @@ function Registracija() {
 
   const handleRegistration = async () => {
     try {
-      const response = await axios.post("http://localhost:5001/registration", {
+      const response = await axios.post("http://localhost:3001/registracija", {
         username,
         email,
         password,

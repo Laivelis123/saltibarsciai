@@ -22,14 +22,34 @@ app.post('/registracija', (req, res) => {
     const username = req.body.username
     const email = req.body.email
     const password = req.body.password
+    const accountType = req.body.accountType
 
-    db.query("INSERT INTO user (name, email, password) VALUES (?, ?, ?)", 
-    [username, email, password], 
+    db.query("INSERT INTO user (name, email, password, accountType) VALUES (?, ?, ?, ?)", 
+    [username, email, password, accountType], 
     (err, result) => {
         console.log(err);
     })
 });
 
-app.listen(5001, () => {
-    console.log(`Server running on port 5001`);
+app.post('/prisijungimas', (req, res) => {
+        const username = req.body.username
+        const password = req.body.password
+    
+        db.query("SELECT * FROM user WHERE name = ? AND password = ?", 
+        [username, password], 
+        (err, result) => {
+            if (err) {
+                res.send({err: err}) 
+            }
+
+            if (result.length > 0) {
+                res.send({message: "Sėkmingai prisijungta", result: result});
+            } else {
+                res.send({message: "Blogas vartotojo vardas / slaptažodis"});
+            }
+        })
+});
+
+app.listen(3001, () => {
+    console.log(`Server running on port 3001`);
 });
