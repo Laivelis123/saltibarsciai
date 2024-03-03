@@ -1,7 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
-import { Fizika, Anglu, Chemija, Lietuviu, Biologija } from "./Pages";
+import {
+  Fizika,
+  Anglu,
+  Chemija,
+  Lietuviu,
+  Biologija,
+  Prisijungimas,
+  Registracija,
+} from "./Pages";
 import Pav from "./Pages/Informaciniai/Pavyzdys.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -35,14 +43,12 @@ const router = createBrowserRouter([
     element: <Biologija />,
   },
   {
-    /*{
     path: "prisijungimas",
-    element: <Login />,
+    element: <Prisijungimas />,
   },
   {
     path: "registracija",
-    element: <Register />,
-  },*/
+    element: <Registracija />,
   },
 ]);
 

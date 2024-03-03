@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./registratcija.module.css";
+import styles from "./registracija.module.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -7,6 +7,7 @@ function Registracija() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [accountType, setAccountType] = useState("");
 
   const handleRegistration = async () => {
     try {
@@ -14,6 +15,7 @@ function Registracija() {
         username,
         email,
         password,
+        accountType,
       });
       console.log(response);
     } catch (error) {
@@ -23,8 +25,8 @@ function Registracija() {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Registration</h2>
       <form className={styles.form}>
+        <h2 className={styles.title}>Registration</h2>
         <div className={styles.formGroup}>
           <label htmlFor="username" className={styles.label}>
             Username
@@ -61,10 +63,35 @@ function Registracija() {
             className={styles.input}
           />
         </div>
+        <div className={styles.formGroup}>
+          <label className={styles.label}>Account Type:</label>
+          <label className={styles.radioLabel}>
+            <input
+              type="radio"
+              value="student"
+              checked={accountType === "student"}
+              onChange={() => setAccountType("student")}
+              className={styles.radioInput}
+            />
+            <span className={styles.checkmark}></span>
+            <span className={styles.radioText}>Student</span>
+          </label>
+          <label className={styles.radioLabel}>
+            <input
+              type="radio"
+              value="teacher"
+              checked={accountType === "teacher"}
+              onChange={() => setAccountType("teacher")}
+              className={styles.radioInput}
+            />
+            <span className={styles.checkmark}></span>
+            <span className={styles.radioText}>Teacher</span>
+          </label>
+        </div>
         <button onClick={handleRegistration} className={styles.button}>
           Register
         </button>
-        <Link to="/login" className={styles.link}>
+        <Link to="/prisijungimas" className={styles.link}>
           Already have an account? Login here.
         </Link>
       </form>
@@ -72,4 +99,4 @@ function Registracija() {
   );
 }
 
-export default Registration;
+export default Registracija;
