@@ -14,10 +14,9 @@ const data = [
     {
         tema: 'Vidinė energija',
         potemes: [
-            ['Pavyzdys', '/fizika/Pav'],//pavadinmas matomas puslapy, linkas į puslapį
-            ['1.2 Branduolinė', '/fizika/Brand'],
-            ['1.3 Elektroninė', '/fizika/Elek'],
-            ['1.4 Molekulinė', '/fizika/Mol']
+            ['1.1 Branduolinė', '/fizika/Brand'],
+            ['1.2 Elektroninė', '/fizika/Elek'],
+            ['1.3 Molekulinė', '/fizika/Mol']
         ],
     },
     {

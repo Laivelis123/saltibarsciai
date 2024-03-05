@@ -4,7 +4,14 @@ function Molekuline()
 {
     return (
         <UI>
-        {/*info goes here*/}
+        {
+             <div className="container"> 
+             <h1>
+                 Molekulinė vidinė energija
+             </h1>
+             </div>
+
+        }
         </UI>
     );
 

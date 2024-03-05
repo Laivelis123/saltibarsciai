@@ -13,7 +13,7 @@ import {
   Apie,
   Kontaktai,
 } from "./Pages";
-import Pav from "./Pages/Informaciniai/Pavyzdys.jsx";
+//import Pav from "./Pages/Informaciniai/Pavyzdys.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Branduoline from "./Pages/Informaciniai/Branduoline.jsx";
 import Elektronine from "./Pages/Informaciniai/Elektronine.jsx";
@@ -41,10 +41,6 @@ const router = createBrowserRouter([
     element: <Fizika />,
   },
   {
-    path: "fizika/Pav",
-    element: <Pav />,
-  },
-  {
     path: "fizika/Brand",
     element: <Branduoline />,
   },
@@ -56,6 +52,7 @@ const router = createBrowserRouter([
     path: "fizika/Mol",
     element: <Molekuline />,
   },
+  
   {
     path: "chemija",
     element: <Chemija />,

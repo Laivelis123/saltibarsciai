@@ -4,7 +4,14 @@ function Elektronine()
 {
     return (
         <UI>
-        {/*info goes here*/}
+        {
+            <div className="container"> 
+            <h1>
+                Elektroninė vidinė energija
+            </h1>
+            </div>
+          
+        }
         </UI>
     );
 }
