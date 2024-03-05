@@ -1,6 +1,6 @@
 import React from 'react'
 import UI from "../../../components/UI";
-function elektr (){
+function Elektr (){
     return (
         <UI>
         {
@@ -42,4 +42,4 @@ Branduolinė vidinė energija naudojama branduolinėse elektrinėse, kurios gene
         </UI>
     );
 }
-export default  elektr;    
+export default  Elektr;    

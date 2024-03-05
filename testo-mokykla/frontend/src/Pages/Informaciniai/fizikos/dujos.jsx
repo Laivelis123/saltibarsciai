@@ -1,6 +1,6 @@
 import React from 'react'
 import UI from "../../../components/UI";
-function dujos (){
+function Dujos (){
     return (
         <UI>
         {
@@ -42,4 +42,4 @@ Branduolinė vidinė energija naudojama branduolinėse elektrinėse, kurios gene
         </UI>
     );
 }
-export default  dujos;    
+export default  Dujos;    

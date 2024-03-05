@@ -18,6 +18,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Branduoline from "./Pages/Informaciniai/Branduoline.jsx";
 import Elektronine from "./Pages/Informaciniai/Elektronine.jsx";
 import Molekuline from "./Pages/Informaciniai/Molekuline.jsx";
+import kieti from "./Pages/Informaciniai/fizikos/kieti.jsx";
+import skysti from "./Pages/Informaciniai/fizikos/skysti.jsx";
+import dujos from "./Pages/Informaciniai/fizikos/dujos.jsx";
 
 const router = createBrowserRouter([
   {
@@ -52,6 +55,19 @@ const router = createBrowserRouter([
     path: "fizika/Mol",
     element: <Molekuline />,
   },
+  {
+    path: "fizika/kieti",
+    element: <Kieti />,
+  },
+  {
+    path: "fizika/skysti",
+    element: <Skysti />,
+  },
+  {
+    path: "fizika/kieti",
+    element: <Dujos />,
+  },
+  
   
   {
     path: "chemija",
