@@ -6,35 +6,33 @@ function prot (){
         {
             <div className="container"> 
             <h1 id='header'>
-                Branduolinė vidinė energija
+                Skysti
             </h1>
             <p1>
-            Branduolinė vidinė energija yra energija, susijusi su atominėmis branduolių sąveikomis. Ši energija yra gausi labai dideliuose atomuose, kurie turi daug protonų ir neutronų branduolyje. Pagrindinės savybės ir informacija apie branduolinę vidinę energiją yra šios:
+            Molekulinė Vibracija ir Bangos Pusperiode:
 
-Branduolinė sąveika:
+Kieti kūnai, turintys kristalinę struktūrą, yra sudaryti iš atominės tūrio, kurios molekulės yra sujungtos tvirtais ryšiais. Atomai gali atlikti vibracinius judesius aplink jų pusę. Šie judesiai gali būti aptarti Bangos pusperiode, kuris gali turėti įtakos kietojo kūno elgsenai.
+Elektroninė Struktūra ir Bandinio Elektronai:
 
-Branduolinė vidinė energija susijusi su sąveika tarp protonų ir neutronų, esančių atomų branduoliuose. Ši sąveika palaiko atomų struktūrą.
-Atominiai branduoliai:
+Kieti kūnai turi išskirtinę elektroninę struktūrą, kurioje elektronai užpildo skirtingus energetinius lygmenis. Bandiniai, sudaryti iš daugelio atomų ar molekulių, gali turėti bendrų elektronų, kurie gali judėti per visą bandinį ir prisidėti prie geležies laidumo savybių.
+Kristalų Defektai:
 
-Dideliuose atomuose, pavyzdžiui, uranu ar plutonu, branduolinė vidinė energija yra ypač svarbi. Tokiuose branduoliuose esantys protonai atstumiami elektromagnetinės atstūmimo jėgos, bet traukiami stipria branduoline jėga.
-Branduolinių reakcijų energija:
+Kietuose kūnuose gali būti defektai, pvz., trūkumai arba priemaišų atomai, kurie gali turėti įtakos fizikinėms savybėms. Toks defektų buvimas gali paveikti šilumos laidumą, elektrinį laidumą ir mechanines savybes.
+Elastinės Savybės:
 
-Branduolinė vidinė energija gali būti atlaisvinama arba absorbuojama branduolinių reakcijų metu. Ši energija yra atlaisvinama, kai lengvai branduoliai susijungia (branduolinė sintezė) arba kai sunkūs branduoliai suskyla (branduolinis skilimas).
-Branduolinis skilimas:
+Kieti kūnai gali būti elastingi, tai yra, jie gali sugrįžti į savo pradinę formą po deformacijos. Tai paaiškinama atomų vibracijomis ir jų sąveika, siekiant išlaikyti tam tikrą tvirtumą.
+Kristalų Srovės:
 
-Branduolinis skilimas yra vienas iš procesų, kurį galima naudoti branduolinės energijos gamybai. Pvz., kai urano ar plutonio branduoliai suskyla, atlaisvinama didžiulė energijos kiekis.
-Branduolinės sintezės:
+Elektronai, kurie juda per kietus kūnus, sukelia srovę. Tai yra pagrindinis principas, leidžiantis naudoti kietuosius kūnus kaip laidininkus elektros grandinėse.
+Fermi Lygis ir Banginių Užpildymas:
 
-Branduolinės sintezės metu lengvi branduoliai sujungiami sukuriant sunkesnius branduolius. Šis procesas vyksta, pavyzdžiui, saulėje, kur vandenilis paverčiamas heliumu, ir tai yra šaltinis saulės energijos.
-Branduolinės energijos panaudojimas:
+Fermi lygis yra energijos lygmuo, kuriame yra pusė užpildytų ir pusė neužpildytų būsenų. Šis lygis yra svarbus supratimui apie elektronų elgesį kietuose kūnuose.
+Šiluminės Savybės:
 
-Branduolinė vidinė energija naudojama branduolinėse elektrinėse, kurios generuoja elektros energiją branduolinių reakcijų rezultate. Tai gali būti ir potencialus šaltinis ateities energijos poreikiams tenkinti.
-                <h2>Branduolinės energijos formos</h2>
-                <li>
-                Branduolinė vidinė energija yra energetinė būsena, kuri 
-                susijusi su branduolio sudėtimi ir jo komponentų, tokiais kaip kvarkai ir gluonai,
-                sąveika. Ši energija yra susijusi su stipraus branduolinio sąveikos jėga, kuri veikia tarp 
-                kvarkų ir gluonų.                </li>
+Kieti kūnai gali turėti specifines šilumos savybes, pavyzdžiui, šilumos laidumą, kuris priklauso nuo medžiagos struktūros ir susijusių vibracinių judesių.
+Feroelektrinės ir Feromagnetinės Savybės:
+
+Kai kurie kietieji kūnai gali rodyti ferroelektrines (turi elektrinį momentą net be išorinio lauko) arba feromagnetines (turinčios nuolatinį magnetinį momentą net be išorinio lauko) savybes. Tai susiję su atomų ir molekulių sąveika ir jų tvarka kristaliniame gretasienyje.
             </p1>
         
             </div>

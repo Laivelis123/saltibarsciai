@@ -9,32 +9,26 @@ function skysti (){
                 Branduolinė vidinė energija
             </h1>
             <p1>
-            Branduolinė vidinė energija yra energija, susijusi su atominėmis branduolių sąveikomis. Ši energija yra gausi labai dideliuose atomuose, kurie turi daug protonų ir neutronų branduolyje. Pagrindinės savybės ir informacija apie branduolinę vidinę energiją yra šios:
+            Skysčiai yra viena iš trimų pagrindinių agregatinės būsenos formų, kartu su dujomis ir kietu kūnu. Šių medžiagų fizika yra labai plačiai nagrinėjama ir turi įdomių savybių. Štai daugiau informacijos apie skystus kūnus fizikoje:
 
-Branduolinė sąveika:
+Agregatinė būsena:
 
-Branduolinė vidinė energija susijusi su sąveika tarp protonų ir neutronų, esančių atomų branduoliuose. Ši sąveika palaiko atomų struktūrą.
-Atominiai branduoliai:
+Skystos būsenos medžiagos turi fiksuotą tūrį, bet jos neturi fiksuotos formos. Skystos būsenos atsiranda tarp kietų ir dujų būsenų temperatūros ir slėgio sąlygomis.
+Dalijimas į skysčius:
 
-Dideliuose atomuose, pavyzdžiui, uranu ar plutonu, branduolinė vidinė energija yra ypač svarbi. Tokiuose branduoliuose esantys protonai atstumiami elektromagnetinės atstūmimo jėgos, bet traukiami stipria branduoline jėga.
-Branduolinių reakcijų energija:
+Skysčiai gali būti suskirstyti į dvi pagrindines kategorijas: newtoninius ir nestovusius. Newtoniniai skysčiai pasižymi pastoviais tekėjimo savybėmis (pvz., vanduo), o nestovūs skysčiai elgiasi kaip stambūs kūnai (pvz., melasa).
+Slėgis:
 
-Branduolinė vidinė energija gali būti atlaisvinama arba absorbuojama branduolinių reakcijų metu. Ši energija yra atlaisvinama, kai lengvai branduoliai susijungia (branduolinė sintezė) arba kai sunkūs branduoliai suskyla (branduolinis skilimas).
-Branduolinis skilimas:
+Skysčiai perduoda slėgį lygiai visomis kryptimis. Slėgis skysčiuose yra paskirstytas vienodai visur, ir jis perduoda iš vienos vietos į kitą visuose kryptyse.
+Pakilimo jėga ir plovimo dėsnis:
 
-Branduolinis skilimas yra vienas iš procesų, kurį galima naudoti branduolinės energijos gamybai. Pvz., kai urano ar plutonio branduoliai suskyla, atlaisvinama didžiulė energijos kiekis.
-Branduolinės sintezės:
+Pakilimo jėga skysčiuose yra aukšto slėgio srityje mažesnė nei žemo slėgio srityje. Tai paaiškina, kodėl kūnai, pamerkti į skystį, yra palaikomi aukštai paviršiuje (plovimo dėsnis).
+Savita šiluminė talpa:
 
-Branduolinės sintezės metu lengvi branduoliai sujungiami sukuriant sunkesnius branduolius. Šis procesas vyksta, pavyzdžiui, saulėje, kur vandenilis paverčiamas heliumu, ir tai yra šaltinis saulės energijos.
-Branduolinės energijos panaudojimas:
+Savita šiluminė talpa tai kiek šilumos reikia perduoti vienetui medžiagos mases, kad pakiltų jos temperatūra vienu laipsniu Celsijaus. Skysčiai turi savo specifinę šiluminę talpą, kurią galima panaudoti apskaičiuoti šilumos perdavimą arba absorbciją.
+Šiluminis išsiplėtimas:
 
-Branduolinė vidinė energija naudojama branduolinėse elektrinėse, kurios generuoja elektros energiją branduolinių reakcijų rezultate. Tai gali būti ir potencialus šaltinis ateities energijos poreikiams tenkinti.
-                <h2>Branduolinės energijos formos</h2>
-                <li>
-                Branduolinė vidinė energija yra energetinė būsena, kuri 
-                susijusi su branduolio sudėtimi ir jo komponentų, tokiais kaip kvarkai ir gluonai,
-                sąveika. Ši energija yra susijusi su stipraus branduolinio sąveikos jėga, kuri veikia tarp 
-                kvarkų ir gluonų.                </li>
+Skysčiai išsiplėčia, kai šyla, ir sutraukiasi, kai atšaldomi. Šiluminis išsiplėtimas yra svarbus inžinerijos ir konstrukcijų srityse.
             </p1>
         
             </div>
