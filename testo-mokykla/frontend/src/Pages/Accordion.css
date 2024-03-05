@@ -46,44 +46,4 @@
 .container h1 {
   text-align: center;
 }
-.container button{
-  display:inline-flex;
-  align-items: center;
-  margin-top:150px;
-  font-family: inherit;
-  font-weight: 500;
-  font-size: 16px;
-  padding: 0.7em 1.4em 0.7em 1.1em;
-  color: white;
-  background: #ad5389;
-  background: linear-gradient(0deg, rgb(48, 50, 48) 0%, rgb(188, 194, 189) 100%);
-  border: none;
-  box-shadow: 0 0.7em 1.5em -0.5em #676d6998;
-  letter-spacing: 0.05em;
-  border-radius: 20em;
-  cursor: pointer;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-}
-.container button:hover {
-  box-shadow: 0 0.5em 2em -0.5em #62656398;
-}
-.container button:active {
-  box-shadow: 0 0.5em 1em -0.5em #62656398;
-}
-.container .left {
-  /* Align to the left */
-  align-items: center;
-}
-
-.container .right {
-  /* Align to the right */
-  margin-left: 720px;
-}
-
-.container .center {
-  /* Centered button */
-  margin: 0 auto;
-}
 
