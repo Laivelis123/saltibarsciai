@@ -14,7 +14,7 @@ const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'users',
+    database: 'projektas',
 });
 
 app.post('/registracija', (req, res) => {
