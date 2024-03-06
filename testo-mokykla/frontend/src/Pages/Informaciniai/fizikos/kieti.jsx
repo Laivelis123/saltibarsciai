@@ -1,6 +1,6 @@
 import React from 'react'
 import UI from "../../../components/UI";
-function kieti (){
+function Kieti (){
     return (
         <UI>
         {
@@ -41,4 +41,4 @@ Kai kurie kietieji kūnai gali rodyti ferroelektrines (turi elektrinį momentą 
         </UI>
     );
 }
-export default  kieti;    
+export default  Kieti;    

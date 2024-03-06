@@ -1,5 +1,5 @@
 import React from 'react'
-import UI from "../../components/UI";
+import UI from "../../../components/UI";
 function Molekuline()
 {
     return (

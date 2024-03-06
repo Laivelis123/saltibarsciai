@@ -5,10 +5,8 @@ function Prot (){
         <UI>
         {
             <div className="container"> 
-            <h1 id='header'>
-                Skysti
-            </h1>
             <p1>
+                
                 
             </p1>
         

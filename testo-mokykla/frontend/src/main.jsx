@@ -15,12 +15,13 @@ import {
 } from "./Pages";
 //import Pav from "./Pages/Informaciniai/Pavyzdys.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Branduoline from "./Pages/Informaciniai/Branduoline.jsx";
-import Elektronine from "./Pages/Informaciniai/Elektronine.jsx";
-import Molekuline from "./Pages/Informaciniai/Molekuline.jsx";
-import kieti from "./Pages/Informaciniai/fizikos/kieti.jsx";
-import skysti from "./Pages/Informaciniai/fizikos/skysti.jsx";
-import dujos from "./Pages/Informaciniai/fizikos/dujos.jsx";
+import Branduoline from "./Pages/Informaciniai/fizikos/Branduoline.jsx";
+import Molekuline from "./Pages/Informaciniai/fizikos/Molekuline.jsx";
+import Elektronine from "./Pages/Informaciniai/fizikos/Elektronine.jsx";
+//import Molekuline from "./Pages/Informaciniai/fizikos/Molekuline.jsx";
+import Kieti from "./Pages/Informaciniai/fizikos/Kieti.jsx";
+import Skysti from "./Pages/Informaciniai/fizikos/skysti.jsx";
+import Dujos from "./Pages/Informaciniai/fizikos/Dujos.jsx";
 
 const router = createBrowserRouter([
   {

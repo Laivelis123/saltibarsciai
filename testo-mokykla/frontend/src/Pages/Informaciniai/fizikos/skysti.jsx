@@ -6,7 +6,7 @@ function skysti (){
         {
             <div className="container"> 
             <h1 id='header'>
-                Branduolinė vidinė energija
+                Skysti kūnai
             </h1>
             <p1>
             Skysčiai yra viena iš trimų pagrindinių agregatinės būsenos formų, kartu su dujomis ir kietu kūnu. Šių medžiagų fizika yra labai plačiai nagrinėjama ir turi įdomių savybių. Štai daugiau informacijos apie skystus kūnus fizikoje:
