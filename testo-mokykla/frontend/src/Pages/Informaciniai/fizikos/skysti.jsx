@@ -1,6 +1,6 @@
 import React from 'react'
 import UI from "../../../components/UI";
-function skysti (){
+function Skysti (){
     return (
         <UI>
         {
@@ -36,4 +36,4 @@ Skysčiai išsiplėčia, kai šyla, ir sutraukiasi, kai atšaldomi. Šiluminis i
         </UI>
     );
 }
-export default  skysti;    
+export default  Skysti;    

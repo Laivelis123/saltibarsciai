@@ -6,35 +6,23 @@ function Dujos (){
         {
             <div className="container"> 
             <h1 id='header'>
-                Branduolinė vidinė energija
+                Dujos
             </h1>
             <p1>
-            Branduolinė vidinė energija yra energija, susijusi su atominėmis branduolių sąveikomis. Ši energija yra gausi labai dideliuose atomuose, kurie turi daug protonų ir neutronų branduolyje. Pagrindinės savybės ir informacija apie branduolinę vidinę energiją yra šios:
+            Molekulės ir Atomai: Dujos gali būti sudarytos iš atomų arba molekulių. Pavyzdžiui, oro dujos yra sudarytos iš skirtingų molekulių, tokių kaip azotas (N2), deguonis (O2), anglies dioksidas (CO2) ir kt.
 
-Branduolinė sąveika:
+Judėjimas: Dujos charakterizuoja chaotiškas judėjimas. Molekulės nuolat susiduria tarpusavyje ir su aplinkiniais objektais. Šis judėjimas yra pagrindinė priežastis, kodėl dujos užima visas turimas erdves.
 
-Branduolinė vidinė energija susijusi su sąveika tarp protonų ir neutronų, esančių atomų branduoliuose. Ši sąveika palaiko atomų struktūrą.
-Atominiai branduoliai:
+Tūris: Dujų molekulės užima didelį tūrį palyginti su skystaisiais arba kietuoju būsenos laipsniais. Jų molekulės yra nesusijusios, todėl jų tūris plinta, kad užimtų visas turimas erdves.
 
-Dideliuose atomuose, pavyzdžiui, uranu ar plutonu, branduolinė vidinė energija yra ypač svarbi. Tokiuose branduoliuose esantys protonai atstumiami elektromagnetinės atstūmimo jėgos, bet traukiami stipria branduoline jėga.
-Branduolinių reakcijų energija:
+Temperatūra ir Slegis: Dujos yra jautrios temperatūrai ir slėgiui. Šios būsenos būdingos idealiosioms dujoms, kurios yra teorinės dujų būsenos, kurią aprašo Boyle-Mariotte ir Charles'io dėsniai. Boyle-Mariotte dėsnis teigia, kad jei dujų temperatūra nepakinta, tai jų slėgis yra tiesiogiai proporcingas tūriui. Charles'io dėsnis teigia, kad esant pastovioms sąlygoms (pvz., jei slėgis neminta), dujų tūris yra tiesiogiai proporcingas temperatūrai.
 
-Branduolinė vidinė energija gali būti atlaisvinama arba absorbuojama branduolinių reakcijų metu. Ši energija yra atlaisvinama, kai lengvai branduoliai susijungia (branduolinė sintezė) arba kai sunkūs branduoliai suskyla (branduolinis skilimas).
-Branduolinis skilimas:
+Fizikiniai Būsenos Kintamieji: Dujų būseną galima apibūdinti pagal tokias fizikinių būsenų kintamuosius kaip temperatūra, slėgis, tūris ir masė. Šie kintamieji nustato dujų būseną ir jų elgseną.
 
-Branduolinis skilimas yra vienas iš procesų, kurį galima naudoti branduolinės energijos gamybai. Pvz., kai urano ar plutonio branduoliai suskyla, atlaisvinama didžiulė energijos kiekis.
-Branduolinės sintezės:
+Gazo Dėsniai: Dujos paklūsta tam tikriems fizikiniams dėsniams, pavyzdžiui, Avogadro dėsniui, kuris teigia, kad vienodos sąlygos turi vienodą tūrį dujų, nepriklausomai nuo jų rūšies.
 
-Branduolinės sintezės metu lengvi branduoliai sujungiami sukuriant sunkesnius branduolius. Šis procesas vyksta, pavyzdžiui, saulėje, kur vandenilis paverčiamas heliumu, ir tai yra šaltinis saulės energijos.
-Branduolinės energijos panaudojimas:
+Dujų Elgsena: Realaus dujų elgseną dažnai geriau aprašo van der Waals lygtis, kuri atsižvelgia į molekulinį tūrį ir jų tarpusavio sąveiką.
 
-Branduolinė vidinė energija naudojama branduolinėse elektrinėse, kurios generuoja elektros energiją branduolinių reakcijų rezultate. Tai gali būti ir potencialus šaltinis ateities energijos poreikiams tenkinti.
-                <h2>Branduolinės energijos formos</h2>
-                <li>
-                Branduolinė vidinė energija yra energetinė būsena, kuri 
-                susijusi su branduolio sudėtimi ir jo komponentų, tokiais kaip kvarkai ir gluonai,
-                sąveika. Ši energija yra susijusi su stipraus branduolinio sąveikos jėga, kuri veikia tarp 
-                kvarkų ir gluonų.                </li>
             </p1>
         
             </div>

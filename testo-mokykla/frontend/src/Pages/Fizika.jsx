@@ -22,17 +22,16 @@ const data = [
     {
         tema: 'Medžiagos būsenų kitimas',
         potemes: [
-            ['2.1 Kietų kūnų savybės', '2.1l'],
-            ['2.2 Skystų kūnų savybės', '2.2l'],
-            ['2.3 Dujinių kūnų savybės', '2.3l'],
+            ['2.1 Kietų kūnų savybės', '/fizika/kieti'],
+            ['2.2 Skystų kūnų savybės', '/fizika/skysti'],
+            ['2.3 Dujinių kūnų savybės', '/fizika/dujos'],
         ],
     },
     {
         tema: 'Atomo sandara',
         potemes: [
-            ['2.1 Elektronai', '2.1l'],
-            ['2.2 Protonai ir neutronai', '2.2l'],
-            ['2.3 ', '2.3l'],
+            ['2.1 Elektronai', ''],
+            ['2.2 Protonai ir neutronai', '/fizika/prot'],
         ],
     },
     {

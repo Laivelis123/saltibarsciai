@@ -5,36 +5,25 @@ function Elektr (){
         <UI>
         {
             <div className="container"> 
-            <h1 id='header'>
-                Branduolinė vidinė energija
+                <h1 id='header'>
+                Elektronai
             </h1>
             <p1>
-            Branduolinė vidinė energija yra energija, susijusi su atominėmis branduolių sąveikomis. Ši energija yra gausi labai dideliuose atomuose, kurie turi daug protonų ir neutronų branduolyje. Pagrindinės savybės ir informacija apie branduolinę vidinę energiją yra šios:
+            Elektronas yra subatomarinė dalelė, turinti neigiamą elektrinį krūvį. Jis yra viena iš pagrindinių atomo sudedamųjų dalių ir cirkuliuoja aplink branduolį atomo orbitose. Štai keletas pagrindinių faktų apie elektronus fizikoje:
 
-Branduolinė sąveika:
+Masa: Elektrono masa yra maždaug 9,11 x 10^-31 kilogramai. Ji yra daug mažesnė nei protono ar neutrono masa, tačiau elektronai sudaro dalelių fizikos pasaulį ir yra svarbūs cheminėse reakcijose.
 
-Branduolinė vidinė energija susijusi su sąveika tarp protonų ir neutronų, esančių atomų branduoliuose. Ši sąveika palaiko atomų struktūrą.
-Atominiai branduoliai:
+Krūvis: Elektronas turi neigiamą elektrinį krūvį, lygų elementinio krūvio vienetui. Elektrono krūvis yra priešingas nei protono krūvis, todėl jie sąveikauja elektromagnetinėje jėgoje.
 
-Dideliuose atomuose, pavyzdžiui, uranu ar plutonu, branduolinė vidinė energija yra ypač svarbi. Tokiuose branduoliuose esantys protonai atstumiami elektromagnetinės atstūmimo jėgos, bet traukiami stipria branduoline jėga.
-Branduolinių reakcijų energija:
+Orbitos ir energinė būsena: Elektronai juda aplink branduolį orbitomis ir yra susieti su tam tikromis energinėmis būsenomis. Jie gali peršokti iš vienos orbitos į kitą, absorbuodami arba išspinduliuodami energiją. Šie energijos pereinų procesai lemia atomų spektrus.
 
-Branduolinė vidinė energija gali būti atlaisvinama arba absorbuojama branduolinių reakcijų metu. Ši energija yra atlaisvinama, kai lengvai branduoliai susijungia (branduolinė sintezė) arba kai sunkūs branduoliai suskyla (branduolinis skilimas).
-Branduolinis skilimas:
+Spin: Elektronas turi savybę, vadinamą spinu. Tai yra savotiškas sukimosi momentas, kuris yra kvantizuotas. Elektrono spinas turi svarbią reikšmę daugelyje subatomarinių procesų ir sąveikauja su kitomis dalelėmis.
 
-Branduolinis skilimas yra vienas iš procesų, kurį galima naudoti branduolinės energijos gamybai. Pvz., kai urano ar plutonio branduoliai suskyla, atlaisvinama didžiulė energijos kiekis.
-Branduolinės sintezės:
+Elektronų šeima: Elektronai yra klasifikuojami pagal pagrindinę energetinę lygį ir orbitos, kuriose jie cirkuliuoja, vadinamos elektroninėmis obliūtomis. Elektronų šeima yra subatomarinės dalelės, kurios turi tuos pačius kvantinius skaičius, tokie kaip pagrindinė energinė lygį skaičius, orbitalės momento kiekis ir spinas.
 
-Branduolinės sintezės metu lengvi branduoliai sujungiami sukuriant sunkesnius branduolius. Šis procesas vyksta, pavyzdžiui, saulėje, kur vandenilis paverčiamas heliumu, ir tai yra šaltinis saulės energijos.
-Branduolinės energijos panaudojimas:
+Eksperimentinės patvirtinimai: Elektronai buvo eksperimentiškai patvirtinti 1897 metais J.J. Thomsono eksperimentuose, naudojant katodinio spindulio vakuuminį leiją. Šis eksperimentas leido nustatyti elektrono masę ir neigiamą krūvį.
 
-Branduolinė vidinė energija naudojama branduolinėse elektrinėse, kurios generuoja elektros energiją branduolinių reakcijų rezultate. Tai gali būti ir potencialus šaltinis ateities energijos poreikiams tenkinti.
-                <h2>Branduolinės energijos formos</h2>
-                <li>
-                Branduolinė vidinė energija yra energetinė būsena, kuri 
-                susijusi su branduolio sudėtimi ir jo komponentų, tokiais kaip kvarkai ir gluonai,
-                sąveika. Ši energija yra susijusi su stipraus branduolinio sąveikos jėga, kuri veikia tarp 
-                kvarkų ir gluonų.                </li>
+            
             </p1>
         
             </div>
