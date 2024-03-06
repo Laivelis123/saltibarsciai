@@ -43,14 +43,6 @@ const data = [
         ],
     },
     {
-        tema: 'Atomų branduolių virsmai',
-        potemes: [
-            ['2.1 ', '2.1l'],
-            ['2.2', '2.2l'],
-            ['2.3', '2.3l'],
-        ],
-    },
-    {
         tema: 'Visata ir jos evoliucija',
         potemes: [
             ['2.1 Planetos', '2.1l'],
@@ -59,27 +51,11 @@ const data = [
         ],
     },
     {
-        tema: 'Elektros krūviai ir jų sąveika',
+        tema: 'Elektros srovė',
         potemes: [
-            ['2.1', '2.1l'],
-            ['2.2', '2.2l'],
-            ['2.3', '2.3l'],
-        ],
-    },
-    {
-        tema: 'Nuolatinė elektros srovė',
-        potemes: [
-            ['2.1  ', '2.1l'],
-            ['2.2 ', '2.2l'],
-            ['2.3 Taikymas pramonėje', '2.3l'],
-        ],
-    },
-    {
-        tema: 'Elektros srovė terpėse',
-        potemes: [
-            ['2.1', '2.1l'],
-            ['2.2', '2.2l'],
-            ['2.3', '2.3l'],
+            ['2.1 Nuolatinė', '/fizika/nuolat'],
+            ['2.2 Taikymas pramonėje' , '/fizika/taikymas'],
+            ['2.3 Terpėse', '/fizika/terpe'],
         ],
     },
 ]

@@ -19,6 +19,12 @@ import Branduoline from "./Pages/Informaciniai/fizikos/Branduoline.jsx";
 import Molekuline from "./Pages/Informaciniai/fizikos/Molekuline.jsx";
 import Elektronine from "./Pages/Informaciniai/fizikos/Elektronine.jsx";
 import Elektr from "./Pages/Informaciniai/fizikos/Elektr.jsx";
+import PoveikisA from "./Pages/Informaciniai/fizikos/PoveikisA.jsx";
+import PoveikisZ from "./Pages/Informaciniai/fizikos/PoveikisZ.jsx";
+import Spind from "./Pages/Informaciniai/fizikos/Spind.jsx";
+import Taikymas from "./Pages/Informaciniai/fizikos/Taikymas.jsx";
+import Terpe from "./Pages/Informaciniai/fizikos/Terpe.jsx";
+import Nuolat from "./Pages/Informaciniai/fizikos/Nuolat.jsx";
 import Prot from "./Pages/Informaciniai/fizikos/Prot.jsx";
 import Kieti from "./Pages/Informaciniai/fizikos/Kieti.jsx";
 import Dujos from "./Pages/Informaciniai/fizikos/Dujos.jsx";
@@ -78,8 +84,30 @@ const router = createBrowserRouter([
     path: "fizika/dujos",
     element: <Dujos />,
   },
-  
-  
+  {
+    path: "fizika/apl",
+    element: <PoveikisA />,
+  },
+  {
+    path: "fizika/apl2",
+    element: <PoveikisZ />,
+  },
+  {
+    path: "fizika/spind",
+    element: <Spind />,
+  },
+  {
+    path: "fizika/terpe",
+    element: <Terpe />,
+  },
+  {
+    path: "fizika/nuolat",
+    element: <Nuolat />,
+  },
+  {
+    path: "fizika/taikymas",
+    element: <Taikymas />,
+  },
   
   {
     path: "chemija",
