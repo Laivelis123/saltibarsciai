@@ -30,24 +30,22 @@ const data = [
     {
         tema: 'Atomo sandara',
         potemes: [
-            ['2.1 Elektronai', ''],
+            ['2.1 Elektronai', '/fizika/elektr'],
             ['2.2 Protonai ir neutronai', '/fizika/prot'],
         ],
     },
     {
         tema: 'Radioaktyvumas',
         potemes: [
-            ['2.1 Poveikis aplinkai', '2.1l'],
-            ['2.2 Poveikis žmogui', '2.2l'],
-            ['2.3 Spinduliuotės', '2.3l'],
+            ['2.1 Poveikis aplinkai', '/fizika/apll'],
+            ['2.2 Poveikis žmogui', '/fizika/apl2'],
+            ['2.3 Spinduliuotės', '/fizika/spind'],
         ],
     },
     {
         tema: 'Visata ir jos evoliucija',
         potemes: [
-            ['2.1 Planetos', '2.1l'],
-            ['2.2 Visatos raida', '2.2l'],
-            ['2.3 Gyvybės atsiradimas', '2.3l'],
+            ['2.1 Visatos raida', ''],
         ],
     },
     {

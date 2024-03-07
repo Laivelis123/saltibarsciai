@@ -108,6 +108,10 @@ const router = createBrowserRouter([
     path: "fizika/taikymas",
     element: <Taikymas />,
   },
+  {
+    path: "fizika/elektr",
+    element: <Elektr />,
+  },
   
   {
     path: "chemija",
