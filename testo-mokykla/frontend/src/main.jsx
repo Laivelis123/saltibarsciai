@@ -22,6 +22,7 @@ import Elektr from "./Pages/Informaciniai/fizikos/Elektr.jsx";
 import PoveikisA from "./Pages/Informaciniai/fizikos/PoveikisA.jsx";
 import PoveikisZ from "./Pages/Informaciniai/fizikos/PoveikisZ.jsx";
 import Spind from "./Pages/Informaciniai/fizikos/Spind.jsx";
+import Vis from "./Pages/Informaciniai/fizikos/Vis.jsx";
 import Taikymas from "./Pages/Informaciniai/fizikos/Taikymas.jsx";
 import Terpe from "./Pages/Informaciniai/fizikos/Terpe.jsx";
 import Nuolat from "./Pages/Informaciniai/fizikos/Nuolat.jsx";
@@ -29,6 +30,12 @@ import Prot from "./Pages/Informaciniai/fizikos/Prot.jsx";
 import Kieti from "./Pages/Informaciniai/fizikos/Kieti.jsx";
 import Dujos from "./Pages/Informaciniai/fizikos/Dujos.jsx";
 import Skysti from "./Pages/Informaciniai/fizikos/Skysti.jsx";
+import Alk from "./Pages/Informaciniai/chemijos/Alk.jsx";
+import Ald from "./Pages/Informaciniai/chemijos/Ald.jsx";
+import Karb from "./Pages/Informaciniai/chemijos/Karb.jsx";
+import Met from "./Pages/Informaciniai/chemijos/Met.jsx";
+import Nem from "./Pages/Informaciniai/chemijos/Nem.jsx";
+
 
 const router = createBrowserRouter([
   {
@@ -71,13 +78,14 @@ const router = createBrowserRouter([
     path: "fizika/skysti",
     element: <Skysti />,
   },
-  {
-    path: "fizika/dujos",
-    element: <Dujos />,
-  },
+  
   {
     path: "fizika/prot",
     element: <Prot />,
+  },
+  {
+    path: "fizika/vis",
+    element: <Vis />,
   },
   
   {
@@ -111,6 +119,26 @@ const router = createBrowserRouter([
   {
     path: "fizika/elektr",
     element: <Elektr />,
+  },
+  {
+    path: "chemija/alk",
+    element: <Alk />,
+  },
+  {
+    path: "chemija/ald",
+    element: <Ald />,
+  },
+  {
+    path: "chemija/met",
+    element: <Met />,
+  },
+  {
+    path: "chemija/nem",
+    element: <Nem />,
+  },
+  {
+    path: "chemija/karb",
+    element: <Karb />,
   },
   
   {

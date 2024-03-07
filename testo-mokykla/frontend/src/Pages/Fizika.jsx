@@ -45,7 +45,7 @@ const data = [
     {
         tema: 'Visata ir jos evoliucija',
         potemes: [
-            ['2.1 Visatos raida', ''],
+            ['2.1 Visatos raida', '/fizika/vis'],
         ],
     },
     {

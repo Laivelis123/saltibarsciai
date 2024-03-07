@@ -12,16 +12,16 @@ function Biologija() {
 }
 const data = [
     {
-        tema: 'Ląstelė',
+        tema: 'Anatomija',
         potemes: [
-            ['1.1', '1.1l'],//pavadinmas matomas puslapy, linkas � puslap�
-            ['1.2', '1.2l'],
+            ['1.1 Lastelė', '1.1l'],//pavadinmas matomas puslapy, linkas � puslap�
+            ['1.2 ', '1.2l'],
             ['1.3', '1.3l'],
             ['1.4', '1.4l']
         ],
     },
     {
-        tema: 'Gyvūnija',
+        tema: 'Evoliucija',
         potemes: [
             ['1.1', '1.1l'],//pavadinmas matomas puslapy, linkas � puslap�
             ['1.2', '1.2l'],
