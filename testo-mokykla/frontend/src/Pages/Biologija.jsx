@@ -15,18 +15,16 @@ const data = [
         tema: 'Anatomija',
         potemes: [
             ['1.1 Lastelė', '1.1l'],//pavadinmas matomas puslapy, linkas � puslap�
-            ['1.2 ', '1.2l'],
-            ['1.3', '1.3l'],
-            ['1.4', '1.4l']
+            ['1.2 Kraujotaka', '1.2l'],
+            ['1.3 Organai', '1.3l'],
         ],
     },
     {
         tema: 'Evoliucija',
         potemes: [
-            ['1.1', '1.1l'],//pavadinmas matomas puslapy, linkas � puslap�
-            ['1.2', '1.2l'],
-            ['1.3', '1.3l'],
-            ['1.4', '1.4l']
+            ['1.1 Raida', '/bio/raida'],//pavadinmas matomas puslapy, linkas � puslap�
+            ['1.2 Augalai', '/bio/aug'],
+            ['1.3 Gyvūnai', '/bio/gyv'],
         ],
     },
 ]

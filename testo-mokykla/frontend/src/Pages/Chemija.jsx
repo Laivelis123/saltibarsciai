@@ -14,9 +14,9 @@ const data = [
     {
         tema: 'Neorganinė chemija',
         potemes: [
-            ['1.1 Metalai ', '1.1l'],//pavadinmas matomas puslapy, linkas � puslap�
-            ['1.2 Pusmetaliai', '1.2l'],
-            ['1.3 Elektrolizė', '1.3l'],
+            ['1.1 Metalai ', '/chemija/met'],//pavadinmas matomas puslapy, linkas � puslap�
+            ['1.2 Nemetalai', '/chemija/nem'],
+            ['1.3 Elektrolizė', '/chemija/eliz'],
         ],
     },
     {

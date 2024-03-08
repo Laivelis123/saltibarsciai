@@ -27,6 +27,7 @@ import Taikymas from "./Pages/Informaciniai/fizikos/Taikymas.jsx";
 import Terpe from "./Pages/Informaciniai/fizikos/Terpe.jsx";
 import Nuolat from "./Pages/Informaciniai/fizikos/Nuolat.jsx";
 import Prot from "./Pages/Informaciniai/fizikos/Prot.jsx";
+import Eliz from "./Pages/Informaciniai/chemijos/Eliz.jsx";
 import Kieti from "./Pages/Informaciniai/fizikos/Kieti.jsx";
 import Dujos from "./Pages/Informaciniai/fizikos/Dujos.jsx";
 import Skysti from "./Pages/Informaciniai/fizikos/Skysti.jsx";
@@ -35,7 +36,12 @@ import Ald from "./Pages/Informaciniai/chemijos/Ald.jsx";
 import Karb from "./Pages/Informaciniai/chemijos/Karb.jsx";
 import Met from "./Pages/Informaciniai/chemijos/Met.jsx";
 import Nem from "./Pages/Informaciniai/chemijos/Nem.jsx";
-
+import Aug from "./Pages/Informaciniai/bio/Aug.jsx";
+import Gyv from "./Pages/Informaciniai/bio/Gyv.jsx";
+import Kr from "./Pages/Informaciniai/bio/Kr.jsx";
+import Last from "./Pages/Informaciniai/bio/Last.jsx";
+import Org from "./Pages/Informaciniai/bio/Org.jsx";
+import Raida from "./Pages/Informaciniai/bio/Raida.jsx";
 
 const router = createBrowserRouter([
   {
@@ -137,9 +143,38 @@ const router = createBrowserRouter([
     element: <Nem />,
   },
   {
+    path: "chemija/eliz",
+    element: <Eliz />,
+  },
+  {
     path: "chemija/karb",
     element: <Karb />,
   },
+  {
+    path: "bio/aug",
+    element: <Aug />,
+  },
+  {
+    path: "bio/gyv",
+    element: <Gyv />,
+  },
+  {
+    path: "bio/kr",
+    element: <Kr />,
+  },
+  {
+    path: "bio/last",
+    element: <Last />,
+  },
+  {
+    path: "bio/org",
+    element: <Org />,
+  },
+  {
+    path: "bio/raida",
+    element: <Raida />,
+  },
+  
   
   {
     path: "chemija",
