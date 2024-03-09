@@ -42,6 +42,13 @@ import Kr from "./Pages/Informaciniai/bio/Kr.jsx";
 import Last from "./Pages/Informaciniai/bio/Last.jsx";
 import Org from "./Pages/Informaciniai/bio/Org.jsx";
 import Raida from "./Pages/Informaciniai/bio/Raida.jsx";
+import Vien from "./Pages/Informaciniai/lietuviu/Vien.jsx";
+import Prieb from "./Pages/Informaciniai/lietuviu/Prieb.jsx";
+import Paz from "./Pages/Informaciniai/lietuviu/Paz.jsx";
+import Kreip from "./Pages/Informaciniai/lietuviu/Kreip.jsx";
+import Iterp from "./Pages/Informaciniai/lietuviu/Iterp.jsx";
+import Bals from "./Pages/Informaciniai/lietuviu/Bals.jsx";
+import Sud from "./Pages/Informaciniai/lietuviu/Sud.jsx";
 
 const router = createBrowserRouter([
   {
@@ -174,8 +181,7 @@ const router = createBrowserRouter([
     path: "bio/raida",
     element: <Raida />,
   },
-  
-  
+
   {
     path: "chemija",
     element: <Chemija />,
@@ -187,6 +193,34 @@ const router = createBrowserRouter([
   {
     path: "lietuviu",
     element: <Lietuviu />,
+  },
+  {
+    path: "liet/vien",
+    element: <Vien />,
+  },
+  {
+    path: "liet/iterp",
+    element: <Iterp />,
+  },
+  {
+    path: "liet/bals",
+    element: <Bals />,
+  },
+  {
+    path: "liet/prieb",
+    element: <Prieb />,
+  },
+  {
+    path: "liet/kreip",
+    element: <Kreip />,
+  },
+  {
+    path: "liet/paz",
+    element: <Paz />,
+  },
+  {
+    path: "liet/sud",
+    element: <Sud />,
   },
   {
     path: "biologija",

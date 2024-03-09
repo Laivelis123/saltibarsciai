@@ -14,9 +14,9 @@ const data = [
     {
         tema: 'Anatomija',
         potemes: [
-            ['1.1 Lastelė', '1.1l'],//pavadinmas matomas puslapy, linkas � puslap�
-            ['1.2 Kraujotaka', '1.2l'],
-            ['1.3 Organai', '1.3l'],
+            ['1.1 Lastelė', '/bio/last'],//pavadinmas matomas puslapy, linkas � puslap�
+            ['1.2 Kraujotaka', '/bio/kr'],
+            ['1.3 Organai', '/bio/org'],
         ],
     },
     {

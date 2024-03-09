@@ -43,7 +43,20 @@
 
 
 }
+.container{
+  padding: 20px;
+  text-align: justify;
+
+}
 .container h1 {
   text-align: center;
+  font-size: 30px;
+  font-family: 'georgia';
+  font-weight: bold;
+  text-align: center;
+}
+.container p1{
+  font-family: 'georgia';
+
 }
 
