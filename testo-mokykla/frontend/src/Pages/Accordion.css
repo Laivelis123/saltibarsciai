@@ -59,19 +59,16 @@
   font-family: 'georgia';
 
 }
+
 .container button{
-  text-align: center;
-  background: hsl(var(--hue), 98%, 80%);
-	border: none;
-	border-radius: 7px;
-	cursor: pointer;
-	color: black;
-	font: 600 1.05rem/1 "Nunito", sans-serif;
-	letter-spacing: .05em;
-	overflow: hidden;
-	padding: 1.15em 3.5em;
-	min-height: 3.3em;
-	position: relative;
+  padding: 1rem;
+  font-size: 1rem;
+  border: none;
+  color: #0c1016;
+  filter: url("#gooey");
+  position: relative;
+  background-color: #6fc09a;
 
 }
+.container button
 
