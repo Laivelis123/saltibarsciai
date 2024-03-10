@@ -49,6 +49,9 @@ Susidariusi zigota pradeda vystytis archegonės viduje, tačiau gemalas greitai 
                 
              </p1>
              <button>Bandomasis testas</button>
+             <button className='next_btn'>Mokytojo paskirti testai</button>
+
+
 
              </div>
 

@@ -38,7 +38,6 @@
   transition: all 0.5s cubic-bezier(1, 0, 1, 0);
 }
 .container{
-  overflow: scroll;
   height: 500px;
 
 
@@ -61,14 +60,55 @@
 }
 
 .container button{
-  padding: 1rem;
-  font-size: 1rem;
+  font-family: "Helvetica", "Arial", sans-serif;
+  display: table-cell;
+  font-size: 1em;
+  padding: 1em 2em;
+  margin-top: 400px;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: rgb(144, 213, 173);
+  color: #000000;
+  border-radius: 4px;
   border: none;
-  color: #0c1016;
-  filter: url("#gooey");
-  position: relative;
-  background-color: #6fc09a;
+  left: 45%;
+  cursor: pointer;
+  position: absolute;
+  transition: transform ease-in 0.1s, box-shadow ease-in 0.25s;
+  box-shadow: 0 2px 25px rgba(144, 213, 173);
 
 }
-.container button
+.container button:focus{
+  outline: 0;
+
+}
+.container button:before, .container button:after {
+  position: absolute;
+  content: "";
+  display: block;
+  width: 140%;
+  height: 100%;
+  left: -20%;
+  z-index: -1000;
+  transition: all ease-in-out 0.5s;
+  background-repeat: no-repeat;
+}
+.container button:active {
+  transform: scale(0.9);
+  background-color: rgb(114, 170, 137);
+  box-shadow: 0 2px 25px rgba(255, 0, 130, 0.2);
+}
+.container button:before {
+  display: block;
+  animation: topBubbles ease-in-out 0.75s forwards;
+}
+.container button:after {
+  display: block;
+}
+.container .next_btn {
+  left: 30%;
+  top: 250px;
+
+}
+
 

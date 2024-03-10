@@ -29,10 +29,7 @@ Fermi Lygis ir Banginių Užpildymas:
 Fermi lygis yra energijos lygmuo, kuriame yra pusė užpildytų ir pusė neužpildytų būsenų. Šis lygis yra svarbus supratimui apie elektronų elgesį kietuose kūnuose.
 Šiluminės Savybės:
 
-Kieti kūnai gali turėti specifines šilumos savybes, pavyzdžiui, šilumos laidumą, kuris priklauso nuo medžiagos struktūros ir susijusių vibracinių judesių.
-Feroelektrinės ir Feromagnetinės Savybės:
 
-Kai kurie kietieji kūnai gali rodyti ferroelektrines (turi elektrinį momentą net be išorinio lauko) arba feromagnetines (turinčios nuolatinį magnetinį momentą net be išorinio lauko) savybes. Tai susiję su atomų ir molekulių sąveika ir jų tvarka kristaliniame gretasienyje.
             
             </p1>
             <button>Bandomasis testas</button>
