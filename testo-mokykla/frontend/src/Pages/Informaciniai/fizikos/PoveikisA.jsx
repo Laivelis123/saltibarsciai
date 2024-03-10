@@ -11,20 +11,20 @@ function PoveikisA()
              </h1>
 
              <p1>
-             Jonizuojanti spinduliuotė: Radioktyvumas dažnai lydi jonizuojančią spinduliuotę, kuri gali pažeisti ląstelių struktūrą ir sukelti genetinius pažeidimus. Tai gali turėti įtakos augalų, gyvūnų ir žmonių sveikatai.
+             <li>Jonizuojanti spinduliuotė: Radioktyvumas dažnai lydi jonizuojančią spinduliuotę, kuri gali pažeisti ląstelių struktūrą ir sukelti genetinius pažeidimus. Tai gali turėti įtakos augalų, gyvūnų ir žmonių sveikatai.
 
-Branduolinių atliekų tvarkymas: Radioktyvūs elementai gali būti susidarę branduolinių reaktorių veikimo metu arba branduolinių sprogimų metu. Tinkamas šių atliekų tvarkymas yra esminis, siekiant užkirsti kelią jų išmetimui į aplinką ir užtikrinti saugų ilgalaikį saugojimą.
+Branduolinių atliekų tvarkymas: Radioktyvūs elementai gali būti susidarę branduolinių reaktorių veikimo metu arba branduolinių sprogimų metu. Tinkamas šių atliekų tvarkymas yra esminis, siekiant užkirsti kelią jų išmetimui į aplinką ir užtikrinti saugų ilgalaikį saugojimą.</li>
 
-Radioaktyvumo sklaida dirvoje ir vandenyje: Jei radioktyvūs elementai patenka į dirvą ar vandenį, jie gali plisti ir sukelti taršą. Tai gali turėti pasekmių ne tik vietiniam ekosistemų funkcionavimui, bet ir paveikti žmonių gyvenamąsias vietas bei žemės ūkio produkciją.
+<li>Radioaktyvumo sklaida dirvoje ir vandenyje: Jei radioktyvūs elementai patenka į dirvą ar vandenį, jie gali plisti ir sukelti taršą. Tai gali turėti pasekmių ne tik vietiniam ekosistemų funkcionavimui, bet ir paveikti žmonių gyvenamąsias vietas bei žemės ūkio produkciją.
 
-Radiacinė aplinka: Radioktyvumo poveikis gali būti išmatuojamas radiaciniais rodikliais, tokių kaip dozimetrija ir radiaciniai matavimai. Šie matavimai yra svarbūs, siekiant nustatyti, ar tam tikroje srityje nėra pavojingų radiacinės aplinkos lygių.
+Radiacinė aplinka: Radioktyvumo poveikis gali būti išmatuojamas radiaciniais rodikliais, tokių kaip dozimetrija ir radiaciniai matavimai. Šie matavimai yra svarbūs, siekiant nustatyti, ar tam tikroje srityje nėra pavojingų radiacinės aplinkos lygių.</li>
 
-Ilgaamžiai radioktyvūs izotopai: Kai kurie radioktyvūs izotopai yra ilgaamžiai, ir jie gali išlikti aplinkoje labai ilgą laiką. Tai kelia riziką ilgalaikiam radiaciniam poveikiui.
+<li>Ilgaamžiai radioktyvūs izotopai: Kai kurie radioktyvūs izotopai yra ilgaamžiai, ir jie gali išlikti aplinkoje labai ilgą laiką. Tai kelia riziką ilgalaikiam radiaciniam poveikiui.</li>
                 
 
                 
              </p1>
-             <button>Bandomasis testas</button>
+             <button className='first_btn'>Bandomasis testas</button>
              <button className='next_btn'>Mokytojo paskirti testai</button>
 
 
