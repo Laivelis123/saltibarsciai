@@ -24,6 +24,8 @@ Gazo Dėsniai: Dujos paklūsta tam tikriems fizikiniams dėsniams, pavyzdžiui, 
 Dujų Elgsena: Realaus dujų elgseną dažnai geriau aprašo van der Waals lygtis, kuri atsižvelgia į molekulinį tūrį ir jų tarpusavio sąveiką.
 
             </p1>
+            <button>Bandomasis testas</button>
+
         
             </div>
         }

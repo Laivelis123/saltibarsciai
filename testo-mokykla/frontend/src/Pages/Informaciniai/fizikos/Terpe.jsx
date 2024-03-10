@@ -26,6 +26,8 @@ Jėga ir judėjimas: Elektronai juda per laidininką dėl elektros jėgos, kuri�
 Šiluminiai efektai: Elektros srovė terpėje taip pat gali sukelti šilumos išsiskyrimą. Šiluminiai efektai gali būti svarbūs, ypač kai svarbu įvertinti laidininko efektyvumą ir išvengti per didelės šiluminės energijos praradimų.
                 
              </p1>
+             <button>Bandomasis testas</button>
+
              </div>
 
         }

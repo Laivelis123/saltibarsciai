@@ -40,6 +40,8 @@ Supratimas apie elektroninę vidinę energiją yra svarbus fizikos, chemijos ir 
                 
                            
             </p1>
+            <button>Bandomasis testas</button>
+
         
             </div>
           

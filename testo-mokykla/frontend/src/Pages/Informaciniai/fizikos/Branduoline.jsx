@@ -36,6 +36,8 @@ Branduolinė vidinė energija naudojama branduolinėse elektrinėse, kurios gene
                 sąveika. Ši energija yra susijusi su stipraus branduolinio sąveikos jėga, kuri veikia tarp 
                 kvarkų ir gluonų.                </li>
             </p1>
+            <button>Bandomasis testas</button>
+
         
             </div>
         }

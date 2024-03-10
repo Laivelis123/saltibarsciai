@@ -35,6 +35,8 @@ Feroelektrinės ir Feromagnetinės Savybės:
 Kai kurie kietieji kūnai gali rodyti ferroelektrines (turi elektrinį momentą net be išorinio lauko) arba feromagnetines (turinčios nuolatinį magnetinį momentą net be išorinio lauko) savybes. Tai susiję su atomų ir molekulių sąveika ir jų tvarka kristaliniame gretasienyje.
             
             </p1>
+            <button>Bandomasis testas</button>
+
         
             </div>
         }

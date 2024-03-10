@@ -25,6 +25,8 @@ Telekomunikacijos: Elektroninių įrenginių maitinimas, signalų perdavimas ir 
 Šaltinių maitinimas laboratorijoje: Daug laboratorinių prietaisų, kuriuose reikalingas stabilus ir pastovus maitinimas, naudoja nuolatinę srovę.
                 
              </p1>
+             <button>Bandomasis testas</button>
+
              </div>
 
         }

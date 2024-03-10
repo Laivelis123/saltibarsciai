@@ -26,6 +26,8 @@ Taikymai: Nuolatinė srovė yra plačiai naudojama įvairiose srityse. Ji yra es
 Elektros grandinės su nuolatine srove: Elektros grandinėse su nuolatine srove paprastai yra elementai, kurie valdo srovės stiprumą, tokie kaip rezistoriai, kondensatoriai ir induktorius. Šie elementai leidžia projektuoti elektros grandines pagal pageidaujamus funkcionalumo ir kontrolės principus.
 
              </p1>
+             <button>Bandomasis testas</button>
+
              </div>
 
         }

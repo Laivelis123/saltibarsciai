@@ -52,6 +52,8 @@ Bakterijos labai gerai ir greitai geba prisitaikyti prie aplinkos, įsisavinti m
 
 
              </p1>
+             <button>Bandomasis testas</button>
+
              </div>
 
         }

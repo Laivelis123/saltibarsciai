@@ -52,6 +52,8 @@ Plikasėkliai
 Gaubtasėkliai
                 
              </p1>
+             <button>Bandomasis testas</button>
+
              </div>
 
         }
