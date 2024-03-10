@@ -42,6 +42,8 @@ Aldehidai turi daug bendro su ketonais, kurie taip pat turėtų anglies atomą s
              </p1>
 
              <button>Bandomasis testas</button>
+             <button className='next_btn'>Mokytojo paskirti testai</button>
+
              </div>
 
         }

@@ -28,6 +28,8 @@ Stuburiniams priklauso 5 klasės: žuvys, varliagyviai, ropliai, paukščiai ir 
                 
              </p1>
              <button>Bandomasis testas</button>
+             <button className='next_btn'>Mokytojo paskirti testai</button>
+
 
              </div>
 

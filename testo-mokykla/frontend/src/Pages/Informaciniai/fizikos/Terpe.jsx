@@ -27,6 +27,8 @@ Jėga ir judėjimas: Elektronai juda per laidininką dėl elektros jėgos, kuri�
                 
              </p1>
              <button>Bandomasis testas</button>
+             <button className='next_btn'>Mokytojo paskirti testai</button>
+
 
              </div>
 

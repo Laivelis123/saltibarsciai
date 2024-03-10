@@ -41,6 +41,8 @@ muši, muš, mušime, mušite, muš (nes mušti); slysiu, slysi, slys, slysime, 
                 
              </p1>
              <button>Bandomasis testas</button>
+             <button className='next_btn'>Mokytojo paskirti testai</button>
+
 
              </div>
 

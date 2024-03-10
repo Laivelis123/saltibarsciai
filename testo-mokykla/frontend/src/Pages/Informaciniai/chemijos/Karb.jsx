@@ -42,6 +42,8 @@ Naudojimas pramonėje:
 Karboksirūgštys naudojamos pramonėje, pavyzdžiui, maisto pramonėje, farmacijoje, kosmetikoje ir cheminiuose procesuose. 
             </p1>
             <button>Bandomasis testas</button>
+            <button className='next_btn'>Mokytojo paskirti testai</button>
+
 
              </div>
 

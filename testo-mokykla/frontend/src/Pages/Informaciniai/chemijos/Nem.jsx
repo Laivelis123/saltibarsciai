@@ -46,6 +46,8 @@ Kai kurie nemetalai turi stabilius izotopus, tačiau kai kurie gali turėti radi
                 
             </p1>
             <button>Bandomasis testas</button>
+            <button className='next_btn'>Mokytojo paskirti testai</button>
+
 
              </div>
 

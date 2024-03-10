@@ -33,6 +33,8 @@ Fermi lygis yra energijos lygmuo, kuriame yra pusė užpildytų ir pusė neužpi
             
             </p1>
             <button>Bandomasis testas</button>
+            <button className='next_btn'>Mokytojo paskirti testai</button>
+
 
         
             </div>

@@ -53,6 +53,8 @@ Gaubtasėkliai
                 
              </p1>
              <button>Bandomasis testas</button>
+             <button className='next_btn'>Mokytojo paskirti testai</button>
+
 
              </div>
 

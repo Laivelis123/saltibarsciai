@@ -25,6 +25,8 @@ Dujų Elgsena: Realaus dujų elgseną dažnai geriau aprašo van der Waals lygti
 
             </p1>
             <button>Bandomasis testas</button>
+            <button className='next_btn'>Mokytojo paskirti testai</button>
+
 
         
             </div>

@@ -29,6 +29,8 @@ Užkrūčio liauka. Vaikai turi didesnę, o seniems žmonėms gali sunykti. Joje
                 
              </p1>
              <button>Bandomasis testas</button>
+             <button className='next_btn'>Mokytojo paskirti testai</button>
+
 
              </div>
 

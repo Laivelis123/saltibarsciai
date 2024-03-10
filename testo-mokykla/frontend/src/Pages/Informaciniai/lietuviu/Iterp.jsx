@@ -37,6 +37,8 @@ svarstymas nėra aktualus. O kalbant apie televiziją, tai jūs vakar turėjote 
                 
              </p1>
              <button>Bandomasis testas</button>
+             <button className='next_btn'>Mokytojo paskirti testai</button>
+
 
              </div>
 

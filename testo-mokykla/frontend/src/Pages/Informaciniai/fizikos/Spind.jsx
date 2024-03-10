@@ -26,6 +26,8 @@ Branduolinių reakcijų kontrolė: Fizikai analizuoja ir siekia kontroliuoti bra
   
              </p1>
              <button>Bandomasis testas</button>
+             <button className='next_btn'>Mokytojo paskirti testai</button>
+
 
              </div>
 

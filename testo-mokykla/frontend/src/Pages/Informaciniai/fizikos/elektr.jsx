@@ -26,6 +26,8 @@ Eksperimentinės patvirtinimai: Elektronai buvo eksperimentiškai patvirtinti 18
             
             </p1>
             <button>Bandomasis testas</button>
+            <button className='next_btn'>Mokytojo paskirti testai</button>
+
 
         
             </div>

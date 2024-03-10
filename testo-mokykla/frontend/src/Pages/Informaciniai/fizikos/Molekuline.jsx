@@ -16,6 +16,8 @@ function Molekuline()
 Visa ši molekulinė vidinė energija yra svarbi fizikinio chemijos ir termodinamikos sričių dalis. Ji gali būti išmatuota ir naudojama įvairiose mokslinėse ir technologinėse srityse, pavyzdžiui, reaguojant cheminėse reakcijose, šilumos perdavime ir kt. Supratimas apie molekulinę vidinę energiją yra svarbus, siekiant nagrinėti medžiagos elgseną skirtingomis sąlygomis ir prognozuoti cheminės sistemos elgesį.
              </p1>
              <button>Bandomasis testas</button>
+             <button className='next_btn'>Mokytojo paskirti testai</button>
+
 
              </div>
 

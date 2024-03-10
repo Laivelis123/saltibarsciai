@@ -26,6 +26,8 @@ Skilveliai varinėja kraują kraujagyslėmis, todėl jų sistolė ilgesnė ir st
                 
              </p1>
              <button>Bandomasis testas</button>
+             <button className='next_btn'>Mokytojo paskirti testai</button>
+
 
              </div>
 

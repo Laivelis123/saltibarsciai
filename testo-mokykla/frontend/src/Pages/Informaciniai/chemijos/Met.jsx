@@ -45,6 +45,8 @@ Metalai gali reaguoti su aplinkos elementais ir sudaryti korozijos produktus, ku
                 
             </p1>
             <button>Bandomasis testas</button>
+            <button className='next_btn'>Mokytojo paskirti testai</button>
+
 
              </div>
 
