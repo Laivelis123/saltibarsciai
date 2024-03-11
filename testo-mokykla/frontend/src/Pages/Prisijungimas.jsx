@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import styles from "./prisijungimas.module.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import UI from "../components/UI.jsx"
 
 function Prisijungimas() {
   const [username, setUsername] = useState("");
@@ -25,13 +26,14 @@ function Prisijungimas() {
     }
   };
   
-  return (
+    return (
+      <UI>
     <div className={styles.container}>
       <form className={styles.form} onSubmit={handleLogin} >
-        <h2 className={styles.title}>Login</h2>
+        <h2 className={styles.title}>Prisijungimas</h2>
         <div className={styles.formGroup}>
           <label htmlFor="username" className={styles.label}>
-            Username
+            Vartotojo vardas
           </label>
           <input
             type="text"
@@ -43,7 +45,7 @@ function Prisijungimas() {
         </div>
         <div className={styles.formGroup}>
           <label htmlFor="password" className={styles.label}>
-            Password
+            Slaptažodis
           </label>
           <input
             type="password"
@@ -55,15 +57,16 @@ function Prisijungimas() {
         </div>
         <div className={styles.formGroup}>
           <button type="submit" className={styles.button}>
-            Login
+            Prisijungti
           </button>
         </div>
         <Link to="/registracija" className={styles.link}>
-          Don't have an account? Sign up here.
+          Neturinte paskyros? Registruokitės čia.
         </Link>
       </form>
       <h1>{loginStatus}</h1>
-    </div>
+            </div>
+        </UI>
   );
 }
 

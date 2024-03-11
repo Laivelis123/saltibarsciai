@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import styles from "./registracija.module.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import UI from "../components/UI.jsx"
 
 function Registracija() {
   const [username, setUsername] = useState("");
@@ -23,13 +24,14 @@ function Registracija() {
     }
   };
 
-  return (
+    return (
+      <UI>
     <div className={styles.container}>
       <form className={styles.form}>
-        <h2 className={styles.title}>Registration</h2>
+        <h2 className={styles.title}>Registracija</h2>
         <div className={styles.formGroup}>
           <label htmlFor="username" className={styles.label}>
-            Username
+            Vartotojo vardas
           </label>
           <input
             type="text"
@@ -41,7 +43,7 @@ function Registracija() {
         </div>
         <div className={styles.formGroup}>
           <label htmlFor="email" className={styles.label}>
-            Email
+            El. pašto adresas
           </label>
           <input
             type="email"
@@ -53,7 +55,7 @@ function Registracija() {
         </div>
         <div className={styles.formGroup}>
           <label htmlFor="password" className={styles.label}>
-            Password
+            Slaptažodis
           </label>
           <input
             type="password"
@@ -64,7 +66,7 @@ function Registracija() {
           />
         </div>
         <div className={styles.formGroup}>
-          <label className={styles.label}>Account Type:</label>
+          <label className={styles.label}>Paskyros tipas:</label>
           <label className={styles.radioLabel}>
             <input
               type="radio"
@@ -74,7 +76,7 @@ function Registracija() {
               className={styles.radioInput}
             />
             <span className={styles.checkmark}></span>
-            <span className={styles.radioText}>Student</span>
+            <span className={styles.radioText}>Studentas</span>
           </label>
           <label className={styles.radioLabel}>
             <input
@@ -85,17 +87,18 @@ function Registracija() {
               className={styles.radioInput}
             />
             <span className={styles.checkmark}></span>
-            <span className={styles.radioText}>Teacher</span>
+            <span className={styles.radioText}>Mokytojas</span>
           </label>
         </div>
         <button onClick={handleRegistration} className={styles.button}>
-          Register
+          Registruotis
         </button>
         <Link to="/prisijungimas" className={styles.link}>
-          Already have an account? Login here.
+          Jau turite paskyrą? Prisijunkite čia.
         </Link>
       </form>
-    </div>
+            </div>
+        </UI>
   );
 }
 
