@@ -33,8 +33,6 @@ Skysčiai išsiplėčia, kai šyla, ir sutraukiasi, kai atšaldomi. Šiluminis i
             <button className='first_btn'>Bandomasis testas</button>
             <button className='next_btn'>Mokytojo paskirti testai</button>
 
-
-        
             </div>
         }
         </UI>
