@@ -12,12 +12,19 @@ function Biologija() {
 }
 const data = [
     {
-        tema: '',
+        tema: 'Anatomija',
         potemes: [
-            ['1.1', '1.1l'],//pavadinmas matomas puslapy, linkas � puslap�
-            ['1.2', '1.2l'],
-            ['1.3', '1.3l'],
-            ['1.4', '1.4l']
+            ['1.1 Lastelė', '/bio/last'],//pavadinmas matomas puslapy, linkas � puslap�
+            ['1.2 Kraujotaka', '/bio/kr'],
+            ['1.3 Organai', '/bio/org'],
+        ],
+    },
+    {
+        tema: 'Evoliucija',
+        potemes: [
+            ['1.1 Raida', '/bio/raida'],//pavadinmas matomas puslapy, linkas � puslap�
+            ['1.2 Augalai', '/bio/aug'],
+            ['1.3 Gyvūnai', '/bio/gyv'],
         ],
     },
 ]

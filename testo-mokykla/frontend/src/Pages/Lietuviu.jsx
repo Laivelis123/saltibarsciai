@@ -12,12 +12,21 @@ function Lietuviu() {
 }
 const data = [
     {
-        tema: '',
+        tema: 'Skyryba',
         potemes: [
-            ['1.1', '1.1l'],//pavadinmas matomas puslapy, linkas � puslap�
-            ['1.2', '1.2l'],
-            ['1.3', '1.3l'],
-            ['1.4', '1.4l']
+            ['1.1 Vienarūšės sakinio dalys', '/liet/vien'],//pavadinmas matomas puslapy, linkas � puslap�
+            ['1.2 Pažyminiai', '/liet/paz'],
+            ['1.3 Įterpiniai', '/liet/iterp'],
+            ['1.4 Krepiniai', '/liet/kreip'],
+
+        ],
+    },
+    {
+        tema: 'Rašyba',
+        potemes: [
+            ['1.1 Balsių rašymas', '/liet/bals'],//pavadinmas matomas puslapy, linkas � puslap�
+            ['1.2 Priebalsių rašyba', '/liet/prieb'],
+            ['1.3 Sudurtinių žodžių rašymas', '/liet/sud']
         ],
     },
 ]

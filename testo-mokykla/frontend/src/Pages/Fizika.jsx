@@ -14,74 +14,46 @@ const data = [
     {
         tema: 'Vidinė energija',
         potemes: [
-            ['Pavyzdys', '/fizika/Pav'],//pavadinmas matomas puslapy, linkas į puslapį
-            ['1.2 Branduolinė', '/fizika/Brand'],
-            ['1.3 Elektroninė', '/fizika/Elek'],
-            ['1.4 Molekulinė', '/fizika/Mol']
+            ['1.1 Branduolinė', '/fizika/Brand'],
+            ['1.2 Elektroninė', '/fizika/Elek'],
+            ['1.3 Molekulinė', '/fizika/Mol']
         ],
     },
     {
         tema: 'Medžiagos būsenų kitimas',
         potemes: [
-            ['2.1 Kietų kūnų savybės', '2.1l'],
-            ['2.2 Skystų kūnų savybės', '2.2l'],
-            ['2.3 Dujinių kūnų savybės', '2.3l'],
+            ['2.1 Kietų kūnų savybės', '/fizika/kieti'],
+            ['2.2 Skystų kūnų savybės', '/fizika/skysti'],
+            ['2.3 Dujinių kūnų savybės', '/fizika/dujos'],
         ],
     },
     {
         tema: 'Atomo sandara',
         potemes: [
-            ['2.1 Elektronai', '2.1l'],
-            ['2.2 Protonai ir neutronai', '2.2l'],
-            ['2.3 ', '2.3l'],
+            ['2.1 Elektronai', '/fizika/elektr'],
+            ['2.2 Protonai ir neutronai', '/fizika/prot'],
         ],
     },
     {
         tema: 'Radioaktyvumas',
         potemes: [
-            ['2.1 Poveikis aplinkai', '2.1l'],
-            ['2.2 Poveikis žmogui', '2.2l'],
-            ['2.3 Spinduliuotės', '2.3l'],
-        ],
-    },
-    {
-        tema: 'Atomų branduolių virsmai',
-        potemes: [
-            ['2.1 ', '2.1l'],
-            ['2.2', '2.2l'],
-            ['2.3', '2.3l'],
+            ['2.1 Poveikis aplinkai', '/fizika/apll'],
+            ['2.2 Poveikis žmogui', '/fizika/apl2'],
+            ['2.3 Spinduliuotės', '/fizika/spind'],
         ],
     },
     {
         tema: 'Visata ir jos evoliucija',
         potemes: [
-            ['2.1 Planetos', '2.1l'],
-            ['2.2 Visatos raida', '2.2l'],
-            ['2.3 Gyvybės atsiradimas', '2.3l'],
+            ['2.1 Visatos raida', '/fizika/vis'],
         ],
     },
     {
-        tema: 'Elektros krūviai ir jų sąveika',
+        tema: 'Elektros srovė',
         potemes: [
-            ['2.1', '2.1l'],
-            ['2.2', '2.2l'],
-            ['2.3', '2.3l'],
-        ],
-    },
-    {
-        tema: 'Nuolatinė elektros srovė',
-        potemes: [
-            ['2.1  ', '2.1l'],
-            ['2.2 ', '2.2l'],
-            ['2.3 Taikymas pramonėje', '2.3l'],
-        ],
-    },
-    {
-        tema: 'Elektros srovė terpėse',
-        potemes: [
-            ['2.1', '2.1l'],
-            ['2.2', '2.2l'],
-            ['2.3', '2.3l'],
+            ['2.1 Nuolatinė', '/fizika/nuolat'],
+            ['2.2 Taikymas pramonėje' , '/fizika/taikymas'],
+            ['2.3 Terpėse', '/fizika/terpe'],
         ],
     },
 ]
