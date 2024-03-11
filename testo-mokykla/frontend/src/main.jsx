@@ -1,20 +1,21 @@
-import React from "react";
+﻿import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import {
-  Fizika,
-  Anglu,
-  Chemija,
-  Lietuviu,
-  Biologija,
-  Prisijungimas,
-  Registracija,
-  Naujienos,
-  Apie,
-  Kontaktai,
+    Fizika,
+    Anglu,
+    Chemija,
+    Lietuviu,
+    Biologija,
+    Prisijungimas,
+    Registracija,
+    Naujienos,
+    Apie,
+    Kontaktai,
 } from "./Pages";
 //import Pav from "./Pages/Informaciniai/Pavyzdys.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Anatomija from "./Pages/Informaciniai/bio/Anatomija.jsx";
 import Branduoline from "./Pages/Informaciniai/fizikos/Branduoline.jsx";
 import Molekuline from "./Pages/Informaciniai/fizikos/Molekuline.jsx";
 import Elektronine from "./Pages/Informaciniai/fizikos/Elektronine.jsx";
@@ -54,209 +55,216 @@ import PastPrf from "./Pages/Informaciniai/english/PastPrf.jsx";
 import Pres from "./Pages/Informaciniai/english/Pres.jsx";
 import PrsP from "./Pages/Informaciniai/english/PrsP.jsx";
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-  },
-  {
-    path: "/naujienos",
-    element: <Naujienos />,
-  },
-  {
-    path: "/apie",
-    element: <Apie />,
-  },
-  {
-    path: "/kontaktai",
-    element: <Kontaktai />,
-  },
-  {
-    path: "fizika",
-    element: <Fizika />,
-  },
-  {
-    path: "fizika/Brand",
-    element: <Branduoline />,
-  },
-  {
-    path: "fizika/Elek",
-    element: <Elektronine />,
-  },
-  {
-    path: "fizika/Mol",
-    element: <Molekuline />,
-  },
-  {
-    path: "fizika/kieti",
-    element: <Kieti />,
-  },
-  {
-    path: "fizika/skysti",
-    element: <Skysti />,
-  },
-  
-  {
-    path: "fizika/prot",
-    element: <Prot />,
-  },
-  {
-    path: "fizika/vis",
-    element: <Vis />,
-  },
-  
-  {
-    path: "fizika/dujos",
-    element: <Dujos />,
-  },
-  {
-    path: "fizika/apl",
-    element: <PoveikisA />,
-  },
-  {
-    path: "fizika/apl2",
-    element: <PoveikisZ />,
-  },
-  {
-    path: "fizika/spind",
-    element: <Spind />,
-  },
-  {
-    path: "fizika/terpe",
-    element: <Terpe />,
-  },
-  {
-    path: "fizika/nuolat",
-    element: <Nuolat />,
-  },
-  {
-    path: "fizika/taikymas",
-    element: <Taikymas />,
-  },
-  {
-    path: "fizika/elektr",
-    element: <Elektr />,
-  },
-  {
-    path: "chemija/alk",
-    element: <Alk />,
-  },
-  {
-    path: "chemija/ald",
-    element: <Ald />,
-  },
-  {
-    path: "chemija/met",
-    element: <Met />,
-  },
-  {
-    path: "chemija/nem",
-    element: <Nem />,
-  },
-  {
-    path: "chemija/eliz",
-    element: <Eliz />,
-  },
-  {
-    path: "chemija/karb",
-    element: <Karb />,
-  },
-  {
-    path: "bio/aug",
-    element: <Aug />,
-  },
-  {
-    path: "bio/gyv",
-    element: <Gyv />,
-  },
-  {
-    path: "bio/kr",
-    element: <Kr />,
-  },
-  {
-    path: "bio/last",
-    element: <Last />,
-  },
-  {
-    path: "bio/org",
-    element: <Org />,
-  },
-  {
-    path: "bio/raida",
-    element: <Raida />,
-  },
-
-  {
-    path: "chemija",
-    element: <Chemija />,
-  },
-  {
-    path: "anglu",
-    element: <Anglu />,
-  },
-  {
-    path: "anglu/present",
-    element: <Pres />,
-  },
-  {
-    path: "anglu/past",
-    element: <Past />,
-  },
-  {
-    path: "anglu/presPerf",
-    element: <PrsP />,
-  },
-  {
-    path: "anglu/pastPerf",
-    element: <PastPrf />,
-  },
-  {
-    path: "lietuviu",
-    element: <Lietuviu />,
-  },
-  {
-    path: "liet/vien",
-    element: <Vien />,
-  },
-  {
-    path: "liet/iterp",
-    element: <Iterp />,
-  },
-  {
-    path: "liet/bals",
-    element: <Bals />,
-  },
-  {
-    path: "liet/prieb",
-    element: <Prieb />,
-  },
-  {
-    path: "liet/kreip",
-    element: <Kreip />,
-  },
-  {
-    path: "liet/paz",
-    element: <Paz />,
-  },
-  {
-    path: "liet/sud",
-    element: <Sud />,
-  },
-  {
-    path: "biologija",
-    element: <Biologija />,
-  },
-  {
-    path: "prisijungimas",
-    element: <Prisijungimas />,
-  },
-  {
-    path: "registracija",
-    element: <Registracija />,
-  },
+    //__________________________PAGRINDINIS____________________________//
+    {
+        path: "/",
+        element: <App />,
+    },
+    {
+        path: "/naujienos",
+        element: <Naujienos />,
+    },
+    {
+        path: "/apie",
+        element: <Apie />,
+    },
+    {
+        path: "/kontaktai",
+        element: <Kontaktai />,
+    },
+    {
+        path: "prisijungimas",
+        element: <Prisijungimas />,
+    },
+    {
+        path: "registracija",
+        element: <Registracija />,
+    },
+    //__________________________FIZIKA____________________________//
+    {
+        path: "fizika",
+        element: <Fizika />,
+    },
+    {
+        path: "fizika/Brand",
+        element: <Branduoline />,
+    },
+    {
+        path: "fizika/Elek",
+        element: <Elektronine />,
+    },
+    {
+        path: "fizika/Mol",
+        element: <Molekuline />,
+    },
+    {
+        path: "fizika/kieti",
+        element: <Kieti />,
+    },
+    {
+        path: "fizika/skysti",
+        element: <Skysti />,
+    },
+    {
+        path: "fizika/prot",
+        element: <Prot />,
+    },
+    {
+        path: "fizika/vis",
+        element: <Vis />,
+    },
+    {
+        path: "fizika/dujos",
+        element: <Dujos />,
+    },
+    {
+        path: "fizika/apl",
+        element: <PoveikisA />,
+    },
+    {
+        path: "fizika/apl2",
+        element: <PoveikisZ />,
+    },
+    {
+        path: "fizika/spind",
+        element: <Spind />,
+    },
+    {
+        path: "fizika/terpe",
+        element: <Terpe />,
+    },
+    {
+        path: "fizika/nuolat",
+        element: <Nuolat />,
+    },
+    {
+        path: "fizika/taikymas",
+        element: <Taikymas />,
+    },
+    {
+        path: "fizika/elektr",
+        element: <Elektr />,
+    },
+    //__________________________CHEMIJA____________________________//
+    {
+        path: "chemija",
+        element: <Chemija />,
+    },
+    {
+        path: "chemija/alk",
+        element: <Alk />,
+    },
+    {
+        path: "chemija/ald",
+        element: <Ald />,
+    },
+    {
+        path: "chemija/met",
+        element: <Met />,
+    },
+    {
+        path: "chemija/nem",
+        element: <Nem />,
+    },
+    {
+        path: "chemija/eliz",
+        element: <Eliz />,
+    },
+    {
+        path: "chemija/karb",
+        element: <Karb />,
+    },
+    //__________________________BIOLOGIJA____________________________//
+    {
+        path: "biologija",
+        element: <Biologija />,
+    },
+    {
+        path: "biologija/anatomija",
+        element: <Anatomija />,
+    },
+    {
+        path: "bio/aug",
+        element: <Aug />,
+    },
+    {
+        path: "bio/gyv",
+        element: <Gyv />,
+    },
+    {
+        path: "biologija/anatomija/kraujotaka",
+        element: <Kr />,
+    },
+    {
+        path: "biologija/anatomija/lastelė",
+        element: <Last />,
+    },
+    {
+        path: "biologija/anatomija/organai",
+        element: <Org />,
+    },
+    {
+        path: "bio/raida",
+        element: <Raida />,
+    },
+    //__________________________ANGLU____________________________//
+    {
+        path: "anglu",
+        element: <Anglu />,
+    },
+    {
+        path: "anglu/present",
+        element: <Pres />,
+    },
+    {
+        path: "anglu/past",
+        element: <Past />,
+    },
+    {
+        path: "anglu/presPerf",
+        element: <PrsP />,
+    },
+    {
+        path: "anglu/pastPerf",
+        element: <PastPrf />,
+    },
+    //__________________________LIETUVIU____________________________//
+    {
+        path: "lietuviu",
+        element: <Lietuviu />,
+    },
+    {
+        path: "liet/vien",
+        element: <Vien />,
+    },
+    {
+        path: "liet/iterp",
+        element: <Iterp />,
+    },
+    {
+        path: "liet/bals",
+        element: <Bals />,
+    },
+    {
+        path: "liet/prieb",
+        element: <Prieb />,
+    },
+    {
+        path: "liet/kreip",
+        element: <Kreip />,
+    },
+    {
+        path: "liet/paz",
+        element: <Paz />,
+    },
+    {
+        path: "liet/sud",
+        element: <Sud />,
+    },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
+    <React.StrictMode>
+        <RouterProvider router={router} />
+    </React.StrictMode>
 );
