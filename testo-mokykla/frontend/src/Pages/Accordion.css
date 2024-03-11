@@ -56,6 +56,13 @@
 }
 .container p1{
   font-family: 'georgia';
+  justify-content: center;
+
+}
+.container p2{
+  font-family: 'georgia';
+  justify-content: center;
+
 
 }
 

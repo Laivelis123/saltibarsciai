@@ -14,15 +14,15 @@ function Met()
              <p1>
              Bendrieji metalų savybės:
 
-Blykstingumas: Metalai dažnai turi metalinį blizgesį.
+<li>Blykstingumas: Metalai dažnai turi metalinį blizgesį.
 Duktibilumas ir plastiškumas: Metalai gali būti ištempti į ploną lakštą arba iškalami į formas be sulūžimo.
-Geros laidumo savybės: Metalai gerai laiduoja elektrą ir šilumą.
-Elektronų pasiskirstymas:
+Geros laidumo savybės: Metalai gerai laiduoja elektrą ir šilumą.</li>
+<li>Elektronų pasiskirstymas:
 
-Metaluose elektronai yra susitelkę į elektroninį debesį, kuriame jie yra laisvi judėti. Tai leidžia metalams būti geriausiais elektriniais laidais.
-Metalų junginiai:
+Metaluose elektronai yra susitelkę į elektroninį debesį, kuriame jie yra laisvi judėti. Tai leidžia metalams būti geriausiais elektriniais laidais.</li>
+<li>Metalų junginiai:
 
-Dauguma metalų sudaro joninio tipo junginius su nemetaliniais elementais, taip sukurdami metalinius junginius.
+Dauguma metalų sudaro joninio tipo junginius su nemetaliniais elementais, taip sukurdami metalinius junginius.</li>
 Oksidacija ir redukcija:
 
 Metalai lengvai pasiduoda oksidacijai (praranda elektronus) ir gali būti sumažinti (gauna elektronus).
@@ -44,7 +44,7 @@ Metalai gali reaguoti su aplinkos elementais ir sudaryti korozijos produktus, ku
 
                 
             </p1>
-            <button>Bandomasis testas</button>
+            <button className='first_btn'>Bandomasis testas</button>
             <button className='next_btn'>Mokytojo paskirti testai</button>
 
 

@@ -11,22 +11,22 @@ function Terpe()
              </h1>
 
              <p1>
-             Elektronų judėjimas: Elektros srovė yra susijusi su elektronų judėjimu medžiagoje. Paprastai elektronai yra neigiamai įelektrinti ir juda nuo vietų, kurios turi daugiau neigiamų krūvių, link vietų su mažiau neigiamų krūvių arba su daugiau teigiamų krūvių.
+             <li>Elektronų judėjimas: Elektros srovė yra susijusi su elektronų judėjimu medžiagoje. Paprastai elektronai yra neigiamai įelektrinti ir juda nuo vietų, kurios turi daugiau neigiamų krūvių, link vietų su mažiau neigiamų krūvių arba su daugiau teigiamų krūvių.
 
-Laidininkai: Dauguma medžiagų turi tam tikrą laidumą elektronams. Metalo laidininkuose elektronai gali laisvai judėti, sudarant elektros srovę. Izoliuotose medžiagose elektronai gali būti prisirišę prie atomų ir nejudėti laisvai.
+Laidininkai: Dauguma medžiagų turi tam tikrą laidumą elektronams. Metalo laidininkuose elektronai gali laisvai judėti, sudarant elektros srovę. Izoliuotose medžiagose elektronai gali būti prisirišę prie atomų ir nejudėti laisvai.</li>
 
-Elektros pasipriešinimas: Elektros pasipriešinimas (elektrinė varža) yra svarbus dydis, nurodantis, kaip lengvai elektronai gali judėti per medžiagą. Maža elektrinė varža reiškia geresnį laidumą, o didelė elektrinė varža reiškia blogą laidumą.
+<li>Elektros pasipriešinimas: Elektros pasipriešinimas (elektrinė varža) yra svarbus dydis, nurodantis, kaip lengvai elektronai gali judėti per medžiagą. Maža elektrinė varža reiškia geresnį laidumą, o didelė elektrinė varža reiškia blogą laidumą.
 
-Srovės stipris: Elektros srovės stipris matuojamas amperais (A). Jis nusako, kiek elektronų pernešama per laidininką per vienetinį laiko tarpą.
+Srovės stipris: Elektros srovės stipris matuojamas amperais (A). Jis nusako, kiek elektronų pernešama per laidininką per vienetinį laiko tarpą.</li>
 
-Įtampa: Elektros įtampa (voltai, V) nurodo potencialų skirtumą tarp dviejų taškų elektros grandinėje, kurie skatina elektronų judėjimą. Kuo didesnis įtampos skirtumas, tuo greičiau juda elektronai.
+<li>Įtampa: Elektros įtampa (voltai, V) nurodo potencialų skirtumą tarp dviejų taškų elektros grandinėje, kurie skatina elektronų judėjimą. Kuo didesnis įtampos skirtumas, tuo greičiau juda elektronai.
 
-Jėga ir judėjimas: Elektronai juda per laidininką dėl elektros jėgos, kurią sukelia elektrinė įtampa. Elektros jėga veikia neigiamus elektronus nuo vietų su mažiau neigiamų krūvių link vietų su daugiau neigiamų krūvių arba su daugiau teigiamų krūvių.
+Jėga ir judėjimas: Elektronai juda per laidininką dėl elektros jėgos, kurią sukelia elektrinė įtampa. Elektros jėga veikia neigiamus elektronus nuo vietų su mažiau neigiamų krūvių link vietų su daugiau neigiamų krūvių arba su daugiau teigiamų krūvių.</li>
 
-Šiluminiai efektai: Elektros srovė terpėje taip pat gali sukelti šilumos išsiskyrimą. Šiluminiai efektai gali būti svarbūs, ypač kai svarbu įvertinti laidininko efektyvumą ir išvengti per didelės šiluminės energijos praradimų.
+<li>Šiluminiai efektai: Elektros srovė terpėje taip pat gali sukelti šilumos išsiskyrimą. Šiluminiai efektai gali būti svarbūs, ypač kai svarbu įvertinti laidininko efektyvumą ir išvengti per didelės šiluminės energijos praradimų.</li>
                 
              </p1>
-             <button>Bandomasis testas</button>
+             <button className='first_btn'>Bandomasis testas</button>
              <button className='next_btn'>Mokytojo paskirti testai</button>
 
 

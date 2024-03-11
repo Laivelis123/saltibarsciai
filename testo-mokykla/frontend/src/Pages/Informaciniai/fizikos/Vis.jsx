@@ -15,42 +15,42 @@ function Vis()
              </p1>
              <h2>Planetos</h2>
              <p2>
-             Jupiteris:
+             <li>Jupiteris:
 
 Didžiausia planeta Saulės sistemoje.
 Labai stiprus magnetinis laukas.
-Daugybė palydovų, įskaitant didžiausią, Ganimedą.
-Saturnas:
+Daugybė palydovų, įskaitant didžiausią, Ganimedą.</li>
+<li>Saturnas:
 
 Žinomas dėl įspūdingo žiedo sistema.
-Gausu palydovų, o didžiausias iš jų yra Titanas.
-Uranas:
+Gausu palydovų, o didžiausias iš jų yra Titanas.</li>
+<li>Uranas:
 
 Planetos ašis yra netolygi, ir ji guli beveik horizontaliai.
-Turi atitinkamai nuobodus žiedus ir mažai pastebimą paviršių.
-Neptūnas:
+Turi atitinkamai nuobodus žiedus ir mažai pastebimą paviršių.</li>
+<li>Neptūnas:
 
 Žinomas dėl didelių greičių pasaulio vėjo atmosferoje.
-Turi palydovą, vadinamą Tritonu, kuris juda priešinga planetai kryptimi.
+Turi palydovą, vadinamą Tritonu, kuris juda priešinga planetai kryptimi.</li>
 
-Merkurijus:
+<li>Merkurijus:
 
 Mažiausia ir artimiausia Saulės.
 Beveik jokios atmosferos.
-Ekstremalios temperatūros: nuo labai aukštų dieninių iki labai žemų naktinių temperatūrų.
-Venera:
+Ekstremalios temperatūros: nuo labai aukštų dieninių iki labai žemų naktinių temperatūrų.</li>
+<li>Venera:
 
 Panaši į žemę dydžiu, tačiau turi storesnę ir tankesnę atmosferą.
-Labai karšta dėl pasipūtusios anglies dioksido atmosferos, kuri sukanka šilumą.
-Žemė:
+Labai karšta dėl pasipūtusios anglies dioksido atmosferos, kuri sukanka šilumą.</li>
+<li>Žemė:
 
 Gyva planeta su įvairiapusiu klimatu ir įvairiomis ekosistemomis.
-Vandenynai, oro sąlygos ir įvairios temperatūros leidžia įvairiems gyvybės formoms egzistuoti.
-Marsas:
+Vandenynai, oro sąlygos ir įvairios temperatūros leidžia įvairiems gyvybės formoms egzistuoti.</li>
+<li>Marsas:
 
 Raudonas planetos paviršius.
 Turi retą atmosferą ir sausą klimatą.
-Galimi rodikliai, kad seniau galėjo egzistuoti vandens srautai.
+Galimi rodikliai, kad seniau galėjo egzistuoti vandens srautai.</li>
 
 
              </p2>
