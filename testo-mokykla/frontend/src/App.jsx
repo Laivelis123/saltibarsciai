@@ -9,7 +9,6 @@ function App() {
     { name: "Chemija" },
     { name: "Lietuviu" },
     { name: "Biologija" },
-    { name: "Nenaudojama super ilga kategorija, kuri ismes klaida 😂" },
   ]);
 
   const [filterText, setFilterText] = useState("");

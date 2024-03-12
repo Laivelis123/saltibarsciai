@@ -4,7 +4,7 @@
     left: -10%; /* Position them outside of the screen */
     transition: 0.3s; /* Add transition on hover */
     padding-top: 50px;
-    width: 30%; /* Set a specific width */
+    width: 35%; /* Set a specific width */
     max-width: 400px;
     text-decoration: none; /* Remove underline */
     font-size: 20px; /* Increase font size */

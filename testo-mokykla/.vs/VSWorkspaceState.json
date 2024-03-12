@@ -6,8 +6,8 @@
     "\\frontend\\src\\components",
     "\\frontend\\src\\Pages",
     "\\frontend\\src\\Pages\\Informaciniai",
-    "\\frontend\\src\\Pages\\Informaciniai\\bio"
+    "\\frontend\\src\\Pages\\Informaciniai\\fizikos"
   ],
-  "SelectedNode": "\\frontend\\src\\Pages\\Informaciniai\\bio\\Anatomija.jsx",
+  "SelectedNode": "\\frontend\\src\\Pages\\Informaciniai\\fizikos\\Fizika.jsx",
   "PreviewInSolutionExplorer": false
 }
