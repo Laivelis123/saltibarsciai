@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import {
   Fizika,
-  Anglu,
   Chemija,
   Lietuviu,
   Biologija,
@@ -49,10 +48,6 @@ import Kreip from "./Pages/Informaciniai/lietuviu/Kreip.jsx";
 import Iterp from "./Pages/Informaciniai/lietuviu/Iterp.jsx";
 import Bals from "./Pages/Informaciniai/lietuviu/Bals.jsx";
 import Sud from "./Pages/Informaciniai/lietuviu/Sud.jsx";
-import Past from "./Pages/Informaciniai/english/Past.jsx";
-import PastPrf from "./Pages/Informaciniai/english/PastPrf.jsx";
-import Pres from "./Pages/Informaciniai/english/Pres.jsx";
-import PrsP from "./Pages/Informaciniai/english/PrsP.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -188,26 +183,6 @@ const router = createBrowserRouter([
   {
     path: "chemija",
     element: <Chemija />,
-  },
-  {
-    path: "anglu",
-    element: <Anglu />,
-  },
-  {
-    path: "anglu/present",
-    element: <Pres />,
-  },
-  {
-    path: "anglu/past",
-    element: <Past />,
-  },
-  {
-    path: "anglu/presPerf",
-    element: <PrsP />,
-  },
-  {
-    path: "anglu/pastPerf",
-    element: <PastPrf />,
   },
   {
     path: "lietuviu",

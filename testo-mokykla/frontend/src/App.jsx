@@ -7,7 +7,6 @@ function App() {
   const [categories, setCategories] = useState([
     { name: "Fizika" },
     { name: "Chemija" },
-    { name: "Anglu" },
     { name: "Lietuviu" },
     { name: "Biologija" },
     { name: "Nenaudojama super ilga kategorija, kuri ismes klaida 😂" },
