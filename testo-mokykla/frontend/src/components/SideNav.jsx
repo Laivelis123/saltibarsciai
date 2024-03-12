@@ -15,7 +15,7 @@ export default function SideNav({ categories }) {
         <div key={category.name} className={styles.side_block}>
           <Link
             className={styles.side_link}
-            to={`/${category.name.toLowerCase()}`}
+            to={`./${category.name.toLowerCase()}`}
           >
             {category.name}
           </Link>

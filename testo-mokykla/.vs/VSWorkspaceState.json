@@ -4,8 +4,10 @@
     "\\frontend",
     "\\frontend\\src",
     "\\frontend\\src\\components",
-    "\\frontend\\src\\Pages"
+    "\\frontend\\src\\Pages",
+    "\\frontend\\src\\Pages\\Informaciniai",
+    "\\frontend\\src\\Pages\\Informaciniai\\bio"
   ],
-  "SelectedNode": "\\frontend\\src\\Pages\\Registracija.jsx",
+  "SelectedNode": "\\frontend\\src\\Pages\\Informaciniai\\bio\\Anatomija.jsx",
   "PreviewInSolutionExplorer": false
 }
