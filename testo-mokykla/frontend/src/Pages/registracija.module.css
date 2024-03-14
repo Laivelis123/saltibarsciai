@@ -1,165 +1,134 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.title {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  border-radius: 5%;
+  padding: 25px;
+  background-color: rgb(144, 213, 173);
+}
+
+.formGroup {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.label {
+  flex-basis: 48%;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.input {
+  padding: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  color: #333;
+  text-decoration: none;
+  flex-basis: 48%;
+}
+
+.button {
+  padding: 5px 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background-color: rgb(31, 163, 60);
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  flex-basis: 100%;
+}
+
+.link {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 0.8rem;
+  text-decoration: none;
+  color: #007bff;
+  flex-basis: 100%;
+}
+
+.radioLabel {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.radioInput {
+  margin-right: 5px;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  outline: none;
+  transition: background-color 0.2s ease, border-color 0.2s ease; /* Added transition */
+}
+
+.radioInput:checked {
+  background-color: #1ce65f;
+}
+
+.radioInput:checked + .checkmark::before {
+  content: "";
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #fff;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+}
+
+.radioText {
+  margin-left: 10px;
+  flex-basis: 45%;
+}
+
+/* Media Queries */
 @media only screen and (min-width: 601px) {
-  .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 50px;
-  }
-
-  .title {
-    margin-bottom: 30px;
-    text-align: center;
-  }
-
   .form {
-    display: flex;
-    flex-direction: column;
-    border-radius: 5%;
     width: 33%;
     max-width: 475px;
-    padding: 25px;
-    background-color: rgb(144, 213, 173);
-  }
-
-  .formGroup {
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .label {
-    font-weight: bold;
-    margin-bottom: 5px;
-    flex-basis: 48%;
-  }
-
-  .input {
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    color: #333;
-    text-decoration: none;
-    flex-basis: 48%;
-  }
-
-  .button {
-    padding: 5px 10px;
-    background-color: rgb(31, 163, 60);
-    color: white;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    flex-basis: 100%;
-  }
-
-  .link {
-    text-align: center;
-    margin-top: 10px;
-    font-size: 0.8rem;
-    text-decoration: none;
-    color: #007bff;
-    flex-basis: 100%;
-  }
-
-  .radioLabel {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    flex-basis: 48%;
-  }
-
-  .radioInput {
-    margin-right: 5px;
-    appearance: none;
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    outline: none;
-    transition: background-color 0.2s ease;
-  }
-
-  .radioInput:checked {
-    background-color: #1ce65f;
-  }
-
-  .radioInput:checked + .checkmark::before {
-    content: "";
-    display: block;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #fff;
-    position: absolute;
-    top: 2px;
-    left: 2px;
-  }
-
-  .radioText {
-    margin-left: 10px;
-    flex-basis: 45%;
   }
 }
+
 @media only screen and (max-width: 600px) {
   .container {
     width: 100%;
   }
 
   .form {
-    width: 100%;
+    width: 85%;
+    height: 500px;
   }
 
-  .formGroup {
-    align-items: center;
-  }
-  .form {
-    display: flex;
-    flex-direction: column;
-    border-radius: 5%;
-    width: 85%;
-    padding: 25px;
-    height: 500px;
-    background-color: rgb(144, 213, 173);
-  }
   .label {
     flex-basis: 100%;
-    font-weight: bold;
-    margin-bottom: 5px;
-    flex-basis: 48%;
-  }
-
-  .input {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    color: #333;
-    text-decoration: none;
-  }
-  .title {
-    margin-bottom: 30px;
-    text-align: center;
   }
 
   .button {
-    margin-top: 20px;
-    margin-bottom: 20px;
     flex-basis: 150px;
-    align-content: center;
     height: 60px;
     width: 90%;
-    background-color: rgb(31, 163, 60);
-    color: white;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-  }
-
-  .link {
-    flex-basis: 100%;
+    align-content: center;
   }
 
   .radioLabel {
@@ -167,37 +136,8 @@
     align-items: flex-start;
   }
 
-  .radioInput {
-    margin-right: 5px;
-    appearance: none;
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    outline: none;
-    transition: background-color 0.2s ease;
-  }
-
-  .radioInput:checked {
-    background-color: #1ce65f;
-  }
-
-  .radioInput:checked + .checkmark::before {
-    content: "";
-    display: block;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #fff;
-    position: absolute;
-    top: 2px;
-    left: 2px;
-  }
-
   .radioText {
     margin-top: 5px;
-    margin-left: 10px;
     flex-basis: 100%;
   }
 }

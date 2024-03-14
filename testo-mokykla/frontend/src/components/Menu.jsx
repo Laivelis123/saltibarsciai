@@ -1,6 +1,7 @@
 import React from "react";
 import "./menu.module.css";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import { SearchBar } from "./SearchBar";
 
 export default function Menu({ filterText, handleFilterChange }) {

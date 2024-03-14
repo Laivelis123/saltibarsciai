@@ -1,0 +1,12 @@
+.error {
+  background-color: #d44c43;
+  color: white;
+  padding: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.error:hover {
+  opacity: 0.2;
+}
