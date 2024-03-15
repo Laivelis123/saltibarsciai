@@ -17,7 +17,29 @@ li a {
   padding: 14px 16px;
   text-decoration: none;
 }
-
+.non_link_li {
+  float: right;
+  display: flex;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+.logout_li {
+  background-color: blue;
+  border-radius: 20%;
+  float: right;
+  display: flex;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+.logout_li button {
+  background-color: blue;
+  border: none;
+  color: white;
+}
 li a:hover {
   background-color: #111;
   color: rgb(144, 213, 173);

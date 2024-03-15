@@ -53,12 +53,15 @@ function Registracija() {
       return;
     }
     try {
-      const response = await axios.post("http://localhost:3001/registracija", {
-        username,
-        email,
-        password,
-        accountType,
-      });
+      const response = await axios.post(
+        "http://localhost:3001/api/auth/register",
+        {
+          username,
+          email,
+          password,
+          accountType,
+        }
+      );
       console.log(response);
       setRegistrationSuccess(true);
     } catch (error) {

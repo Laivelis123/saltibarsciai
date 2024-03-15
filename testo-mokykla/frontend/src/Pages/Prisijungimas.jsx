@@ -7,23 +7,24 @@ import UI from "../components/UI.jsx";
 function Prisijungimas() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [loginStatus, setLoginStatus] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3001/prisijungimas", {
-        username,
-        password,
-      });
-      if (response.data.message) {
-        setLoginStatus(response.data.message);
-      } else {
-        setLoginStatus(response.data[0].username);
+      const response = await axios.post(
+        "http://localhost:3001/api/auth/login",
+        {
+          username,
+          password,
+        }
+      );
+      const { token } = response.data;
+      if (token) {
+        localStorage.setItem("token", token);
+        window.location.href = "/";
       }
     } catch (error) {
-      console.error(error.config);
-      console.error(error.request);
+      console.error(error);
     }
   };
 
