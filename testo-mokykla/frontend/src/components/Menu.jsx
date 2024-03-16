@@ -3,11 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { SearchBar } from "./SearchBar";
 import styles from "./menu.module.css";
+import { useAuth } from "../utils/useAuth";
 
 export default function Menu({ filterText, handleFilterChange }) {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
-
   useEffect(() => {
     const fetchUsername = async () => {
       try {
@@ -25,11 +25,22 @@ export default function Menu({ filterText, handleFilterChange }) {
         }
       } catch (error) {
         console.error("Klaida ieškant vartotojo vardo:", error);
+        if (
+          error.response &&
+          (error.response.status === 401 || error.response.status === 403)
+        ) {
+          console.log(
+            "Baigėsi sesija arba nebegalioja žetonas. Atjungiamas vartotojas."
+          );
+          localStorage.removeItem("token");
+          navigate("/prisijungimas");
+        }
       }
     };
 
     fetchUsername();
-  }, []);
+  }, [username]);
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/prisijungimas");

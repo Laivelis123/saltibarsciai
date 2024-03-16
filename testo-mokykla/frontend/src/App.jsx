@@ -70,10 +70,10 @@ import {
 function App() {
   return (
     <Routes>
+      <Route path="/naujienos" element={<Naujienos />} />
+      <Route path="/apie" element={<Apie />} />
+      <Route path="/kontaktai" element={<Kontaktai />} />
       <Route element={<PublicRoutes />}>
-        <Route path="/naujienos" element={<Naujienos />} />
-        <Route path="/apie" element={<Apie />} />
-        <Route path="/kontaktai" element={<Kontaktai />} />
         <Route path="prisijungimas" element={<Prisijungimas />} />
         <Route path="registracija" element={<Registracija />} />
       </Route>
