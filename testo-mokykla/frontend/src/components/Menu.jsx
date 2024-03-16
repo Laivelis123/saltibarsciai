@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { SearchBar } from "./SearchBar";
 import styles from "./menu.module.css";
 
 export default function Menu({ filterText, handleFilterChange }) {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
 
   useEffect(() => {
@@ -31,23 +32,29 @@ export default function Menu({ filterText, handleFilterChange }) {
   }, []);
   const handleLogout = () => {
     localStorage.removeItem("token");
-    window.location.href = "/prisijungimas";
+    navigate("/prisijungimas");
   };
   return (
     <>
       <ul>
-        <li>
-          <Link to="/">Pagrindinis</Link>
-        </li>
+        {username && (
+          <li>
+            <Link to="/">Pagrindinis</Link>
+          </li>
+        )}
         <li>
           <Link to="/naujienos">Naujienos</Link>
         </li>
-        <li>
-          <Link to="/prisijungimas">Prisijungimas</Link>
-        </li>
-        <li>
-          <Link to="/registracija">Registracija</Link>
-        </li>
+        {!username && (
+          <li>
+            <Link to="/prisijungimas">Prisijungimas</Link>
+          </li>
+        )}
+        {!username && (
+          <li>
+            <Link to="/registracija">Registracija</Link>
+          </li>
+        )}
         <li>
           <Link to="/apie">Apie</Link>
         </li>

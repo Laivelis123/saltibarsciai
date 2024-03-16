@@ -7,3 +7,4 @@ export { default as Prisijungimas } from "./Prisijungimas";
 export { default as Naujienos } from "./Naujienos";
 export { default as Kontaktai } from "./Kontaktai";
 export { default as Apie } from "./Apie";
+export { default as Pagrindinis } from "./Pagrindinis";

@@ -1,13 +1,20 @@
 ﻿import React, { useState, useEffect } from "react";
 import styles from "./prisijungimas.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import UI from "../components/UI.jsx";
+import Menu from "../components/Menu";
+import UI from "../components/UI";
 
 function Prisijungimas() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  const navigate = useNavigate();
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/");
+    }
+  }, [navigate]);
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -21,7 +28,7 @@ function Prisijungimas() {
       const { token } = response.data;
       if (token) {
         localStorage.setItem("token", token);
-        window.location.href = "/";
+        navigate("/");
       }
     } catch (error) {
       console.error(error);
@@ -66,7 +73,6 @@ function Prisijungimas() {
             Neturinte paskyros? Registruokitės čia.
           </Link>
         </form>
-        <h1>{loginStatus}</h1>
       </div>
     </UI>
   );
