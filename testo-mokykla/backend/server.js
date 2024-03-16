@@ -9,8 +9,6 @@ dotenv.config();
 
 const app = express();
 const port = 3001;
-
-// Middleware
 app.use(
   cors({
     origin: "http://localhost:5173",

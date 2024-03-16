@@ -2,19 +2,13 @@
 import styles from "./prisijungimas.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Menu from "../components/Menu";
 import UI from "../components/UI";
 
 function Prisijungimas() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      navigate("/");
-    }
-  }, [navigate]);
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -29,9 +23,12 @@ function Prisijungimas() {
       if (token) {
         localStorage.setItem("token", token);
         navigate("/");
+      } else {
+        setError("Neteisingi prisijungimo duomenys.");
       }
     } catch (error) {
       console.error(error);
+      setError("Vidinė klaida. Prašome bandyti dar kartą.");
     }
   };
 

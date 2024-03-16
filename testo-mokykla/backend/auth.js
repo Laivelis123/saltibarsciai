@@ -63,14 +63,33 @@ router.post("/login", async (req, res) => {
   }
 });
 router.get("/username", async (req, res) => {
-  // This endpoint fetches the username from the token
   try {
     const token = req.headers.authorization.split(" ")[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    if (!decoded) {
+      console.log(
+        "Baigėsi sesija arba nebegalioja žetonas. Atjungiamas vartotojas."
+      );
+      return res
+        .status(401)
+        .json({ error: "Baigėsi sesija arba nebegalioja žetonas." });
+    }
     res.status(200).json({ username: decoded.username });
   } catch (error) {
     console.error("Klaida ieškant vartotojo vardo:", error);
+    if (
+      error.name === "TokenExpiredError" ||
+      error.name === "JsonWebTokenError"
+    ) {
+      console.log(
+        "Baigėsi sesija arba nebegalioja žetonas. Atjungiamas vartotojas."
+      );
+      return res
+        .status(401)
+        .json({ error: "Baigėsi sesija arba nebegalioja žetonas." });
+    }
     res.status(500).json({ error: "Vidinė serverio klaida" });
   }
 });
+
 module.exports = router;
