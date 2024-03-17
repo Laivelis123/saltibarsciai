@@ -35,10 +35,10 @@ function Profilis() {
     <UI>
       {user && (
         <>
-          <div>Name: {user.username}</div>
-          <div>Email: {user.email}</div>
+          <div>Slapyvardis: {user.username}</div>
+          <div>Paštas: {user.email}</div>
           <div>
-            Account type:
+            Paskyros tipas:
             {user.accountType === "teacher" ? " Mokytojas" : " Mokinys"}
           </div>
         </>
