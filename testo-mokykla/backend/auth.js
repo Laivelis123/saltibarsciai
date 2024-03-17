@@ -45,7 +45,7 @@ router.post("/register", async (req, res) => {
   }
 });
 function generateToken(user) {
-  return jwt.sign(user, process.env.JWT_SECRET, { expiresIn: "5s" }); // Token expires in 2 hours
+  return jwt.sign(user, process.env.JWT_SECRET, { expiresIn: "2h" }); // Token expires in 2 hours
 }
 
 router.post("/login", async (req, res) => {
