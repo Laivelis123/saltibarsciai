@@ -1,33 +1,50 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import UI from "../components/UI";
 
 function Profilis() {
-  const [username, setUsername] = useState("");
-
+  const [user, setUser] = useState({});
   useEffect(() => {
-    const fetchUsername = async () => {
+    const fetchUser = async () => {
       try {
         const token = localStorage.getItem("token");
         if (token) {
           const response = await axios.get(
-            "http://localhost:3001/api/auth/username",
+            "http://localhost:3001/api/auth/data/user",
             {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
             }
           );
-          setUsername(response.data.username);
+          setUser({
+            username: response.data.username,
+            email: response.data.email,
+            accountType: response.data.accountType,
+          });
         }
       } catch (error) {
         console.error("Klaida ieškant vartotojo vardo:", error);
       }
     };
 
-    fetchUsername();
-  }, []);
+    fetchUser();
+  }, [user]);
 
-  return <div>{username && <div>Name: {username}</div>}</div>;
+  return (
+    <UI>
+      {user && (
+        <>
+          <div>Slapyvardis: {user.username}</div>
+          <div>Paštas: {user.email}</div>
+          <div>
+            Paskyros tipas:
+            {user.accountType === "teacher" ? " Mokytojas" : " Mokinys"}
+          </div>
+        </>
+      )}
+    </UI>
+  );
 }
 
 export default Profilis;

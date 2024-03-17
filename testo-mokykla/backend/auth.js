@@ -4,6 +4,19 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const pool = require("./db");
 
+const checkToken = (req, res, next) => {
+  const header = req.headers["authorization"];
+
+  if (typeof header !== "undefined") {
+    const bearer = header.split(" ");
+    const token = bearer[1];
+
+    req.token = token;
+    next();
+  } else {
+    res.sendStatus(401);
+  }
+};
 router.post("/register", async (req, res) => {
   try {
     const { username, email, password, accountType } = req.body;
@@ -32,7 +45,7 @@ router.post("/register", async (req, res) => {
   }
 });
 function generateToken(user) {
-  return jwt.sign(user, process.env.JWT_SECRET, { expiresIn: "2h" }); // Token expires in 2 hours
+  return jwt.sign(user, process.env.JWT_SECRET, { expiresIn: "5s" }); // Token expires in 2 hours
 }
 
 router.post("/login", async (req, res) => {
@@ -62,7 +75,7 @@ router.post("/login", async (req, res) => {
     res.status(500).json({ error: "Vidinė serverio klaida" });
   }
 });
-router.get("/username", async (req, res) => {
+router.get("/data/user", checkToken, async (req, res) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -74,7 +87,14 @@ router.get("/username", async (req, res) => {
         .status(401)
         .json({ error: "Baigėsi sesija arba nebegalioja žetonas." });
     }
-    res.status(200).json({ username: decoded.username });
+    const [user] = await pool.query("SELECT * FROM users WHERE username = ?", [
+      decoded.username,
+    ]);
+    res.status(200).json({
+      username: user[0].username,
+      email: user[0].email,
+      accountType: user[0].accountType,
+    });
   } catch (error) {
     console.error("Klaida ieškant vartotojo vardo:", error);
     if (
