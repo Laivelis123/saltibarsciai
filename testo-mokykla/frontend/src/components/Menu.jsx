@@ -14,7 +14,7 @@ export default function Menu({ filterText, handleFilterChange }) {
         const token = localStorage.getItem("token");
         if (token) {
           const response = await axios.get(
-            "http://localhost:3001/api/auth/username",
+            "http://localhost:3001/api/auth/data/user",
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -77,7 +77,11 @@ export default function Menu({ filterText, handleFilterChange }) {
             <button onClick={handleLogout}>Atsijungti</button>
           </li>
         )}
-        {username && <li className={styles.non_link_li}><Link to ="/profilis">Sveiki, {username}</Link></li>}
+        {username && (
+          <li className={styles.non_link_li}>
+            <Link to="/profilis">Sveiki, {username}</Link>
+          </li>
+        )}
       </ul>
       <SearchBar filterText={filterText} onChange={handleFilterChange} />
     </>
