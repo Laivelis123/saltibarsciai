@@ -85,18 +85,6 @@ function Profilis() {
         </div>
       </div>
     </UI>
-    // <UI>
-    //   {user && (
-    //     <>
-    //       <div>Slapyvardis: {user.username}</div>
-    //       <div>Paštas: {user.email}</div>
-    //       <div>
-    //         Paskyros tipas:
-    //         {user.accountType === "teacher" ? " Mokytojas" : " Mokinys"}
-    //       </div>
-    //     </>
-    //   )}
-    // </UI>
   );
 }
 
