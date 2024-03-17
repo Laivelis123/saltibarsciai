@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import UI from "../components/UI";
 
 function Profilis() {
-  const [username, setUsername] = useState("");
-
+  const [user, setUser] = useState({});
   useEffect(() => {
-    const fetchUsername = async () => {
+    const fetchUser = async () => {
       try {
         const token = localStorage.getItem("token");
         if (token) {
@@ -17,17 +17,34 @@ function Profilis() {
               },
             }
           );
-          setUsername(response.data.username);
+          setUser({
+            username: response.data.username,
+            email: response.data.email,
+            accountType: response.data.accountType,
+          });
         }
       } catch (error) {
         console.error("Klaida ieškant vartotojo vardo:", error);
       }
     };
 
-    fetchUsername();
+    fetchUser();
   }, []);
 
-  return <div>{username && <div>Name: {username}</div>}</div>;
+  return (
+    <UI>
+      {user && (
+        <>
+          <div>Name: {user.username}</div>
+          <div>Email: {user.email}</div>
+          <div>
+            Account type:
+            {user.accountType === "teacher" ? " Mokytojas" : " Mokinys"}
+          </div>
+        </>
+      )}
+    </UI>
+  );
 }
 
 export default Profilis;

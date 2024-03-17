@@ -74,7 +74,14 @@ router.get("/username", async (req, res) => {
         .status(401)
         .json({ error: "Baigėsi sesija arba nebegalioja žetonas." });
     }
-    res.status(200).json({ username: decoded.username });
+    const [user] = await pool.query("SELECT * FROM users WHERE username = ?", [
+      decoded.username,
+    ]);
+    res.status(200).json({
+      username: user[0].username,
+      email: user[0].email,
+      accountType: user[0].accountType,
+    });
   } catch (error) {
     console.error("Klaida ieškant vartotojo vardo:", error);
     if (

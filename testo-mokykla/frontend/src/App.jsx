@@ -12,6 +12,7 @@ import {
   Naujienos,
   Apie,
   Kontaktai,
+  Profilis,
 } from "./Pages";
 import {
   Anatomija,
@@ -80,6 +81,7 @@ function App() {
       , //Private
       <Route element={<PrivateRoutes />}>
         <Route path="/" element={<Pagrindinis />} />
+        <Route path ="profilis" element={<Profilis />} />
         //_______________________FIZIKA______________________//
         <Route path="fizika" element={<Fizika />}>
           <Route path="vidinė-energija" element={<Vidinė />} />

@@ -77,7 +77,7 @@ export default function Menu({ filterText, handleFilterChange }) {
             <button onClick={handleLogout}>Atsijungti</button>
           </li>
         )}
-        {username && <li className={styles.non_link_li}>Sveiki, {username}</li>}
+        {username && <li className={styles.non_link_li}><Link to ="/profilis">Sveiki, {username}</Link></li>}
       </ul>
       <SearchBar filterText={filterText} onChange={handleFilterChange} />
     </>
