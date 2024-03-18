@@ -73,8 +73,13 @@ export default function Menu({ filterText, handleFilterChange }) {
           <Link to="/kontaktai">Kontaktai</Link>
         </li>
         {username && (
-          <li className={styles.logout_li}>
-            <button onClick={handleLogout}>Atsijungti</button>
+          <li className={styles.non_link_li}>
+            <button
+              onClick={handleLogout}
+              className={`btn btn-lg ${styles.buttonColor}`}
+            >
+              Atsijungti
+            </button>
           </li>
         )}
         {username && (

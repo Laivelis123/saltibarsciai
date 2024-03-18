@@ -1,14 +1,15 @@
-﻿import React, { useState, useEffect } from "react";
-import styles from "./prisijungimas.module.css";
+﻿import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import UI from "../components/UI";
+import UI from "../components/UI.jsx";
+import styles from "./prisijungimas.module.css";
 
 function Prisijungimas() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -24,52 +25,60 @@ function Prisijungimas() {
         localStorage.setItem("token", token);
         navigate("/");
       } else {
-        setError("Neteisingi prisijungimo duomenys.");
+        setError("Neteisingas vartotojo vardas arba slaptažodis.");
       }
     } catch (error) {
       console.error(error);
-      setError("Vidinė klaida. Prašome bandyti dar kartą.");
+      if (error.response && error.response.status === 401) {
+        setError("Vartotojo vardas arba slaptažodis yra klaidingas.");
+      } else if (error.response && error.response.status === 500) {
+        setError("Serverio klaida. Prašome bandyti dar kartą.");
+      } else {
+        setError("Vidinė klaida. Prašome bandyti dar kartą.");
+      }
     }
   };
 
   return (
     <UI>
-      <div className={styles.container}>
-        <form className={styles.form} onSubmit={handleLogin}>
-          <h2 className={styles.title}>Prisijungimas</h2>
-          <div className={styles.formGroup}>
-            <label htmlFor="username" className={styles.label}>
-              Vartotojo vardas
-            </label>
-            <input
-              type="text"
-              id="username"
-              onChange={(e) => setUsername(e.target.value)}
-              name="username"
-              className={styles.input}
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label htmlFor="password" className={styles.label}>
-              Slaptažodis
-            </label>
-            <input
-              type="password"
-              id="password"
-              onChange={(e) => setPassword(e.target.value)}
-              name="password"
-              className={styles.input}
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <button type="submit" className={styles.button}>
-              Prisijungti
-            </button>
-          </div>
-          <Link to="/registracija" className={styles.link}>
-            Neturinte paskyros? Registruokitės čia.
-          </Link>
-        </form>
+      <div className="container mt-5">
+        <div className={styles.formColor}>
+          <form onSubmit={handleLogin}>
+            <h2 className="mb-4">Prisijungimas</h2>
+            <div className="mb-3">
+              <label htmlFor="username" className="form-label">
+                Vartotojo vardas
+              </label>
+              <input
+                autoComplete="off"
+                type="text"
+                id="username"
+                onChange={(e) => setUsername(e.target.value)}
+                name="username"
+                className="form-control bg-secondary text-light"
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="password" className="form-label ">
+                Slaptažodis
+              </label>
+              <input
+                autoComplete="off"
+                type="password"
+                id="password"
+                onChange={(e) => setPassword(e.target.value)}
+                name="password"
+                className="form-control  bg-secondary text-light"
+              />
+            </div>
+            {error && <div className="mb-3 text-danger">{error}</div>}
+            <div className="mb-3">
+              <button type="submit" className="btn btn-lg btn-dark">
+                Prisijungti
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </UI>
   );
