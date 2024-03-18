@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import UI from "../components/UI";
+import { Card, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import defaultProfile from "../Images/default-profile-picture.jpg";
 
 function Profilis() {
   const [user, setUser] = useState({});
@@ -45,30 +47,55 @@ function Profilis() {
     }
   };
 
+  const handleButtonClick = () => {
+    document.getElementById("fileInput").click();
+  };
+
   return (
     <UI>
       <div className="container mt-5">
         <div className="row justify-content-center">
           <div className="col-md-6">
-            <div className="card">
-              <div className="card-body text-center">
-                <h3 className="card-title">Vartotojo profilis</h3>
-                {profilePicture && (
-                  <img
-                    src={profilePicture}
-                    alt="Profile"
-                    className="img-thumbnail mb-3"
-                    style={{ maxWidth: "200px" }}
+            <Card>
+              <Card.Body>
+                <Card.Title className="text-center">
+                  Vartotojo profilis
+                </Card.Title>
+                <div className="text-center mb-3">
+                  <div>
+                    {profilePicture ? (
+                      <img
+                        src={profilePicture}
+                        alt="Profile"
+                        className="img-thumbnail rounded-circle"
+                        style={{ width: "200px", height: "200px" }}
+                      />
+                    ) : (
+                      <img
+                        src={defaultProfile}
+                        alt="Default Profile"
+                        className="img-thumbnail rounded-circle"
+                        style={{ width: "200px", height: "200px" }}
+                      />
+                    )}
+                  </div>
+                  <input
+                    type="file"
+                    id="fileInput"
+                    style={{ display: "none" }}
+                    onChange={handlePictureChange}
+                    accept="image/*"
                   />
+                </div>
+                {profilePicture ? null : (
+                  <div className="text-center mb-3">
+                    <Button onClick={handleButtonClick}>
+                      Įkelti nuotrauką
+                    </Button>
+                  </div>
                 )}
-                <input
-                  type="file"
-                  className="form-control-file mb-3"
-                  onChange={handlePictureChange}
-                  accept="image/*"
-                />
                 {user && (
-                  <>
+                  <div className="text-center">
                     <div>Slapyvardis: {user.username}</div>
                     <div>Paštas: {user.email}</div>
                     <div>
@@ -77,10 +104,10 @@ function Profilis() {
                         ? " Mokytojas"
                         : " Mokinys"}
                     </div>
-                  </>
+                  </div>
                 )}
-              </div>
-            </div>
+              </Card.Body>
+            </Card>
           </div>
         </div>
       </div>
