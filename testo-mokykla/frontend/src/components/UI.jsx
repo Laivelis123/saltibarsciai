@@ -9,7 +9,7 @@ const UI = ({ filterText, filterCategories, children }) => {
       <Header />
       <Menu filterText={filterText} handleFilterChange={filterCategories} />
       {children}
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

@@ -25,23 +25,11 @@ li a {
   text-align: center;
   text-decoration: none;
 }
-.logout_li {
-  background-color: blue;
-  border-radius: 20%;
-  float: right;
-  display: flex;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-.logout_li button {
-  background-color: blue;
-  border: none;
-  color: white;
+.buttonColor {
+  background-color: rgb(5, 51, 10) !important;
 }
 li a:hover {
   background-color: #111;
-  color: rgb(144, 213, 173);
+  color: rgb(60, 188, 113);
   font-weight: bold;
 }

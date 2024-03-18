@@ -37,13 +37,13 @@ router.post("/register", async (req, res) => {
       "INSERT INTO users (username, email, password, accountType) VALUES (?, ?, ?, ?)",
       [username, email, hashedPassword, accountType]
     );
-
     res.status(201).json({ message: "Vartotojas priregistruotas sėkmingai" });
   } catch (error) {
     console.error("Klaida registruojant vartotoją:", error);
     res.status(500).json({ error: "Vidinė serverio klaida" });
   }
 });
+
 function generateToken(user) {
   return jwt.sign(user, process.env.JWT_SECRET, { expiresIn: "2h" }); // Token expires in 2 hours
 }
@@ -59,15 +59,16 @@ router.post("/login", async (req, res) => {
     if (user.length === 0) {
       return res
         .status(401)
-        .json({ error: "Vartotojo vardas arba slaptažodis yra klaidingas" });
+        .json({ error: "Neteisingas vartotojo vardas arba slaptažodis." });
     }
 
     const validPassword = await bcrypt.compare(password, user[0].password);
     if (!validPassword) {
       return res
         .status(401)
-        .json({ error: "Vartotojo vardas arba slaptažodis yra klaidingas" });
+        .json({ error: "Neteisingas vartotojo vardas arba slaptažodis." });
     }
+
     const token = generateToken({ id: user[0].id, username: user[0].username });
     res.status(200).json({ token });
   } catch (error) {
@@ -75,6 +76,7 @@ router.post("/login", async (req, res) => {
     res.status(500).json({ error: "Vidinė serverio klaida" });
   }
 });
+
 router.get("/data/user", checkToken, async (req, res) => {
   try {
     const token = req.headers.authorization.split(" ")[1];

@@ -3,26 +3,26 @@ import SideNav from "../../../components/SideNav";
 import UI from "../../../components/UI";
 
 function Anatomija() {
-    const [categories, setCategories] = useState([
-        { name: "Raida" },
-        { name: "Gyvūnai" },
-        { name: "Augalai" },
-    ]);
+  const [categories, setCategories] = useState([
+    { name: "Raida" },
+    { name: "Gyvūnai" },
+    { name: "Augalai" },
+  ]);
 
-    const [filterText, setFilterText] = useState("");
+  const [filterText, setFilterText] = useState("");
 
-    const handleFilterChange = (filterText) => {
-        setFilterText(filterText);
-    };
+  const handleFilterChange = (filterText) => {
+    setFilterText(filterText);
+  };
 
-    const filteredCategories = categories.filter((category) =>
-        category.name.toLowerCase().includes(filterText.toLowerCase())
-    );
+  const filteredCategories = categories.filter((category) =>
+    category.name.toLowerCase().includes(filterText.toLowerCase())
+  );
 
-    return (
-        <UI filterText={filterText} filterCategories={handleFilterChange}>
-            <SideNav categories={filteredCategories} />
-        </UI>
-    );
+  return (
+    <UI filterText={filterText} filterCategories={handleFilterChange}>
+      <SideNav categories={filteredCategories} />
+    </UI>
+  );
 }
-export default Anatomija
+export default Anatomija;
