@@ -39,7 +39,19 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   User.associate = (models) => {
-    User.hasOne(models.Session, { foreignKey: "userId" }); // Change hasMany to hasOne
+    User.hasOne(models.Session, { foreignKey: "userId" });
+    User.belongsToMany(models.Category, {
+      as: "UserCategories",
+      through: "UserCategory", // Updated to a unique name
+    });
+    User.belongsToMany(models.Quiz, {
+      as: "CreatedQuizzes",
+      through: "UserCreatedQuizzes",
+    });
+    User.belongsToMany(models.Quiz, {
+      as: "AllowedQuizzes",
+      through: "UserAllowedQuizzes",
+    });
   };
 
   return User;
