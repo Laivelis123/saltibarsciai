@@ -3,15 +3,18 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const session = require("express-session");
 const dotenv = require("dotenv");
-const db = require("./db");
+const db = require("./models");
+
+db.User.hasOne(db.Session, { foreignKey: "userId" });
+db.Session.belongsTo(db.User, { foreignKey: "userId" });
 
 dotenv.config();
 
 const app = express();
-const port = 3001;
+const port = process.env.PORT || 3002;
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: process.env.CORS_ORIGIN,
     methods: ["POST"],
     credentials: true,
   })
@@ -26,9 +29,11 @@ app.use(
 );
 
 // Routes
-app.use("/api/auth", require("./auth"));
-
-// Start server
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/data", require("./routes/user"));
+db.sequelize.sync().then(() => {
+  console.log("Database connected");
+  app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+  });
 });

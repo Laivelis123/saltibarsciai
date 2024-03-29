@@ -13,7 +13,7 @@ function Profilis() {
         const token = localStorage.getItem("token");
         if (token) {
           const response = await axios.get(
-            "http://localhost:3001/api/auth/data/user",
+            "http://localhost:3001/api/data/user",
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -32,7 +32,7 @@ function Profilis() {
     };
 
     fetchUser();
-  }, [user]);
+  }, []);
 
   const [profilePicture, setProfilePicture] = useState(null);
 
