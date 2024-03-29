@@ -81,120 +81,125 @@ function Registracija() {
             onSubmit={handleRegistration}
             validationSchema={validationSchema}
           >
-            <Form className={styles.formColor}>
-              <h2 className="mb-4">Registracija</h2>
+            {({ errors }) => (
+              <Form className={styles.formColor}>
+                <h2 className="mb-4">Registracija</h2>
 
-              <div className="mb-3 ">
-                <label htmlFor="username" className="form-label ">
-                  Vartotojo vardas
-                </label>
-                <Field
-                  autoComplete="off"
-                  type="text"
-                  id="username"
-                  name="username"
-                  className="form-control  bg-secondary text-light"
-                  placeholder="Petras"
-                />
-                <ErrorMessage
-                  name="username"
-                  component="div"
-                  className="text-danger "
-                />
-              </div>
-              <div className="mb-3 ">
-                <label htmlFor="email" className="form-label">
-                  El. pašto adresas
-                </label>
-                <Field
-                  autoComplete="off"
-                  type="email"
-                  id="email"
-                  name="email"
-                  className="form-control bg-secondary text-light"
-                  placeholder="El. paštas"
-                />
-                <ErrorMessage
-                  name="email"
-                  component="div"
-                  className="text-danger"
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="password" className="form-label">
-                  Slaptažodis
-                </label>
-                <Field
-                  autoComplete="off"
-                  type="password"
-                  id="password"
-                  name="password"
-                  className="form-control  bg-secondary text-light"
-                  placeholder="Slaptažodis"
-                />
-                <ErrorMessage
-                  name="password"
-                  component="div"
-                  className="text-danger"
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="confirmPassword" className="form-label">
-                  Patvirtinkite slaptažodį
-                </label>
-                <Field
-                  autoComplete="off"
-                  type="password"
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  className="form-control bg-secondary text-light"
-                  placeholder="Pakartokite slaptažodį"
-                />
-                <ErrorMessage
-                  name="confirmPassword"
-                  component="div"
-                  className="text-danger"
-                />
-              </div>
-              <div className="mb-3 d-flex align-items-center justify-content-between">
-                <label className="form-label mb-0">Paskyros tipas</label>
-                <div className="d-flex align-items-center d-block mx-auto">
-                  <div className="form-check me-2">
-                    <Field
-                      type="radio"
-                      id="student"
-                      name="accountType"
-                      value="student"
-                      className="form-check-input bg-success"
-                    />
-                    <label htmlFor="student" className="form-check-label">
-                      Studentas
-                    </label>
-                  </div>
-                  <div className="form-check">
-                    <Field
-                      type="radio"
-                      id="teacher"
-                      name="accountType"
-                      value="teacher"
-                      className="form-check-input bg-success"
-                    />
-                    <label htmlFor="teacher" className="form-check-label">
-                      Mokytojas
-                    </label>
-                  </div>
+                <div className="mb-3 ">
+                  <label htmlFor="username" className="form-label ">
+                    Vartotojo vardas
+                  </label>
+                  <Field
+                    autoComplete="off"
+                    type="text"
+                    id="username"
+                    name="username"
+                    className="form-control  bg-secondary text-light"
+                    placeholder="Petras"
+                  />
+                  <ErrorMessage
+                    name="username"
+                    component="div"
+                    className="text-danger "
+                  />
                 </div>
-                <ErrorMessage
-                  name="accountType"
-                  component="div"
-                  className="text-danger"
-                />
-              </div>
+                <div className="mb-3 ">
+                  <label htmlFor="email" className="form-label">
+                    El. pašto adresas
+                  </label>
+                  <Field
+                    autoComplete="off"
+                    type="email"
+                    id="email"
+                    name="email"
+                    className="form-control bg-secondary text-light"
+                    placeholder="El. paštas"
+                  />
+                  <ErrorMessage
+                    name="email"
+                    component="div"
+                    className="text-danger"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="password" className="form-label">
+                    Slaptažodis
+                  </label>
+                  <Field
+                    autoComplete="off"
+                    type="password"
+                    id="password"
+                    name="password"
+                    className="form-control  bg-secondary text-light"
+                    placeholder="Slaptažodis"
+                  />
+                  <ErrorMessage
+                    name="password"
+                    component="div"
+                    className="text-danger"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="confirmPassword" className="form-label">
+                    Patvirtinkite slaptažodį
+                  </label>
+                  <Field
+                    autoComplete="off"
+                    type="password"
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    className="form-control bg-secondary text-light"
+                    placeholder="Pakartokite slaptažodį"
+                  />
+                  <ErrorMessage
+                    name="confirmPassword"
+                    component="div"
+                    className="text-danger"
+                  />
+                </div>
+                <div className="mb-3 d-flex align-items-center justify-content-between">
+                  <label className="form-label mb-0">Paskyros tipas</label>
+                  <div className="d-flex align-items-center d-block mx-auto">
+                    <div className="form-check me-2">
+                      <Field
+                        type="radio"
+                        id="student"
+                        name="accountType"
+                        value="student"
+                        className="form-check-input bg-success"
+                      />
+                      <label htmlFor="student" className="form-check-label">
+                        Studentas
+                      </label>
+                    </div>
+                    <div className="form-check">
+                      <Field
+                        type="radio"
+                        id="teacher"
+                        name="accountType"
+                        value="teacher"
+                        className="form-check-input bg-success"
+                      />
+                      <label htmlFor="teacher" className="form-check-label">
+                        Mokytojas
+                      </label>
+                    </div>
+                  </div>
+                  <ErrorMessage
+                    name="accountType"
+                    component="div"
+                    className="text-danger"
+                  />
+                </div>
+                {errors.form && (
+                  <div className="mb-3 text-danger">{errors.form}</div>
+                )}
 
-              <button type="submit" className="btn btn-lg btn-dark ">
-                Registruotis
-              </button>
-            </Form>
+                <button type="submit" className="btn btn-lg btn-dark ">
+                  Registruotis
+                </button>
+              </Form>
+            )}
           </Formik>
         )}
         {registrationSuccess && (

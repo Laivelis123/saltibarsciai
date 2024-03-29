@@ -1,0 +1,24 @@
+{
+  "development": {
+    "username": "root",
+    "password": null,
+    "database": "projektas",
+    "host": "localhost",
+    "dialect": "mysql",
+    "logging": true
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "projektas",
+    "host": "localhost",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "projektas",
+    "host": "localhost",
+    "dialect": "mysql"
+  }
+}
