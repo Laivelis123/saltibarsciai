@@ -1,14 +1,16 @@
 const express = require("express");
 const router = express.Router();
-const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 const { User, Session } = require("../models");
 const { Op } = require("sequelize");
 
+// Generuoja žetoną pagal vartotoją su nurodytu galiojimo laiku.
 const generateToken = (user) => {
-  return jwt.sign(user, process.env.JWT_SECRET, { expiresIn: "2h" }); // Token expires in 2 hours
+  return jwt.sign(user, process.env.JWT_SECRET, { expiresIn: "2h" }); // Žetonas pasibaigs po 2 valandų
 };
 
+// Registruoja naują vartotoją.
 router.post("/register", async (req, res) => {
   try {
     const { username, email, password, accountType } = req.body;
@@ -20,7 +22,9 @@ router.post("/register", async (req, res) => {
     });
 
     if (existingUser) {
-      return res.status(400).json({ error: "User or email already exists" });
+      return res
+        .status(400)
+        .json({ error: "Vartotojas arba el. paštas jau egzistuoja" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -31,13 +35,14 @@ router.post("/register", async (req, res) => {
       accountType,
     });
 
-    res.status(201).json({ message: "User registered successfully" });
+    res.status(201).json({ message: "Vartotojas sėkmingai užregistruotas" });
   } catch (error) {
-    console.error("Error registering user:", error);
-    res.status(500).json({ error: "Internal server error" });
+    console.error("Klaida registruojant vartotoją:", error);
+    res.status(500).json({ error: "Vidinė serverio klaida" });
   }
 });
 
+// Prisijungia vartotoją.
 router.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -45,28 +50,32 @@ router.post("/login", async (req, res) => {
     const user = await User.findOne({ where: { username } });
 
     if (!user) {
-      return res.status(401).json({ error: "Invalid username or password." });
+      return res
+        .status(401)
+        .json({ error: "Neteisingas vartotojo vardas arba slaptažodis." });
     }
 
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
-      return res.status(401).json({ error: "Invalid username or password." });
+      return res
+        .status(401)
+        .json({ error: "Neteisingas vartotojo vardas arba slaptažodis." });
     }
 
-    // Check if the user already has a session
+    // Patikrina, ar vartotojas jau turi sesiją.
     let session = await Session.findOne({ where: { userId: user.id } });
 
     if (!session) {
-      // If no session exists, create a new one
+      // Jei sesija neegzistuoja, sukuria naują.
       session = await Session.create({
         userId: user.id,
         ipAddress: req.ip,
-        expiresAt: new Date(Date.now() + 2 * 60 * 60 * 1000), // Expiring in 2 hours
+        expiresAt: new Date(Date.now() + 2 * 60 * 60 * 1000), // Pasibaigs po 2 valandų
       });
     } else {
-      // If session exists, update it
+      // Jei sesija egzistuoja, ją atnaujina.
       session.ipAddress = req.ip;
-      session.expiresAt = new Date(Date.now() + 2 * 60 * 60 * 1000); // Update expiration time
+      session.expiresAt = new Date(Date.now() + 2 * 60 * 60 * 1000); // Atnaujina galiojimo laiką
       await session.save();
     }
 
@@ -74,8 +83,8 @@ router.post("/login", async (req, res) => {
 
     res.status(200).json({ token });
   } catch (error) {
-    console.error("Error logging in user:", error);
-    res.status(500).json({ error: "Internal server error" });
+    console.error("Klaida prisijungiant vartotoją:", error);
+    res.status(500).json({ error: "Vidinė serverio klaida" });
   }
 });
 

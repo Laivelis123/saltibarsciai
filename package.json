@@ -1,7 +1,13 @@
 {
-  "dependencies": {
-    "formik": "^2.4.5",
-    "react-datepicker": "^6.2.0",
-    "yup": "^1.4.0"
-  }
+  "name": "saltibarsciai",
+  "version": "1.0.0",
+  "description": "Programu sistemu inzinerijos projektas",
+  "main": "index.js",
+  "scripts": {
+    "end": "cd testo-mokykla/backend && npm start",
+    "front": "cd testo-mokykla/frontend && npm run dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

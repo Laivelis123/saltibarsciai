@@ -3,19 +3,22 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const { User } = require("../models");
 
+// Gauna vartotojo duomenis pagal žetoną.
 router.get("/user", async (req, res) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     if (!decoded) {
-      console.log("Session expired or invalid token. User disconnected.");
+      console.log(
+        "Sesija pasibaigė arba netinkamas žetonas. Vartotojas atsijungė."
+      );
       return res
         .status(401)
-        .json({ error: "Session expired or invalid token." });
+        .json({ error: "Sesija pasibaigė arba netinkamas žetonas." });
     }
     const user = await User.findOne({ where: { username: decoded.username } });
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json({ error: "Vartotojas nerastas" });
     }
     res.status(200).json({
       username: user.username,
@@ -23,17 +26,19 @@ router.get("/user", async (req, res) => {
       accountType: user.accountType,
     });
   } catch (error) {
-    console.error("Error finding user:", error);
+    console.error("Klaida ieškant vartotojo:", error);
     if (
       error.name === "TokenExpiredError" ||
       error.name === "JsonWebTokenError"
     ) {
-      console.log("Session expired or invalid token. User disconnected.");
+      console.log(
+        "Sesija pasibaigė arba netinkamas žetonas. Vartotojas atsijungė."
+      );
       return res
         .status(401)
-        .json({ error: "Session expired or invalid token." });
+        .json({ error: "Sesija pasibaigė arba netinkamas žetonas." });
     }
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: "Vidinė serverio klaida" });
   }
 });
 

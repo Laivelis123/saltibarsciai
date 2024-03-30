@@ -12,12 +12,22 @@ import {
   Kontaktai,
   Profilis,
   Kategorija,
+  TeachHub,
+  ManageCategories,
+  ManageQuizes,
+  ManageGroups,
+  StudentHub,
+  DoneQuizes,
+  TakeQuizes,
+  GivenGrades,
+  NeraPuslapio,
 } from "./Pages";
-import CategoryTemplate from "./Pages/Informaciniai/CategoryTemplate";
+import CategoryTemplate from "./Pages/Informaciniai/CategoryTemplate/CategoryTemplate";
 
 function App() {
   return (
     <Routes>
+      <Route path="*" element={<NeraPuslapio />} />
       <Route path="/naujienos" element={<Naujienos />} />
       <Route path="/apie" element={<Apie />} />
       <Route path="/kontaktai" element={<Kontaktai />} />
@@ -28,7 +38,33 @@ function App() {
       <Route element={<PrivateRoutes />}>
         <Route path="/" element={<Pagrindinis />} />
         <Route path="profilis" element={<Profilis />} />
-        <Route path="/kurti/kategorija" element={<Kategorija />} />
+        <Route path="/valdymas/mokinys" element={<StudentHub />} />
+        <Route
+          path="/valdymas/mokinys/testai/baigti"
+          element={<DoneQuizes />}
+        />
+        <Route
+          path="/valdymas/mokinys/testai/daryti"
+          element={<TakeQuizes />}
+        />
+        <Route path="/valdymas/mokinys/ivertinimai" element={<GivenGrades />} />
+        <Route path="/valdymas/mokytojas" element={<TeachHub />} />
+        <Route
+          path="/valdymas/mokytojas/tvarkyti/kategorijas/kurti"
+          element={<Kategorija />}
+        />
+        <Route
+          path="/valdymas/mokytojas/tvarkyti/kategorijas"
+          element={<ManageCategories />}
+        />
+        <Route
+          path="/valdymas/mokytojas//tvarkyti/testus"
+          element={<ManageQuizes />}
+        />
+        <Route
+          path="/valdymas/mokytojas//tvarkyti/grupes"
+          element={<ManageGroups />}
+        />
         <Route path="/category/:categoryId" element={<CategoryTemplate />} />
         {categoryRoutes.map((route) => (
           <Route key={route.key} path={route.path} element={route.element} />

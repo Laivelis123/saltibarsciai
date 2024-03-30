@@ -1,28 +1,28 @@
 ﻿import React, { useState } from "react";
-import SideNav from "../../../components/SideNav";
-import UI from "../../../components/UI";
+import SideNav from "../../../components/UI/SideNav/SideNav";
+import UI from "../../../components/UI/UI";
 
 function Anatomija() {
-    const [categories, setCategories] = useState([
-        { name: "Lastelė" },
-        { name: "Kraujotaka" },
-        { name: "Organai" },
-    ]);
+  const [categories, setCategories] = useState([
+    { name: "Lastelė" },
+    { name: "Kraujotaka" },
+    { name: "Organai" },
+  ]);
 
-    const [filterText, setFilterText] = useState("");
+  const [filterText, setFilterText] = useState("");
 
-    const handleFilterChange = (filterText) => {
-        setFilterText(filterText);
-    };
+  const handleFilterChange = (filterText) => {
+    setFilterText(filterText);
+  };
 
-    const filteredCategories = categories.filter((category) =>
-        category.name.toLowerCase().includes(filterText.toLowerCase())
-    );
+  const filteredCategories = categories.filter((category) =>
+    category.name.toLowerCase().includes(filterText.toLowerCase())
+  );
 
-    return (
-        <UI filterText={filterText} filterCategories={handleFilterChange}>
-            <SideNav categories={filteredCategories} />
-        </UI>
-    );
+  return (
+    <UI filterText={filterText} filterCategories={handleFilterChange}>
+      <SideNav categories={filteredCategories} />
+    </UI>
+  );
 }
-export default Anatomija
+export default Anatomija;
