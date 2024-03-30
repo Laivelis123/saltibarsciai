@@ -1,6 +1,6 @@
 ﻿import React, { useState } from "react";
-import SideNav from "../../../components/SideNav";
-import UI from "../../../components/UI";
+import SideNav from "../../../components/UI/SideNav/SideNav";
+import UI from "../../../components/UI/UI";
 
 function Fizika() {
   const [categories, setCategories] = useState([

@@ -1,12 +1,23 @@
+import { Form } from "react-router-dom";
+
 export { default as Fizika } from "./Informaciniai/fizikos/Fizika";
 export { default as Chemija } from "./Informaciniai/chemijos/Chemija";
 export { default as Lietuviu } from "./Informaciniai/lietuviu/Lietuviu";
 export { default as Biologija } from "./Informaciniai/bio/Biologija";
-export { default as Registracija } from "./Registracija";
-export { default as Prisijungimas } from "./Prisijungimas";
+export { default as Registracija } from "./Registracija/Registracija";
+export { default as Prisijungimas } from "./Prisijungimas/Prisijungimas";
 export { default as Naujienos } from "./Naujienos";
 export { default as Kontaktai } from "./Kontaktai";
 export { default as Apie } from "./Apie";
 export { default as Pagrindinis } from "./Pagrindinis";
 export { default as Profilis } from "./Profilis";
-export { default as Kategorija } from "./Kategorija";
+export { default as Kategorija } from "./TeacherHub/Categories/Kategorija";
+export { default as TeachHub } from "./TeacherHub/TeachHub";
+export { default as ManageCategories } from "./TeacherHub/Categories/ManageCategories";
+export { default as ManageQuizes } from "./TeacherHub/Quizes/ManageQuizes";
+export { default as ManageGroups } from "./TeacherHub/Groups/ManageGroups";
+export { default as GivenGrades } from "./StudentHub/Grades/GivenGrades";
+export { default as DoneQuizes } from "./StudentHub/Quizes/DoneQuizes";
+export { default as StudentHub } from "./StudentHub/StudentHub";
+export { default as TakeQuizes } from "./StudentHub/Quizes/TakeQuizes";
+export { default as NeraPuslapio } from "./NeraPuslapio";

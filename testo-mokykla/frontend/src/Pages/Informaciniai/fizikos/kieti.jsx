@@ -1,5 +1,5 @@
 import React from "react";
-import UI from "../../../components/UI";
+import UI from "../../../components/UI/UI";
 function Kieti() {
   return (
     <UI>

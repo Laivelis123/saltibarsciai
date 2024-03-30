@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import UI from "../components/UI";
+import UI from "../components/UI/UI";
 import { Card, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import defaultProfile from "../Images/default-profile-picture.jpg";

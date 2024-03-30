@@ -4,100 +4,116 @@ const jwt = require("jsonwebtoken");
 const { Op } = require("sequelize");
 const { User, Category } = require("../models");
 
-// Route to fetch categories with optional search functionality
-router.get("/", async (req, res) => {
+// Gauna visus kategorijas pagal filtrą arba be filtro.
+router.get("/filter", async (req, res) => {
   try {
     const { search } = req.query;
     let categories;
 
     if (search) {
-      // If search term is provided, filter categories by name
+      // Gauna kategorijas, kurių pavadinime yra nurodytas paieškos žodis.
       categories = await Category.findAll({
         where: {
           name: {
-            [Op.iLike]: `%${search}%`, // Case-insensitive search
+            [Op.iLike]: `%${search}%`,
           },
         },
-        include: [{ model: Category, as: "children", include: "children" }], // Include child categories recursively
+        include: [{ model: Category, as: "children", include: "children" }],
       });
     } else {
-      // If no search term provided, fetch categories with parentId as null
+      // Gauna šakninių kategorijų sąrašą.
       categories = await Category.findAll({
-        where: { parentId: null }, // Filter by parentId being null
+        where: { parentId: null },
         include: [{ model: Category, as: "children", include: "children" }],
-      }); // Include child categories recursively
+      });
     }
-
     res.status(200).json(categories);
   } catch (error) {
-    console.error("Error fetching categories:", error);
-    res.status(500).json({ error: "Internal server error" });
+    console.error("Klaida gaunant kategorijas:", error);
+    res.status(500).json({ error: "Vidinė serverio klaida" });
   }
 });
 
-// Route to fetch children categories of a specific category
+// Gauna visas kategorijas.
+router.get("/all", async (req, res) => {
+  try {
+    // Gauna visas kategorijas.
+    const categories = await Category.findAll();
+    res.status(200).json(categories);
+  } catch (error) {
+    console.error("Klaida gaunant kategorijas:", error);
+    res.status(500).json({ error: "Vidinė serverio klaida" });
+  }
+});
+
+// Gauna kategorijos vaikines kategorijas pagal nurodytą ID.
 router.get("/:id/children", async (req, res) => {
   try {
     const categoryId = req.params.id;
+    // Gauna kategorijos vaikines kategorijas.
     const childrenCategories = await Category.findAll({
       where: { parentId: categoryId },
     });
     res.status(200).json(childrenCategories);
   } catch (error) {
-    console.error("Error fetching children categories:", error);
-    res.status(500).json({ error: "Internal server error" });
+    console.error("Klaida gaunant vaikines kategorijas:", error);
+    res.status(500).json({ error: "Vidinė serverio klaida" });
   }
 });
 
-// Route to create a new category
+// Sukuria naują kategoriją.
 router.post("/create", async (req, res) => {
   try {
-    const { name, bulletPoints, parentId } = req.body; // Add parentId to the request body
+    const { name, bulletPoints, parentId } = req.body;
 
     const token = req.headers.authorization.split(" ")[1];
     let decoded;
     try {
       decoded = jwt.verify(token, process.env.JWT_SECRET);
     } catch (error) {
-      console.log("Session expired or invalid token. User disconnected.");
+      console.log(
+        "Sesija pasibaigė arba netinkamas žetonas. Vartotojas atsijungė."
+      );
       return res
         .status(401)
-        .json({ error: "Session expired or invalid token." });
+        .json({ error: "Sesija pasibaigė arba netinkamas žetonas." });
     }
 
     const user = await User.findOne({ where: { username: decoded.username } });
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json({ error: "Vartotojas nerastas" });
     }
 
-    console.log("Creating category:", name, bulletPoints, user.id, parentId);
+    console.log("Kuriama kategorija:", name, bulletPoints, user.id, parentId);
+    // Sukuria naują kategoriją su nurodytais duomenimis.
     const category = await Category.create({
       name,
       bulletPoints,
       userId: user.id,
-      parentId: parentId || null, // Set parentId to null if not provided
+      parentId: parentId || null,
     });
 
     res.status(201).json({ success: true, category });
   } catch (error) {
-    console.error("Error creating category:", error);
-    res.status(500).json({ success: false, error: "Internal server error" });
+    console.error("Klaida kuriant kategoriją:", error);
+    res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
   }
 });
 
-// Route to fetch details of a specific category by ID
+// Gauna kategoriją pagal nurodytą ID.
 router.get("/:id", async (req, res) => {
   try {
+    // Gauna kategoriją pagal nurodytą ID kartu su vartotojo duomenimis.
     const category = await Category.findByPk(req.params.id, {
       include: [{ model: User, attributes: ["username"] }],
     });
     if (!category) {
-      return res.status(404).json({ error: "Category not found" });
+      return res.status(404).json({ error: "Kategorija nerasta" });
     }
     res.status(200).json(category);
   } catch (error) {
-    console.error("Error fetching category:", error);
-    res.status(500).json({ error: "Internal server error" });
+    console.error("Klaida gaunant kategoriją:", error);
+    res.status(500).json({ error: "Vidinė serverio klaida" });
   }
 });
 
