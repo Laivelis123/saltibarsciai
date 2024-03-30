@@ -31,6 +31,7 @@ app.use(
 // Routes
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/data", require("./routes/user"));
+app.use("/api/categories", require("./routes/category"));
 db.sequelize.sync().then(() => {
   console.log("Database connected");
   app.listen(port, () => {

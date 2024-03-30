@@ -9,3 +9,4 @@ export { default as Kontaktai } from "./Kontaktai";
 export { default as Apie } from "./Apie";
 export { default as Pagrindinis } from "./Pagrindinis";
 export { default as Profilis } from "./Profilis";
+export { default as Kategorija } from "./Kategorija";

@@ -1,72 +1,19 @@
-@media only screen and (min-width: 481px) {
-  .Snav {
-    position: absolute; /* Position them relative to the browser window */
-    left: -10%; /* Position them outside of the screen */
-    transition: 0.3s; /* Add transition on hover */
-    padding-top: 50px;
-    width: 35%; /* Set a specific width */
-    max-width: 400px;
-    text-decoration: none; /* Remove underline */
-    font-size: 20px; /* Increase font size */
-    color: white; /* White text color */
-    border-radius: 0 5px 5px 0; /* Rounded corners on the top right and bottom right side */
-    /* Break long words and wrap them to the next line */
-  }
-
-  .Snav:hover {
-    left: 0;
-  }
-
-  .side_block {
-    display: block;
-    margin-bottom: 5px;
-    border-radius: 5%;
-    text-align: right;
-    background-color: #333;
-    word-wrap: break-word;
-  }
-
-  .side_link {
-    text-decoration: none;
-    color: inherit;
-    margin-right: 5%;
-    width: 60%; /* Add this line */
-    display: inline-block; /* Add this line */
-    box-sizing: border-box; /* Add this line */
-  }
-
-  .side_block:hover {
-    background-color: #111;
-    color: rgb(60, 188, 113);
-    font-weight: bold;
-  }
+.navColor {
+  background-color: rgb(60, 188, 113) !important;
+  color: black !important;
 }
-@media only screen and (max-width: 480px) {
-  .side_block {
-    display: block;
-    margin-bottom: 5px;
-    border-radius: 5%;
-    text-align: right;
-    background-color: #333;
-    word-wrap: break-word;
-  }
-  .Snav {
-    position: absolute; /* Position them relative to the browser window */
-    padding-top: 50px;
-    min-width: 50px; /* Set a specific width */
-    max-width: 150px;
-    text-decoration: none; /* Remove underline */
-    font-size: 20px; /* Increase font size */
-    color: white; /* White text color */
-    border-radius: 0 5px 5px 0; /* Rounded corners on the top right and bottom right side */
-    /* Break long words and wrap them to the next line */
-  }
-  .side_link {
-    text-decoration: none;
-    color: inherit;
-    margin-right: 5%;
-    width: 60%; /* Add this line */
-    display: inline-block; /* Add this line */
-    box-sizing: border-box; /* Add this line */
-  }
+
+.titleText {
+  text-align: center !important;
+  background-color: rgb(60, 188, 113);
+  border-radius: 10px !important;
+}
+
+.navColor:hover {
+  background-color: rgba(36, 97, 61, 0.63) !important;
+  color: white !important;
+}
+.listItem {
+  border-radius: 10px !important;
+  margin-bottom: 5px;
 }

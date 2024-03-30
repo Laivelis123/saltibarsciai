@@ -1,7 +1,8 @@
+// SearchBar.jsx
 import React from "react";
 import styles from "./searchBar.module.css";
 
-export const SearchBar = ({ filterText, onChange }) => {
+const SearchBar = ({ filterText, onChange }) => {
   return (
     <div>
       <div className={styles.search_input}>
@@ -11,9 +12,11 @@ export const SearchBar = ({ filterText, onChange }) => {
           type="text"
           placeholder="Ieškoti"
           value={filterText}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={(e) => onChange(e.target.value)} // Pass user input to onChange function
         />
       </div>
     </div>
   );
 };
+
+export default SearchBar;

@@ -1,0 +1,35 @@
+.categoryColor {
+  background-color: rgb(36, 160, 88);
+  padding: 4px;
+  border-radius: 0.25rem;
+}
+.containerColor {
+  border-radius: 0.25rem;
+  margin-top: 10px;
+  background-color: rgb(60, 188, 113) !important;
+  padding-bottom: 10px !important;
+}
+.firstBtn {
+  background-color: #007bff;
+  border: none;
+  padding: 10px 20px;
+  margin-right: 10px;
+
+  border-radius: 10px;
+}
+
+.nextBtn {
+  background-color: #28a745;
+  border: none;
+  padding: 10px 20px;
+
+  border-radius: 10px;
+}
+.backBtn {
+  background-color: rgb(9, 26, 11);
+  color: white;
+  border-radius: 10px;
+  float: right;
+  border: none;
+  padding: 10px 20px;
+}

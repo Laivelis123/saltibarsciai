@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { SearchBar } from "./SearchBar";
 import styles from "./menu.module.css";
 import { useAuth } from "../utils/useAuth";
 
-export default function Menu({ filterText, handleFilterChange }) {
+const Menu = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
+  const [categories, setCategories] = useState([]);
+
   useEffect(() => {
     const fetchUsername = async () => {
       try {
@@ -24,14 +25,12 @@ export default function Menu({ filterText, handleFilterChange }) {
           setUsername(response.data.username);
         }
       } catch (error) {
-        console.error("Klaida ieškant vartotojo vardo:", error);
+        console.error("Error fetching user data:", error);
         if (
           error.response &&
           (error.response.status === 401 || error.response.status === 403)
         ) {
-          console.log(
-            "Baigėsi sesija arba nebegalioja žetonas. Atjungiamas vartotojas."
-          );
+          console.log("Session expired or invalid token. User disconnected.");
           localStorage.removeItem("token");
           navigate("/prisijungimas");
         }
@@ -39,12 +38,28 @@ export default function Menu({ filterText, handleFilterChange }) {
     };
 
     fetchUsername();
-  }, [username]);
+  }, [navigate]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:3001/api/categories"
+        );
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/prisijungimas");
   };
+
   return (
     <>
       <ul>
@@ -88,7 +103,8 @@ export default function Menu({ filterText, handleFilterChange }) {
           </li>
         )}
       </ul>
-      <SearchBar filterText={filterText} onChange={handleFilterChange} />
     </>
   );
-}
+};
+
+export default Menu;

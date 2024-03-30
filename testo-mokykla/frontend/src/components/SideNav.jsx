@@ -1,26 +1,61 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Link, useParams, useLocation } from "react-router-dom"; // Import useLocation hook
+import axios from "axios";
 import styles from "./sidenav.module.css";
-import { Link } from "react-router-dom";
+import SearchBar from "./SearchBar";
 
-export default function SideNav({ categories }) {
-  const [filteredCategories, setFilteredCategories] = useState([]);
+const SideNav = ({ filterText, setFilterText, isLoggedIn }) => {
+  const [categories, setCategories] = useState([]);
+  const { categoryId } = useParams();
+  const location = useLocation(); // Get the current location
 
   useEffect(() => {
-    setFilteredCategories(categories);
-  }, [categories]);
+    const fetchCategories = async () => {
+      try {
+        let url = "http://localhost:3001/api/categories";
+        if (categoryId) {
+          // Fetch children categories if categoryId is provided
+          url = `http://localhost:3001/api/categories/${categoryId}/children`;
+        } else if (isLoggedIn && location.pathname === "/") {
+          // Only fetch categories if user is logged in and not in the home page
+          // Fetch only categories without a parent (parentId is null)
+          url = "http://localhost:3001/api/categories?parentId=null";
+        }
+        const response = await axios.get(url);
+        console.log(response.data);
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
+  }, [categoryId, isLoggedIn, location.pathname]); // Add location.pathname to dependency array
 
   return (
-    <div className={styles.Snav}>
-      {filteredCategories.map((category) => (
-        <div key={category.name} className={styles.side_block}>
-          <Link
-            className={styles.side_link}
-            to={`./${category.name.toLowerCase()}`}
-          >
-            {category.name}
-          </Link>
-        </div>
-      ))}
-    </div>
+    <nav className="position-fixed top-0 start-0 bottom-0 bg-dark p-3 d-lg-block d-xl-block">
+      <div className={`text-dark px-3 py-2 mb-3 ${styles.titleText}`}>
+        Kategorijų filtras
+      </div>
+      <SearchBar filterText={filterText} onChange={setFilterText} />
+      <ul className="nav flex-column bg-dark">
+        {categories
+          .filter((category) =>
+            category.name.toLowerCase().includes(filterText.toLowerCase())
+          )
+          .map((category) => (
+            <li key={category.id} className="nav-item">
+              <Link
+                to={`/category/${category.id}`}
+                className={`nav-link ${styles.navColor} ${styles.listItem}`}
+              >
+                {category.name}
+              </Link>
+            </li>
+          ))}
+      </ul>
+    </nav>
   );
-}
+};
+
+export default SideNav;
