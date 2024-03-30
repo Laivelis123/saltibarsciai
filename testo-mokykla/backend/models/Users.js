@@ -39,9 +39,6 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   User.associate = (models) => {
-<<<<<<< Updated upstream
-    User.hasOne(models.Session, { foreignKey: "userId" }); // Change hasMany to hasOne
-=======
     User.hasOne(models.Session, { foreignKey: "userId" });
     User.belongsToMany(models.Category, {
       as: "UserCategories",
@@ -55,7 +52,6 @@ module.exports = (sequelize, DataTypes) => {
       as: "AllowedQuizzes",
       through: "UserAllowedQuizzes",
     });
->>>>>>> Stashed changes
   };
 
   return User;
