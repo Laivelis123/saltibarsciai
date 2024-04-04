@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import UI from "../../../components/UI/UI";
 import styles from "./categoryTemplate.module.css";
@@ -17,7 +17,7 @@ const CategoryTemplate = () => {
         );
         setCategory(response.data);
       } catch (error) {
-        console.error("Error fetching category:", error);
+        console.error("Klaida gaudant kategoriją:", error);
       }
     };
 
@@ -25,11 +25,9 @@ const CategoryTemplate = () => {
   }, [categoryId]);
 
   const handleGoBack = () => {
-    // If there is a parent category, navigate back to its route
     if (category && category.parentId) {
       navigate(`/category/${category.parentId}`);
     } else {
-      // If there is no parent category, navigate to the main page
       navigate("/");
     }
   };

@@ -18,7 +18,6 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
   });
-
   Answer.associate = (models) => {
     Answer.belongsTo(models.Question, { foreignKey: "questionId" });
   };

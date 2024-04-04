@@ -5,38 +5,11 @@ import UI from "../../../components/UI/UI";
 
 const Kategorija = () => {
   const navigate = useNavigate();
-  const [user, setUser] = useState({});
   const [categoryName, setCategoryName] = useState("");
   const [bulletPoints, setBulletPoints] = useState([]);
   const [newBulletPoint, setNewBulletPoint] = useState("");
   const [parentCategory, setParentCategory] = useState("");
   const [categories, setCategories] = useState([]);
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        if (token) {
-          const response = await axios.get(
-            "http://localhost:3001/api/data/user",
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-          setUser(response.data);
-          if (response.data.accountType !== "teacher") {
-            navigate("/");
-          }
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-
-    fetchUser();
-  }, [navigate]);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -46,7 +19,7 @@ const Kategorija = () => {
         );
         setCategories(response.data);
       } catch (error) {
-        console.error("Error fetching categories:", error);
+        console.error("Klaida gaunant kategorijas:", error);
       }
     };
 

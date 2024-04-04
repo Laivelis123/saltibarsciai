@@ -40,6 +40,10 @@ module.exports = (sequelize, DataTypes) => {
 
   User.associate = (models) => {
     User.hasOne(models.Session, { foreignKey: "userId" });
+    User.belongsToMany(models.Group, {
+      through: "UserGroup",
+      foreignKey: "userId",
+    });
     User.belongsToMany(models.Category, {
       as: "UserCategories",
       through: "UserCategory",

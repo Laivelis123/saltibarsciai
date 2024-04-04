@@ -21,3 +21,7 @@ export { default as DoneQuizes } from "./StudentHub/Quizes/DoneQuizes";
 export { default as StudentHub } from "./StudentHub/StudentHub";
 export { default as TakeQuizes } from "./StudentHub/Quizes/TakeQuizes";
 export { default as NeraPuslapio } from "./NeraPuslapio";
+export { default as Grupė } from "./TeacherHub/Groups/Grupė";
+export { default as EditGroups } from "./TeacherHub/Groups/EditGroups";
+export { default as EditGroup } from "./TeacherHub/Groups/EditGroup";
+export { default as YourGroups } from "./StudentHub/Groups/YourGroups";

@@ -5,9 +5,6 @@ const session = require("express-session");
 const dotenv = require("dotenv");
 const db = require("./models");
 
-db.User.hasOne(db.Session, { foreignKey: "userId" });
-db.Session.belongsTo(db.User, { foreignKey: "userId" });
-
 dotenv.config();
 
 const app = express();
@@ -15,7 +12,7 @@ const port = process.env.PORT || 3002;
 app.use(
   cors({
     origin: process.env.CORS_ORIGIN,
-    methods: ["POST"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
@@ -28,10 +25,11 @@ app.use(
   })
 );
 
-// Routes
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/data", require("./routes/user"));
 app.use("/api/categories", require("./routes/category"));
+app.use("/api/groups", require("./routes/group"));
+
 db.sequelize.sync().then(() => {
   console.log("Database connected");
   app.listen(port, () => {

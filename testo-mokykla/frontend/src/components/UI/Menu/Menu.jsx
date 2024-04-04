@@ -6,7 +6,6 @@ import styles from "./menu.module.css";
 const Menu = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
-  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     const fetchUsername = async () => {
@@ -24,12 +23,14 @@ const Menu = () => {
           setUsername(response.data.username);
         }
       } catch (error) {
-        console.error("Error fetching user data:", error);
+        console.error("Klaida gaunant vartotojo duomenis:", error);
         if (
           error.response &&
           (error.response.status === 401 || error.response.status === 403)
         ) {
-          console.log("Session expired or invalid token. User disconnected.");
+          console.log(
+            "Sesija baigėsi arba blogas žetonas. Atjungiamas vartotojas."
+          );
           localStorage.removeItem("token");
           navigate("/prisijungimas");
         }
@@ -38,21 +39,6 @@ const Menu = () => {
 
     fetchUsername();
   }, [navigate]);
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:3001/api/categories"
-        );
-        setCategories(response.data);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
-
-    fetchCategories();
-  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");

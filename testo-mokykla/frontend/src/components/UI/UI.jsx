@@ -5,21 +5,19 @@ import Menu from "./Menu/Menu";
 import SideNav from "./SideNav/SideNav";
 
 const UI = ({ children }) => {
-  // State for filter text
   const [filterText, setFilterText] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [token, setToken] = useState(null); // State to hold the token
+  const [token, setToken] = useState(null);
 
   useEffect(() => {
-    // Check if user is logged in
     const checkLoginStatus = () => {
       const storedToken = localStorage.getItem("token");
       if (storedToken) {
         setIsLoggedIn(true);
-        setToken(storedToken); // Set the token if it exists
+        setToken(storedToken);
       }
-      setIsLoading(false); // Set loading to false after checking login status
+      setIsLoading(false);
     };
 
     checkLoginStatus();
@@ -32,7 +30,7 @@ const UI = ({ children }) => {
           <div className="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100 flex-wrap">
             {isLoading ? (
               <div className="text-white p-3 mt-5">
-                <p className="fs-5">Loading...</p>
+                <p className="fs-5">Krauna...</p>
               </div>
             ) : isLoggedIn ? (
               <SideNav filterText={filterText} setFilterText={setFilterText} />

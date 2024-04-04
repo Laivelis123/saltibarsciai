@@ -27,7 +27,7 @@ function Pagrindinis() {
           });
         }
       } catch (error) {
-        console.error("Error fetching user data:", error);
+        console.error("Klaida gaudant vartotojo duomenis:", error);
       }
       setIsLoading(false);
     };
@@ -37,17 +37,17 @@ function Pagrindinis() {
 
   const getLinkStyle = () => {
     if (user.accountType === "teacher") {
-      return "btn btn-primary btn-lg"; // Bootstrap primary button style
+      return "btn btn-primary btn-lg";
     } else if (user.accountType === "student") {
-      return "btn btn-secondary btn-lg"; // Bootstrap secondary button style
+      return "btn btn-secondary btn-lg";
     } else {
-      return "btn btn-outline-primary btn-lg"; // Default Bootstrap outline primary button style
+      return "btn btn-outline-primary btn-lg";
     }
   };
 
   const renderLinks = () => {
     if (isLoading) {
-      return <p>Loading...</p>;
+      return <p>Krauna...</p>;
     } else {
       switch (user.accountType) {
         case "teacher":

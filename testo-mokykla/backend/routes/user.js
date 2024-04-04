@@ -21,6 +21,7 @@ router.get("/user", async (req, res) => {
       return res.status(404).json({ error: "Vartotojas nerastas" });
     }
     res.status(200).json({
+      id: user.id,
       username: user.username,
       email: user.email,
       accountType: user.accountType,
