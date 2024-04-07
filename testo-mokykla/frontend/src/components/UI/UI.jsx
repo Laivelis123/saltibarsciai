@@ -3,6 +3,7 @@ import Header from "./Header/Header";
 import Footer from "./Footer/Footer";
 import Menu from "./Menu/Menu";
 import SideNav from "./SideNav/SideNav";
+import axios from "axios";
 
 const UI = ({ children }) => {
   // State for filter text
@@ -13,11 +14,30 @@ const UI = ({ children }) => {
 
   useEffect(() => {
     // Check if user is logged in
-    const checkLoginStatus = () => {
+    const checkLoginStatus = async () => {
       const storedToken = localStorage.getItem("token");
       if (storedToken) {
         setIsLoggedIn(true);
         setToken(storedToken); // Set the token if it exists
+
+        // Decode token to get expiry time
+        const decodedToken = JSON.parse(atob(storedToken.split(".")[1]));
+        const expiryTime = decodedToken.exp * 1000; // Convert expiry time to milliseconds
+
+        // Check if token has less than 20 minutes remaining
+        if (expiryTime - Date.now() < 20 * 60 * 1000) {
+          try {
+            // Request backend to update token
+            const response = await axios.post("/api/updateToken", {
+              token: storedToken,
+            });
+            const { token } = response.data;
+            setToken(token); // Update token in state
+            localStorage.setItem("token", token); // Update token in localStorage
+          } catch (error) {
+            console.error("Error updating token:", error);
+          }
+        }
       }
       setIsLoading(false); // Set loading to false after checking login status
     };

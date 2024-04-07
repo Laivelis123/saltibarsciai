@@ -10,6 +10,22 @@ const generateToken = (user) => {
   return jwt.sign(user, process.env.JWT_SECRET, { expiresIn: "2h" }); // Žetonas pasibaigs po 2 valandų
 };
 
+router.post("/updateToken", async (req, res) => {
+  try {
+    const decoded = jwt.verify(req.body.token, process.env.JWT_SECRET);
+
+    if (decoded) {
+      decoded.exp = Math.floor(Date.now() / 1000) + 2 * 60 * 60; // Atnaujina žetono galiojimo laiką
+
+      const token = jwt.sign(decoded, process.env.JWT_SECRET);
+
+      res.status(200).json({ token });
+    }
+  } catch (error) {
+    res.status(401).json({ error: "Neteisingas arba pasibaigęs žetonas" });
+  }
+});
+
 // Registruoja naują vartotoją.
 router.post("/register", async (req, res) => {
   try {
