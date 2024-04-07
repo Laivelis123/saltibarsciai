@@ -13,23 +13,13 @@ describe('filtering_categories_filter', () =>{
     
     it('su filtru: ', async () => {
         const res = await supertest(app).get('/filter');
-        const request = {query:{}};
-        const resq = { 
-            status: function(code){
-                this.code = code;
-                return this;    
-            },
-            json: function(data){
-                this.data = data;
-            },
-          
-          };
           //await router(req,res);   
           expect(res.statusCode).toBe(200);
           //expect(res.)
           //expect(res.data).
 
     });
+    
 
 
 })
