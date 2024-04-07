@@ -26,5 +26,9 @@
     "sequelize": "^6.37.1",
     "sequelize-cli": "^6.6.2",
     "shortid": "^2.2.16"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^6.3.4"
   }
 }
