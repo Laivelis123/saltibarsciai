@@ -28,9 +28,12 @@ const UI = ({ children }) => {
         if (expiryTime - Date.now() < 20 * 60 * 1000) {
           try {
             // Request backend to update token
-            const response = await axios.post("/api/updateToken", {
-              token: storedToken,
-            });
+            const response = await axios.post(
+              "http://localhost:3001/api/auth/updateToken",
+              {
+                token: storedToken,
+              }
+            );
             const { token } = response.data;
             setToken(token); // Update token in state
             localStorage.setItem("token", token); // Update token in localStorage
