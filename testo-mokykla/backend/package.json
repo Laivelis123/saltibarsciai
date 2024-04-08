@@ -29,10 +29,7 @@
     "shortid": "^2.2.16"
   },
   "devDependencies": {
-<<<<<<< HEAD
     "jest": "^29.7.0",
-=======
->>>>>>> main
     "supertest": "^6.3.4"
   }
 }
