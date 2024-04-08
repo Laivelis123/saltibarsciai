@@ -1,38 +1,24 @@
 import React, { useState, useEffect } from "react";
+import { useAuth } from "../../context/AuthContext";
 import Header from "./Header/Header";
 import Footer from "./Footer/Footer";
 import Menu from "./Menu/Menu";
 import SideNav from "./SideNav/SideNav";
 
 const UI = ({ children }) => {
+  const { user, refreshToken } = useAuth();
   const [filterText, setFilterText] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [token, setToken] = useState(null);
-
   useEffect(() => {
-    const checkLoginStatus = () => {
-      const storedToken = localStorage.getItem("token");
-      if (storedToken) {
-        setIsLoggedIn(true);
-        setToken(storedToken);
-      }
-      setIsLoading(false);
-    };
-
-    checkLoginStatus();
+    if (user) {
+      refreshToken();
+    }
   }, []);
-
   return (
     <div className="container-fluid">
       <div className="row flex-nowrap">
         <div className="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
           <div className="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100 flex-wrap">
-            {isLoading ? (
-              <div className="text-white p-3 mt-5">
-                <p className="fs-5">Krauna...</p>
-              </div>
-            ) : isLoggedIn ? (
+            {user ? (
               <SideNav filterText={filterText} setFilterText={setFilterText} />
             ) : (
               <div className="text-white p-3 mt-5">

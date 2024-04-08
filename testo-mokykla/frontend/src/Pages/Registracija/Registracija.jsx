@@ -4,7 +4,6 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import styles from "./registracija.module.css";
 import * as Yup from "yup";
 import axios from "axios";
-import UI from "../../components/UI/UI.jsx";
 
 function Registracija() {
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
@@ -66,7 +65,7 @@ function Registracija() {
   };
 
   return (
-    <UI>
+    <>
       {error && <div className="mb-3 text-danger">{error}</div>}
       <div className="container mt-5">
         {!registrationSuccess && (
@@ -218,7 +217,7 @@ function Registracija() {
           </div>
         )}
       </div>
-    </UI>
+    </>
   );
 }
 

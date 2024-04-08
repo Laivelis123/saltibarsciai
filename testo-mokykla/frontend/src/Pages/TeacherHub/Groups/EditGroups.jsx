@@ -27,27 +27,25 @@ const EditGroups = () => {
   }, []);
 
   return (
-    <UI>
-      <div className="container mt-4">
-        <h2>Mano grupės</h2>
-        <div className="mb-3">
-          {groups.map((group) => (
-            <div key={group.id} className="card mb-3">
-              <div className="card-body">
-                <h5 className="card-title">{group.name}</h5>
-                <p className="card-text">Prisijungimo kodas: {group.code}</p>
-                <Link
-                  to={`/valdymas/mokytojas/tvarkyti/grupes/redaguoti/${group.id}`}
-                  className="btn btn-primary mr-2"
-                >
-                  Redaguoti grupę
-                </Link>
-              </div>
+    <div className="container mt-4">
+      <h2>Mano grupės</h2>
+      <div className="mb-3">
+        {groups.map((group) => (
+          <div key={group.id} className="card mb-3">
+            <div className="card-body">
+              <h5 className="card-title">{group.name}</h5>
+              <p className="card-text">Prisijungimo kodas: {group.code}</p>
+              <Link
+                to={`/valdymas/mokytojas/tvarkyti/grupes/redaguoti/${group.id}`}
+                className="btn btn-primary mr-2"
+              >
+                Redaguoti grupę
+              </Link>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
-    </UI>
+    </div>
   );
 };
 

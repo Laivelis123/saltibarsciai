@@ -1,32 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams, useLocation } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+
+import { useAuth } from "../../../context/AuthContext";
 import styles from "./sidenav.module.css";
 import SearchBar from "../SearchBar/SearchBar";
 
 const SideNav = ({ filterText, setFilterText }) => {
+  const { fetchCategories } = useAuth();
   const [categories, setCategories] = useState([]);
   const { categoryId } = useParams();
-  const location = useLocation();
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        let url = "http://localhost:3001/api/categories/filter";
-        if (categoryId) {
-          url = `http://localhost:3001/api/categories/${categoryId}/children`;
-        } else if (location.pathname === "/") {
-          url = "http://localhost:3001/api/categories/filter?parentId=null";
-        }
-        const response = await axios.get(url);
-        setCategories(response.data);
-      } catch (error) {
-        console.error("Klaida gaunant kategorijas:", error);
-      }
-    };
-
-    fetchCategories();
-  }, [categoryId, location.pathname]);
+    fetchCategories(categoryId, setCategories);
+  }, [categoryId]);
 
   return (
     <nav className="position-fixed top-0 start-0 bottom-0 bg-dark p-3 d-lg-block d-xl-block">

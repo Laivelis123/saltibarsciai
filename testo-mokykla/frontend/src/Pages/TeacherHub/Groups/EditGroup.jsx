@@ -87,49 +87,47 @@ const EditGroup = () => {
   };
 
   return (
-    <UI>
-      <div className="container mt-4">
-        {group && (
-          <>
-            <h2>Redaguoti grupę</h2>
-            <div className="mb-3">
-              <label htmlFor="groupName" className="form-label">
-                Grupės pavadinimas:
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="groupName"
-                value={newGroupName}
-                onChange={handleGroupNameChange}
-              />
-            </div>
-            <button className="btn btn-primary" onClick={handleUpdateGroupName}>
-              Atnaujinti pavadinimą
-            </button>
-            <button className="btn btn-danger ml-2" onClick={handleDeleteGroup}>
-              Ištrinti grupę
-            </button>
-            {errorMessage && <p className="text-danger mt-3">{errorMessage}</p>}
-            <h3>Prisijungę vartotojai:</h3>
-            <ul className="bg-light">
-              {users &&
-                users.map((user) => (
-                  <li key={user.id} className="d-flex align-items-center mb-2">
-                    <div>{user.username}</div>
-                    <button
-                      className="btn btn-danger m-4"
-                      onClick={() => handleRemoveUser(user.id)}
-                    >
-                      Šalinti
-                    </button>
-                  </li>
-                ))}
-            </ul>
-          </>
-        )}
-      </div>
-    </UI>
+    <div className="container mt-4">
+      {group && (
+        <>
+          <h2>Redaguoti grupę</h2>
+          <div className="mb-3">
+            <label htmlFor="groupName" className="form-label">
+              Grupės pavadinimas:
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="groupName"
+              value={newGroupName}
+              onChange={handleGroupNameChange}
+            />
+          </div>
+          <button className="btn btn-primary" onClick={handleUpdateGroupName}>
+            Atnaujinti pavadinimą
+          </button>
+          <button className="btn btn-danger ml-2" onClick={handleDeleteGroup}>
+            Ištrinti grupę
+          </button>
+          {errorMessage && <p className="text-danger mt-3">{errorMessage}</p>}
+          <h3>Prisijungę vartotojai:</h3>
+          <ul className="bg-light">
+            {users &&
+              users.map((user) => (
+                <li key={user.id} className="d-flex align-items-center mb-2">
+                  <div>{user.username}</div>
+                  <button
+                    className="btn btn-danger m-4"
+                    onClick={() => handleRemoveUser(user.id)}
+                  >
+                    Šalinti
+                  </button>
+                </li>
+              ))}
+          </ul>
+        </>
+      )}
+    </div>
   );
 };
 

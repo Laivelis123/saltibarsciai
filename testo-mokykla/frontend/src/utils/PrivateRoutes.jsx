@@ -1,9 +1,15 @@
 import { Outlet, Navigate } from "react-router-dom";
-import { useAuth } from "./useAuth";
+import { useEffect } from "react";
+import { useAuth } from "../context/AuthContext";
 
 function PrivateRoutes() {
-  const token = useAuth();
-  return token ? <Outlet /> : <Navigate to="/prisijungimas" />;
+  const { user } = useAuth();
+
+  return user && user.accessToken ? (
+    <Outlet />
+  ) : (
+    <Navigate to="/prisijungimas" />
+  );
 }
 
 export default PrivateRoutes;

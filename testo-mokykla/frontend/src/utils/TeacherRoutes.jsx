@@ -1,34 +1,10 @@
-import { Outlet, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { useEffect } from "react";
+import { Outlet, Navigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 function TeacherRoutes() {
-  const navigate = useNavigate();
+  const { userData } = useAuth();
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        if (token) {
-          const response = await axios.get(
-            "http://localhost:3001/api/data/user",
-            { headers: { Authorization: `Bearer ${token}` } }
-          );
-          if (response.data.accountType !== "teacher") {
-            navigate("/");
-          }
-        } else {
-          navigate("/prisijungimas");
-        }
-      } catch (error) {
-        console.error("Klaida gaudant duomenis:", error);
-      }
-    };
-
-    fetchUser();
-  }, []);
-
-  return <Outlet />;
+  return userData.accountType === "teacher" ? <Outlet /> : <Navigate to="/" />;
 }
 
 export default TeacherRoutes;

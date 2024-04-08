@@ -1,9 +1,11 @@
 import { Outlet, Navigate } from "react-router-dom";
-import { useAuth } from "./useAuth";
+import { useEffect } from "react";
+import { useAuth } from "../context/AuthContext";
 
 function PublicRoutes() {
-  const token = useAuth();
-  return token ? <Navigate to="/" /> : <Outlet />;
+  const { user } = useAuth();
+
+  return user && user.accessToken ? <Navigate to="/" /> : <Outlet />;
 }
 
 export default PublicRoutes;

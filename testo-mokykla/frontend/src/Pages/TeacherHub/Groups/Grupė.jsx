@@ -29,28 +29,26 @@ const Grupė = () => {
   };
 
   return (
-    <UI>
-      <div className="container mt-4">
-        <h2>Grupės kūrimas</h2>
-        <div className="mb-3">
-          <form onSubmit={handleSubmitCreate}>
-            <label htmlFor="groupName" className="form-label">
-              Grupės pavadinimas:
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="groupName"
-              value={groupName}
-              onChange={handleGroupNameChange}
-            />
-            <button type="submit" className="btn btn-primary mt-2">
-              Sukurti grupę
-            </button>
-          </form>
-        </div>
+    <div className="container mt-4">
+      <h2>Grupės kūrimas</h2>
+      <div className="mb-3">
+        <form onSubmit={handleSubmitCreate}>
+          <label htmlFor="groupName" className="form-label">
+            Grupės pavadinimas:
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="groupName"
+            value={groupName}
+            onChange={handleGroupNameChange}
+          />
+          <button type="submit" className="btn btn-primary mt-2">
+            Sukurti grupę
+          </button>
+        </form>
       </div>
-    </UI>
+    </div>
   );
 };
 

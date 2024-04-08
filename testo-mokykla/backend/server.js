@@ -26,7 +26,6 @@ app.use(
 );
 
 app.use("/api/auth", require("./routes/auth"));
-app.use("/api/data", require("./routes/user"));
 app.use("/api/categories", require("./routes/category"));
 app.use("/api/groups", require("./routes/group"));
 
