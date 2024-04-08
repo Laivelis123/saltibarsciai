@@ -1,3 +1,5 @@
+const { v4: uuidv4 } = require("uuid");
+
 module.exports = (sequelize, DataTypes) => {
   const Group = sequelize.define("Group", {
     id: {
@@ -26,6 +28,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "groupId",
     });
   };
+
+  // Generate a random code before creating a new Group
+  Group.beforeCreate((group) => {
+    group.code = uuidv4();
+  });
 
   return Group;
 };

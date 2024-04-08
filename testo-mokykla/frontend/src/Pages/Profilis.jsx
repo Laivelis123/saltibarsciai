@@ -30,64 +30,69 @@ function Profilis() {
   };
 
   return (
-    <div className="container mt-5">
-      <div className="row justify-content-center">
-        <div className="col-md-6">
-          <Card>
-            <Card.Body>
-              <Card.Title className="text-center">
-                Vartotojo profilis
-              </Card.Title>
-              <div className="text-center mb-3">
-                <div>
-                  {profilePicture ? (
-                    <img
-                      src={profilePicture}
-                      alt="Profile"
-                      className="img-thumbnail rounded-circle"
-                      style={{ width: "200px", height: "200px" }}
-                    />
-                  ) : (
-                    <img
-                      src={defaultProfile}
-                      alt="Default Profile"
-                      className="img-thumbnail rounded-circle"
-                      style={{ width: "200px", height: "200px" }}
-                    />
-                  )}
-                </div>
-                <input
-                  type="file"
-                  id="fileInput"
-                  style={{ display: "none" }}
-                  onChange={handlePictureChange}
-                  accept="image/*"
-                />
-              </div>
-              {profilePicture ? null : (
+    <UI>
+      {" "}
+      <div className="container mt-5">
+        <div className="row justify-content-center">
+          <div className="col-md-6">
+            <Card>
+              <Card.Body>
+                <Card.Title className="text-center">
+                  Vartotojo profilis
+                </Card.Title>
                 <div className="text-center mb-3">
-                  <Button onClick={handleButtonClick}>Įkelti nuotrauką</Button>
-                </div>
-              )}
-              {user && (
-                <div className="text-center">
-                  <div>Slapyvardis: {userData.username}</div>
-                  <div>Paštas: {userData.email}</div>
                   <div>
-                    Paskyros tipas:{" "}
-                    {userData.accountType === "teacher"
-                      ? "Mokytojas"
-                      : userData.accountType === "student"
-                      ? "Studentas"
-                      : userData.accountType}
+                    {profilePicture ? (
+                      <img
+                        src={profilePicture}
+                        alt="Profile"
+                        className="img-thumbnail rounded-circle"
+                        style={{ width: "200px", height: "200px" }}
+                      />
+                    ) : (
+                      <img
+                        src={defaultProfile}
+                        alt="Default Profile"
+                        className="img-thumbnail rounded-circle"
+                        style={{ width: "200px", height: "200px" }}
+                      />
+                    )}
                   </div>
+                  <input
+                    type="file"
+                    id="fileInput"
+                    style={{ display: "none" }}
+                    onChange={handlePictureChange}
+                    accept="image/*"
+                  />
                 </div>
-              )}
-            </Card.Body>
-          </Card>
+                {profilePicture ? null : (
+                  <div className="text-center mb-3">
+                    <Button onClick={handleButtonClick}>
+                      Įkelti nuotrauką
+                    </Button>
+                  </div>
+                )}
+                {user && (
+                  <div className="text-center">
+                    <div>Slapyvardis: {userData.username}</div>
+                    <div>Paštas: {userData.email}</div>
+                    <div>
+                      Paskyros tipas:{" "}
+                      {userData.accountType === "teacher"
+                        ? "Mokytojas"
+                        : userData.accountType === "student"
+                        ? "Studentas"
+                        : userData.accountType}
+                    </div>
+                  </div>
+                )}
+              </Card.Body>
+            </Card>
+          </div>
         </div>
       </div>
-    </div>
+    </UI>
   );
 }
 

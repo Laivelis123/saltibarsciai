@@ -5,15 +5,13 @@
   "main": "index.js",
   "scripts": {
     "end": "cd testo-mokykla/backend && npm start",
-    "front": "cd testo-mokykla/frontend && npm run dev"
+    "front": "cd testo-mokykla/frontend && npm run dev",
+    "test-back": "cd testo-mokykla/backend && npm run test"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "jest": "^29.7.0"
-  },
-  "dependencies": {
-    "shortid": "^2.2.16"
   }
 }

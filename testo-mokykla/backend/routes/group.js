@@ -2,42 +2,34 @@ const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const { User, Group } = require("../models");
-const shortid = require("shortid");
+const { v4: uuidv4 } = require("uuid");
 
-// Funkcija, skirta sugeneruoti naują prisijungimo kodą grupei
-const updateJoinCode = async (groupId) => {
-  const newCode = shortid.generate(); // Sugeneruojamas naujas kodas naudojant shortid biblioteką
-  await Group.update({ code: newCode }, { where: { id: groupId } }); // Atnaujinamas grupės kodas duomenų bazėje
+// Middleware to verify JWT token
+const verifyToken = (req, res, next) => {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+  if (!token) return next({ status: 401, message: "Missing token" });
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) return next({ status: 403, message: "Invalid token" });
+    req.userId = decoded.id; // Add user id to request object
+    next();
+  });
 };
 
-// Sukuria naują grupę su sugeneruotu kodu
-router.post("/create", async (req, res) => {
+// Endpoint to create a new group
+router.post("/create", verifyToken, async (req, res, next) => {
   try {
-    const { name } = req.body; // Išgryninamas grupės pavadinimas iš užklausos
-    // Išskiriama vartotojo ID iš JWT žetono
-    const token = req.headers.authorization.split(" ")[1]; // Išgryninamas JWT žetonas iš užklausos antraštės
-    const decoded = jwt.verify(token, process.env.JWT_SECRET); // Dekoduojamas JWT žetonas naudojant JWT biblioteką ir slaptažodį iš aplinkos kintamųjų
-    const userId = decoded.id; // Išgryninamas vartotojo ID iš dekoduoto JWT žetono
+    const { name } = req.body;
+    const { userId } = req;
 
-    // Sugeneruojamas unikalus kodas grupei
-    const code = shortid.generate(); // Sugeneruojamas naujas unikalus kodas naudojant shortid biblioteką
+    // Generate a random code using uuidv4
+    const code = uuidv4();
 
-    // Sukuriama grupė su sugeneruotu kodu ir susijusiu vartotojo ID
-    const group = await Group.create({
-      name,
-      code,
-      userId: userId, // Susiejamas vartotojo ID su grupe
-    });
-
-    // Nustatomas intervalas, kad kas 7 dienas būtų atnaujinamas prisijungimo prie grupės kodas
-    setInterval(() => {
-      updateJoinCode(group.id);
-    }, 7 * 24 * 60 * 60 * 1000); // 7 dienų intervalas
-
-    res.status(201).json({ success: true, group, code });
+    const group = await Group.create({ name, code, userId });
+    res.status(201).json({ success: true, group });
   } catch (error) {
-    console.error("Klaida kuriant grupę:", error);
-    res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
+    next(error);
   }
 });
 
@@ -66,26 +58,17 @@ router.post("/join", async (req, res) => {
   }
 });
 
-// Gaunami vartotojo grupės
-router.get("/my-groups", async (req, res) => {
+// Endpoint to retrieve user's groups
+router.get("/my-groups", verifyToken, async (req, res) => {
   try {
-    const token = req.headers.authorization.split(" ")[1]; // Išgryninamas JWT žetonas iš užklausos antraštės
-    const decoded = jwt.verify(token, process.env.JWT_SECRET); // Dekoduojamas JWT žetonas naudojant JWT biblioteką ir slaptažodį iš aplinkos kintamųjų
-    const userId = decoded.id; // Išgryninamas vartotojo ID iš dekoduoto JWT žetono
+    const { userId } = req; // Access user id from request object
+    // Find user's groups
+    const groups = await Group.findAll({ where: { userId } });
 
-    const groups = await Group.findAll({ where: { userId } }); // Surandamos visos vartotojo grupės
-
-    const mappedGroups = groups.map((group) => ({
-      // Sudaromas žemėlapis su grupių duomenimis
-      id: group.id,
-      name: group.name,
-      code: group.code,
-    }));
-
-    res.status(200).json({ success: true, groups: mappedGroups });
+    res.status(200).json({ success: true, groups });
   } catch (error) {
-    console.error("Klaida gaunant vartotojo grupes:", error);
-    res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
+    console.error("Error retrieving user's groups:", error);
+    res.status(500).json({ success: false, error: "Internal server error" });
   }
 });
 
@@ -154,31 +137,27 @@ router.get("/:groupId", async (req, res) => {
 });
 
 // Grupės informacijos atnaujinimas
+// Update Group Name Endpoint
 router.put("/:groupId", async (req, res) => {
   try {
-    const { name } = req.body; // Išgryninamas naujas grupės pavadinimas iš užklausos
-    const { groupId } = req.params; // Išgryninamas grupės ID iš užklausos parametrų
-    const token = req.headers.authorization.split(" ")[1]; // Išgryninamas JWT žetonas iš užklausos antraštės
-    const decoded = jwt.verify(token, process.env.JWT_SECRET); // Dekoduojamas JWT žetonas naudojant JWT biblioteką ir slaptažodį iš aplinkos kintamųjų
-    const userId = decoded.id; // Išgryninamas vartotojo ID iš dekoduoto JWT žetono
+    const { name } = req.body;
+    const { groupId } = req.params;
 
-    const group = await Group.findByPk(groupId); // Surandama grupė pagal ID
+    // Find the group by ID
+    const group = await Group.findByPk(groupId);
 
     if (!group) {
-      return res.status(404).json({ success: false, error: "Grupė nerasta" });
+      return res.status(404).json({ success: false, error: "Group not found" });
     }
 
-    if (group.userId !== userId) {
-      // Jei vartotojas neturi teisės redaguoti šios grupės
-      return res.status(403).json({ success: false, error: "Uždrausta" });
-    }
-
-    await group.update({ name }); // Atnaujinamas grupės pavadinimas
+    // Update the group name
+    group.name = name;
+    await group.save();
 
     res.status(200).json({ success: true, group });
   } catch (error) {
-    console.error("Klaida atnaujinant grupę:", error);
-    res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
+    console.error("Error updating group name:", error);
+    res.status(500).json({ success: false, error: "Internal server error" });
   }
 });
 

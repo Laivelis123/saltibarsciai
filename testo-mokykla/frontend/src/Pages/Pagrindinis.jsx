@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import axios from "axios";
+import UI from "../components/UI/UI";
 
 function Pagrindinis() {
   const { user, userData, fetchUser, loading, logout } = useAuth();
@@ -48,11 +49,13 @@ function Pagrindinis() {
   };
 
   return (
-    <div className="d-flex justify-content-left align-items-center p-3">
-      <div className="text-center">
-        <div>{renderLinks()}</div>
+    <UI>
+      <div className="d-flex justify-content-left align-items-center p-3">
+        <div className="text-center">
+          <div>{renderLinks()}</div>
+        </div>
       </div>
-    </div>
+    </UI>
   );
 }
 

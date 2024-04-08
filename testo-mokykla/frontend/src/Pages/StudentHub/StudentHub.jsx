@@ -33,6 +33,7 @@ function StudentHub() {
   }, []);
   return (
     <UI>
+      {" "}
       <div className="container mt-4">
         <h2>Mokinių tvarkyklė</h2>
         <div className="d-grid gap-2">
@@ -41,6 +42,9 @@ function StudentHub() {
           </Link>
           <Link to="/" className="btn btn-primary">
             Įvertinimai
+          </Link>
+          <Link to="/valdymas/mokinys/grupės" className="btn btn-primary">
+            Grupės
           </Link>
         </div>
       </div>

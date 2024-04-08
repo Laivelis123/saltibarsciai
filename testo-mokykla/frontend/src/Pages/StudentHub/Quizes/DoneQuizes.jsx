@@ -1,7 +1,11 @@
 import React from "react";
 
 function DoneQuizes() {
-  return <div>DoneQuizes</div>;
+  return (
+    <UI>
+      <div>DoneQuizes</div>
+    </UI>
+  );
 }
 
 export default DoneQuizes;

@@ -1,7 +1,11 @@
 import React from "react";
-
+import UI from "../../../components/UI/UI";
 function GivenGrades() {
-  return <div>Grades</div>;
+  return (
+    <UI>
+      <div>Grades</div>
+    </UI>
+  );
 }
 
 export default GivenGrades;

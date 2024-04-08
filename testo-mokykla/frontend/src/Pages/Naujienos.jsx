@@ -2,6 +2,10 @@
 import UI from "../components/UI/UI";
 
 function Naujienos() {
-  return <h2>Kolkas naujienų nėra</h2>;
+  return (
+    <UI>
+      <h2>Kolkas naujienų nėra</h2>;
+    </UI>
+  );
 }
 export default Naujienos;

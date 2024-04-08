@@ -33,7 +33,7 @@ const CategoryTemplate = () => {
   };
 
   return (
-    <>
+    <UI>
       {category ? (
         <div className={`container ${styles.containerColor}`}>
           <p>Kategorijos pavadinimas: {category.name}</p>
@@ -57,7 +57,7 @@ const CategoryTemplate = () => {
       ) : (
         <div>Krauna...</div>
       )}
-    </>
+    </UI>
   );
 };
 

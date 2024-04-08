@@ -21,11 +21,16 @@ export const AuthProvider = ({ children }) => {
     setLoading(true);
     try {
       let url = "http://localhost:3001/api/categories/filter";
+
       if (categoryId) {
         url = `http://localhost:3001/api/categories/${categoryId}/children`;
-      } else if (location.pathname === "/") {
-        url = "http://localhost:3001/api/categories/filter?parentId=null";
+      } else {
+        const pathname = window.location.pathname;
+        if (pathname === "/") {
+          url = "http://localhost:3001/api/categories/filter?parentId=null";
+        }
       }
+
       const response = await axios.get(url);
       setCategories(response.data);
     } catch (error) {
@@ -34,6 +39,7 @@ export const AuthProvider = ({ children }) => {
       setLoading(false);
     }
   };
+
   const fetchUser = async () => {
     setLoading(true);
     try {
@@ -84,11 +90,9 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     setLoading(true);
     try {
-      await axios.post(
-        "http://localhost:3001/api/auth/logout",
-        {},
-        { withCredentials: true }
-      );
+      await axios.post("http://localhost:3001/api/auth/logout", {
+        withCredentials: true,
+      });
       setUser(null);
       localStorage.removeItem("token");
       navigate("/prisijungimas");

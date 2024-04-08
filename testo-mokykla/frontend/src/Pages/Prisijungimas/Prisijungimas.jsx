@@ -6,22 +6,22 @@ import UI from "../../components/UI/UI.jsx";
 import styles from "./prisijungimas.module.css";
 
 function Prisijungimas() {
-  const { login } = useAuth();
+  const { login, error } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    if (username && password) {
+    try {
       await login(username, password);
-      navigate("/");
+    } catch (error) {
+      console.error(error);
     }
   };
 
   return (
-    <>
+    <UI>
       <div className="container mt-5">
         <div className={styles.formColor}>
           <form onSubmit={handleLogin}>
@@ -52,7 +52,7 @@ function Prisijungimas() {
                 className="form-control  bg-secondary text-light"
               />
             </div>
-            {error && <div className="mb-3 text-danger">{error}</div>}
+            <div className="mb-3 text-danger">{error}</div>
             <div className="mb-3">
               <button type="submit" className="btn btn-lg btn-dark">
                 Prisijungti
@@ -61,7 +61,7 @@ function Prisijungimas() {
           </form>
         </div>
       </div>
-    </>
+    </UI>
   );
 }
 
