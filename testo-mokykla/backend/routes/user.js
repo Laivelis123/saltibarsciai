@@ -6,8 +6,9 @@ const { User } = require("../models");
 // Gauna vartotojo duomenis pagal žetoną.
 router.get("/user", async (req, res) => {
   try {
-    const token = req.headers.authorization.split(" ")[1];
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const token = req.headers.authorization.split(" ")[1];
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      //console.log("decoded", decoded.username);
     if (!decoded) {
       console.log(
         "Sesija pasibaigė arba netinkamas žetonas. Vartotojas atsijungė."
@@ -16,10 +17,11 @@ router.get("/user", async (req, res) => {
         .status(401)
         .json({ error: "Sesija pasibaigė arba netinkamas žetonas." });
     }
-    const user = await User.findOne({ where: { username: decoded.username } });
+      const user = await User.findOne({ where: { username: decoded.username } });
     if (!user) {
       return res.status(404).json({ error: "Vartotojas nerastas" });
-    }
+      }
+      //console.log("Decoded token:", user);
     res.status(200).json({
       id: user.id,
       username: user.username,

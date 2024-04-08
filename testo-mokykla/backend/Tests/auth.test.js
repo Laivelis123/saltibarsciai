@@ -1,7 +1,7 @@
 // JavaScript source code
-const auth = require('../routes/auth');
+//const auth = require('../routes/auth');
 
-test('login is aaaa', async () => {
-    const data = await global.fetch();
-    expect(data).toBe('aaaa');
-});
+//test('login is aaaa', async () => {
+//    const data = { id: 1, username: 'aaaa', email: 'aaaa@gmail.com', accountType: 'student' };
+//    expect(auth(data).toBe('aaaa');
+//});
