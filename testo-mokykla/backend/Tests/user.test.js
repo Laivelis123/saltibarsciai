@@ -59,7 +59,7 @@ describe("GET /user endpoint", () => {
             .set("Authorization", `Bearer ${token}`);
 
         expect(response.status).toBe(401);
-        expect(response.body).toEqual({ error: "Sesija pasibaigë arba netinkamas þetonas." });
+        expect(response.body).toEqual({ error: "Sesija pasibaigï¿½ arba netinkamas ï¿½etonas." });
     });
 
     it("should return 500 if an internal server error occurs", async () => {
@@ -71,6 +71,6 @@ describe("GET /user endpoint", () => {
             .set("Authorization", `Bearer ${token}`);
 
         expect(response.status).toBe(500);
-        expect(response.body).toEqual({ error: "Vidinë serverio klaida" });
+        expect(response.body).toEqual({ error: "Vidinï¿½ serverio klaida" });
     });
 });
