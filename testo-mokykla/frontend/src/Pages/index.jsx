@@ -1,5 +1,3 @@
-import { Form } from "react-router-dom";
-
 export { default as Fizika } from "./Informaciniai/fizikos/Fizika";
 export { default as Chemija } from "./Informaciniai/chemijos/Chemija";
 export { default as Lietuviu } from "./Informaciniai/lietuviu/Lietuviu";
@@ -21,3 +19,8 @@ export { default as DoneQuizes } from "./StudentHub/Quizes/DoneQuizes";
 export { default as StudentHub } from "./StudentHub/StudentHub";
 export { default as TakeQuizes } from "./StudentHub/Quizes/TakeQuizes";
 export { default as NeraPuslapio } from "./NeraPuslapio";
+export { default as Grupė } from "./TeacherHub/Groups/Grupė";
+export { default as EditGroups } from "./TeacherHub/Groups/EditGroups";
+export { default as EditGroup } from "./TeacherHub/Groups/EditGroup";
+export { default as YourGroups } from "./StudentHub/Groups/YourGroups";
+export { default as CategoryTemplate } from "./Informaciniai/CategoryTemplate/CategoryTemplate";

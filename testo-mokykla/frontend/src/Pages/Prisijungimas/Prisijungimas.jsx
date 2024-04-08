@@ -1,10 +1,12 @@
 ﻿import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
 import UI from "../../components/UI/UI.jsx";
 import styles from "./prisijungimas.module.css";
 
 function Prisijungimas() {
+  const { login } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -12,35 +14,14 @@ function Prisijungimas() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post(
-        "http://localhost:3001/api/auth/login",
-        {
-          username,
-          password,
-        }
-      );
-      const { token } = response.data;
-      if (token) {
-        localStorage.setItem("token", token);
-        navigate("/");
-      } else {
-        setError("Neteisingas vartotojo vardas arba slaptažodis.");
-      }
-    } catch (error) {
-      console.error(error);
-      if (error.response && error.response.status === 401) {
-        setError("Vartotojo vardas arba slaptažodis yra klaidingas.");
-      } else if (error.response && error.response.status === 500) {
-        setError("Serverio klaida. Prašome bandyti dar kartą.");
-      } else {
-        setError("Vidinė klaida. Prašome bandyti dar kartą.");
-      }
+    if (username && password) {
+      await login(username, password);
+      navigate("/");
     }
   };
 
   return (
-    <UI>
+    <>
       <div className="container mt-5">
         <div className={styles.formColor}>
           <form onSubmit={handleLogin}>
@@ -80,7 +61,7 @@ function Prisijungimas() {
           </form>
         </div>
       </div>
-    </UI>
+    </>
   );
 }
 

@@ -1,43 +1,20 @@
 import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import UI from "../components/UI/UI";
+import { useAuth } from "../context/AuthContext";
 import axios from "axios";
 
 function Pagrindinis() {
-  const [user, setUser] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
+  const { user, userData, fetchUser, loading, logout } = useAuth();
 
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        if (token) {
-          const response = await axios.get(
-            "http://localhost:3001/api/data/user",
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-          setUser({
-            username: response.data.username,
-            email: response.data.email,
-            accountType: response.data.accountType,
-          });
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-      setIsLoading(false);
-    };
-
-    fetchUser();
-  }, []);
+    if (user) {
+      fetchUser();
+    }
+  }, [user]);
 
   const getLinkStyle = () => {
-    if (user.accountType === "teacher") {
-      return "btn btn-primary btn-lg"; // Bootstrap primary button style
+    if (userData.accountType === "teacher") {
+      return "btn btn-primary btn-lg";
     } else if (user.accountType === "student") {
       return "btn btn-secondary btn-lg"; // Bootstrap secondary button style
     } else {
@@ -46,36 +23,36 @@ function Pagrindinis() {
   };
 
   const renderLinks = () => {
-    if (isLoading) {
-      return <p>Loading...</p>;
+    if (loading) {
+      return <p>Krauna...</p>;
     } else {
-      switch (user.accountType) {
-        case "teacher":
-          return (
+      return (
+        <div>
+          {user && userData.accountType === "teacher" && (
             <Link to="/valdymas/mokytojas" className={getLinkStyle()}>
               Valdyti kaip mokytojas
             </Link>
-          );
-        case "student":
-          return (
+          )}
+          {user && userData.accountType === "student" && (
             <Link to="/valdymas/mokinys" className={getLinkStyle()}>
               Valdyti kaip mokinys
             </Link>
-          );
-        default:
-          return <p>Kazkas</p>;
-      }
+          )}
+          {!user && <p>Prašome prisijungti</p>}
+          {user && !["teacher", "student"].includes(userData.accountType) && (
+            <p>Nei mokytojas nei studentas</p>
+          )}
+        </div>
+      );
     }
   };
 
   return (
-    <UI>
-      <div className="d-flex justify-content-left align-items-center p-3">
-        <div className="text-center">
-          <div>{renderLinks()}</div>
-        </div>
+    <div className="d-flex justify-content-left align-items-center p-3">
+      <div className="text-center">
+        <div>{renderLinks()}</div>
       </div>
-    </UI>
+    </div>
   );
 }
 
