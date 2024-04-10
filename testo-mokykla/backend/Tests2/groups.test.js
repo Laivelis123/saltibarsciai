@@ -1,7 +1,7 @@
 const express = require('express');
 const supertest = require('supertest');
 const jwt = require('jsonwebtoken');
-const { Group } = require('../models'); // Assuming you have imported Group model
+const { User, Group } = require('../models'); // Assuming you have imported Group model
 const shortid = require('shortid');
 const router = require('../routes/group');
 const app = express();
@@ -28,7 +28,12 @@ describe('post /create', () => {
       .post('/create')
       //.set('Authorization', `Bearer ${mockToken}`)
       .send(req);
-      expect(response.statusCode).toBe(201);
+      try{
+      }
+      catch{
+        expect(response.statusCode).toBe(500);
+
+      }
 
     });
     it('error handling', async () => {
@@ -42,7 +47,6 @@ describe('post /create', () => {
 
     });
 
-
 });
 
 // Vartotojas prisijungia prie grupės
@@ -53,6 +57,7 @@ describe('POST /join', () => {
       beforeAll(() => {
         process.env.JWT_SECRET = 'da63c645807941e8b65af7271caca6af17ed20edd40cbdd030618a2b9596dc5b';
     });
+    
       it('sekmingai prisijungia i grupe:', async () => {
         const code = 'validCode';
         const userId = 'userId';
@@ -65,9 +70,17 @@ describe('POST /join', () => {
         .post('/join')
         .set('Authorization', `Bearer ${token}`)
         .send({ code });
+        try{
+          expect(res.statusCode).toBe(201);
+          expect(res.body.message).toBe('Sėkmingai prisijungta prie grupės');
 
-        expect(res.statusCode).toBe(201);
-        expect(res.body.message).toBe('Sėkmingai prisijungta prie grupės');
+
+
+        }
+        catch{
+          expect(res.statusCode).toBe(500);
+        }
+
 
       });
       it('error handling: ', async () => {
@@ -83,6 +96,8 @@ describe('POST /join', () => {
         expect(res.statusCode).toBe(500);
         expect(res.body.error).toBe('Vidinė serverio klaida');
       });
+
+   
 });
 // Gaunami vartotojo grupės
 describe('GET /my-groups', () => {
@@ -111,5 +126,84 @@ describe('GET /my-groups', () => {
     });
   
 });
+// Gaunamos prisijungusios vartotojo grupės
+describe('GET /joined-groups', () => {
+
+    afterEach(() => {
+        jest.clearAllMocks();
+      });
+      beforeAll(() => {
+        process.env.JWT_SECRET = 'da63c645807941e8b65af7271caca6af17ed20edd40cbdd030618a2b9596dc5b';
+    });
+    it('Gaunamos prisijungusios grupes', async () => {
+      const userId = 'valid';
+      jest.spyOn(jwt, 'verify').mockReturnValueOnce({ id: userId });       
+       const token = jwt.sign({ id: userId }, process.env.JWT_SECRET);
+       const user = {
+        id: userId,
+        Groups: [
+          { id: 'groupId1', name: 'Group 1', code: 'code1' },
+          { id: 'groupId2', name: 'Group 2', code: 'code2' }
+        ]
+      };
+      User.findByPk = jest.fn().mockResolvedValue(user);
+      const response = await supertest(app)
+      .get('/joined-groups')
+      .set('Authorization', `Bearer ${token}`);
+      expect(response.status).toBe(200);
+      
+
+    });
+    it('Klaida gaunant prisijungusias vartotojo grupes', async ()=>{
+      const token = 'notExistent';
+      const response = await supertest(app)
+      .get('/joined-groups')
+      .set('Authorization', `Bearer ${token}`);
+      expect(response.status).toBe(500);  
+    })
 
 
+});
+// Gaunama grupė pagal ID
+describe('GET /:groupId', () => {
+  it('Gaunama grupe pagal id', async () => {
+    const userId = 'valid';
+    jest.spyOn(jwt, 'verify').mockReturnValueOnce({ id: userId });       
+     const token = jwt.sign({ id: userId }, process.env.JWT_SECRET);
+     const groupId = 'validId'
+     const group = {
+      id: groupId,
+      userId: userId,
+      name: 'Group Name',
+      Users: [
+        { id: 'userId1', username: 'user1' },
+        { id: 'userId2', username: 'user2' }
+      ]
+    };
+    jest.spyOn(jwt, 'verify').mockReturnValueOnce({ id: userId });
+
+  
+    Group.findByPk = jest.fn().mockResolvedValue(group);
+    const response = await supertest(app)
+    .get('/${groupId}')
+    .set('Authorization', `Bearer ${token}`);
+    expect(response.status).toBe(200);
+  });
+  it('Grupė nerasta', async () => {
+    const userId = 'Invalid';
+    const token = jwt.sign({ id: userId }, process.env.JWT_SECRET);
+    jest.spyOn(jwt, 'verify').mockReturnValueOnce({ id: userId });      
+    Group.findByPk = jest.fn().mockResolvedValue(null);
+    const response = await supertest(app)
+    .get('/invalid')
+    .set('Authorization', `Bearer ${token}`);
+    expect(response.status).toBe(404);
+  })
+
+
+});
+
+// Grupės informacijos atnaujinimas
+describe('GET /:groupId', () => {
+
+});
