@@ -50,12 +50,18 @@ describe('POST /join', () => {
     afterEach(() => {
         jest.clearAllMocks();
       });
+      beforeAll(() => {
+        process.env.JWT_SECRET = 'da63c645807941e8b65af7271caca6af17ed20edd40cbdd030618a2b9596dc5b';
+    });
       it('sekmingai prisijungia i grupe:', async () => {
         const code = 'validCode';
-        const token = 'validToken';
         const userId = 'userId';
-        jwt.verify.mockResolvedValueOnce({})
-        const res = await request(app)
+        const token = jwt.sign({ id: userId }, process.env.JWT_SECRET);        
+
+        jest.spyOn(jwt, 'verify').mockImplementation((token, secret, callback) => {
+          callback(null, { id: 'userId' });
+      });
+        const res = await supertest(app)
         .post('/join')
         .set('Authorization', `Bearer ${token}`)
         .send({ code });
@@ -70,15 +76,13 @@ describe('POST /join', () => {
         jwt.verify.mockImplementation(() => {
             throw new Error('Invalid token');
           });
-        const res = await request(app)
+        const res = await supertest(app)
         .post('/join')
         .set('Authorization', `Bearer ${token}`)
         .send({ code });
         expect(res.statusCode).toBe(500);
         expect(res.body.error).toBe('Vidinė serverio klaida');
-
       });
-    
 });
 // Gaunami vartotojo grupės
 describe('GET /my-groups', () => {
