@@ -11,7 +11,11 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/react": "^15.0.2",
     "@types/shortid": "^0.0.32",
+    "axios": "^1.6.8",
+    "axios-mock-adapter": "^1.22.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
