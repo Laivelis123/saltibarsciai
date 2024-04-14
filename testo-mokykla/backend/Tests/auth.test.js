@@ -34,6 +34,12 @@ describe('/login', () => {
         try { const data = await axios.post(url, user); }
         catch (e) { await expect(e.response.status.toString()).toMatch('401'); }
     })
+    it('Gives 200', async () => {
+        const url = 'http://localhost:3001/api/auth/login';
+        const user = { username: "aaa", password: "aaaa" };
+        try { const data = await axios.post(url, user); }
+        catch (e) { await expect(e.response.status.toString()).toMatch('200'); }
+    })
 })
 describe('/logout', () => {
     it('Gives message: Vidinë severio klaida', async () => {
@@ -73,12 +79,11 @@ describe('/user', () => {
         try { const data = await axios.post(url, user); }
         catch (e) { await expect(e.response.status.toString()).toMatch('404'); }
     });
-    //it('Gives 404 error', async () => {
-    //    const url = 'http://localhost:3001/api/auth/user';
-    //    const user = { username: "aaa", password: "aaaa" };
-    //    try { const data = await axios.post(url, user); }
-    //    catch(e) { console.log(e); }
-
-    //    //await expect(data.status.toString()).toMatch('200');
-    //});
+    it('Gives 401 error', async () => {
+        const url = 'http://localhost:3001/api/auth/user';
+        const user = {
+            username: "aaa", password: "aaaa", email: "aaa@aaa.aaa", id: 4, accountType: "student", refreshToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwidXNlcm5hbWUiOiJhYWEiLCJpYXQiOjE3MTMwMTk2NzV9.M7RWZse14h2Q_8fjddaPLpzl3gE7peYDeJlHsU1qs3A' };
+        try { const data = await axios.get(url, user); }
+        catch (e) { await expect(e.response.status.toString()).toMatch('401'); }
+    });
 })
