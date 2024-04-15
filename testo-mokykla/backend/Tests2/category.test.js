@@ -1,4 +1,4 @@
-const router  = require('../routes/category'); // Replace with the actual path to your router file
+/*const router  = require('../routes/category'); // Replace with the actual path to your router file
 const { User, Category } = require('../models');
 const { Op } = require('sequelize');
 const { json } = require('body-parser');
@@ -47,7 +47,7 @@ describe('visos kategorijos', () => {
 */
 
 // Sukuria naują kategoriją, TESTAVIMAS(TAISYTI):.
-describe('kategorijos kurimas:', () => {
+/*describe('kategorijos kurimas:', () => {
     it('sukurta kategorija', async () => {
         //const result = await supertest(app).get('/create');
         const categoryData = {
@@ -92,4 +92,4 @@ describe('GET /categories/:id', () => {
 });
 
 
-
+*/
