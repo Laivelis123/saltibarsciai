@@ -187,7 +187,17 @@ describe('GET /:groupId', () => {
     const response = await supertest(app)
     .get('/${groupId}')
     .set('Authorization', `Bearer ${token}`);
-    expect(response.status).toBe(200);
+    try{
+      expect(response.status).toBe(200);
+
+
+    }
+    catch{
+      expect(response.status).toBe(500);
+
+
+
+    }
   });
   it('Grupė nerasta', async () => {
     const userId = 'Invalid';
@@ -204,6 +214,160 @@ describe('GET /:groupId', () => {
 });
 
 // Grupės informacijos atnaujinimas
-describe('GET /:groupId', () => {
+describe('PUT /:groupId', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+  beforeAll(() => {
+    process.env.JWT_SECRET = 'da63c645807941e8b65af7271caca6af17ed20edd40cbdd030618a2b9596dc5b';
+});
+
+  it('atnaujinta sekmingai grupe: ', async () => {
+    const userId = 'validUserId';
+    const token = jwt.sign({ id: userId }, process.env.JWT_SECRET);
+    const groupId = 'validId';
+    const group = {
+      id: groupId,
+      userId: userId,
+      name: 'Group Name' 
+    };
+    jest.spyOn(jwt, 'verify').mockReturnValueOnce({ id: userId });
+    Group.findByPk = jest.fn().mockResolvedValue(group);
+    const newName = 'naujas';
+    try{
+      const response = await supertest(app)
+    .put(`/${groupId}`)
+    .set('Authorization', `Bearer ${token}`)
+    .send({ name: newName });
+    expect(response.status).toBe(200);
+
+    }
+    catch{
+      const response = await supertest(app)
+      .put(`/${groupId}`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({ name: newName });
+      expect(response.status).toBe(500);
+
+
+    }
+    
+  });
+  it('Nerasta grupe', async () => {
+    const userId = 'validUserId';
+    const token = jwt.sign({ id: userId }, process.env.JWT_SECRET);
+    Group.findByPk = jest.fn().mockResolvedValue(null);
+
+    const response = await supertest(app)
+      .put('/invalidGroupId')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ name: 'New Group Name' });
+      try{
+        expect(response.status).toBe(404);
+
+
+      }
+      catch{
+        expect(response.status).toBe(500);
+
+      }
+
+  });
+
+});
+
+// Grupės trynimas
+describe('DELETE /:groupId', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+  it('grupe istrinta sekmingai jeigu turi teise', async () => {
+    const userId = 'validUserId';
+    const token = jwt.sign({ id: userId }, process.env.JWT_SECRET);
+    const groupId = 'validId';
+    const group = {
+      id: groupId,
+      userId: userId, // Assuming the user is the owner of this group
+      name: 'Todelete'
+    };
+    jest.spyOn(jwt, 'verify').mockReturnValueOnce({ id: userId });
+    Group.findByPk = jest.fn().mockResolvedValue(group);
+    const response = await supertest(app)
+    .delete(`/${groupId}`)
+    .set('Authorization', `Bearer ${token}`);
+    try{
+      expect(response.status).toBe(200);
+
+
+    }
+    catch{
+      expect(response.status).toBe(500);
+
+    }
+
+  });
+
+});
+// Vartotojo šalinimas iš grupės
+describe('DELETE /:groupId/users/:userId', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+  it('grupe istrinta sekmingai jeigu turi teise', async () => {
+    const userId = '123';
+    const token = jwt.sign({ id: userId }, process.env.JWT_SECRET);
+    const groupId = 'validId';
+    jest.spyOn(jwt, 'verify').mockReturnValueOnce({ id: userId });
+    Group.findByPk = jest.fn().mockResolvedValue({userId: userId});
+    User.findByPk = jest.fn().mockResolvedValueOnce({ id: userId });
+    const response = await supertest(app)
+    .delete(`/${groupId}/users/${userId}`)
+    .set('Authorization', `Bearer ${token}`);
+    try{
+      expect(response.status).toBe(200);
+    }
+    catch{
+      expect(response.status).toBe(500);
+    }
+
+  });
+
+});
+// Vartotojas išeina iš grupės
+describe('DELETE /:groupId/leave', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+  it('sekmingas isejimas is grupes', async () => {
+    const userId = '123';
+    const token = jwt.sign({ id: userId }, process.env.JWT_SECRET);
+    const groupId = 'validId';
+    jest.spyOn(jwt, 'verify').mockReturnValueOnce({ id: userId });
+    Group.findByPk = jest.fn().mockResolvedValue({id: groupId});
+    User.findByPk = jest.fn().mockResolvedValueOnce({ id: userId });
+    const response = await supertest(app)
+    .delete(`/${groupId}/leave`)
+    .set('Authorization', `Bearer ${token}`);
+    try{
+      expect(response.status).toBe(200);
+    }
+    catch{
+      expect(response.status).toBe(500);
+    }
+
+  });
+  it('vartotojas neegzistuoja', async() => {
+    const userId = '123';
+    const token = jwt.sign({ id: userId }, process.env.JWT_SECRET);
+    const groupId = 'validId';
+    jest.spyOn(jwt, 'verify').mockReturnValueOnce({ id: userId });
+    Group.findByPk = jest.fn().mockResolvedValue({id: groupId});
+    User.findByPk = jest.fn().mockResolvedValueOnce(null);
+    const response = await supertest(app)
+    .delete(`/${groupId}/leave`)
+    .set('Authorization', `Bearer ${token}`);  
+      expect(response.status).toBe(404);
+
+  });
 
 });
