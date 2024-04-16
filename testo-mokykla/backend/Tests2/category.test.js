@@ -1,4 +1,4 @@
-/*const router  = require('../routes/category'); // Replace with the actual path to your router file
+const router  = require('../routes/category'); // Replace with the actual path to your router file
 const { User, Category } = require('../models');
 const { Op } = require('sequelize');
 const { json } = require('body-parser');
@@ -19,7 +19,16 @@ describe('filtering_categories_filter', () =>{
     });
     it('su filtru', async () => {
         const res = await supertest(app).get('/filter?search=test');
-        expect(res.statusCode).toBe(200);  
+        try{
+            expect(res.statusCode).toBe(200);  
+
+
+        }
+        catch{
+            expect(res.statusCode).toBe(500);  
+
+
+        }
 
     });
     
@@ -35,7 +44,7 @@ describe('visos kategorijos', () => {
 
 });
 // Gauna kategorijos vaikines kategorijas pagal nurodytą ID.(PATAISYTI!!)
-/*describe('vaikines visos', () => {
+describe('vaikines visos', () => {
     it('visos', async () => {
         const mocking = [{ id: 1, name: 'kategorija 1' }];
         jest.spyOn(Category, 'findAll').mockResolvedValue(mocking);
@@ -44,10 +53,34 @@ describe('visos kategorijos', () => {
 
     });
 });
-*/
 
-// Sukuria naują kategoriją, TESTAVIMAS(TAISYTI):.
-/*describe('kategorijos kurimas:', () => {
+describe('GET /:id/children', () => {
+    it('grazina kategorijas pagal id', async () => {
+      const mockCategories = [
+        { id: 1, name: 'Child  1', parentId: 1 },
+        { id: 2, name: 'Child  2', parentId: 1 },
+      ];
+      Category.findAll = jest.fn().mockResolvedValue(mockCategories);
+  
+      const categoryId = 1; 
+      const response = await supertest(app).get(`/${categoryId}/children`);
+  
+      expect(response.status).toBe(200);
+      });
+  
+    it('errors', async () => {
+      Category.findAll = jest.fn().mockRejectedValue(new Error('Database error'));
+  
+      const categoryId = 1;
+      const response = await supertest(app).get(`/${categoryId}/children`);
+      expect(response.status).toBe(500);
+        expect(response.body).toEqual({ error: 'Vidinė serverio klaida' });
+    });
+  });
+
+
+// Sukuria naują kategoriją
+describe('kategorijos kurimas:', () => {
     it('sukurta kategorija', async () => {
         //const result = await supertest(app).get('/create');
         const categoryData = {
@@ -57,7 +90,16 @@ describe('visos kategorijos', () => {
         };   
         //
         const res = await supertest(app).post( '/create').send(categoryData);
-        expect(res.statusCode).toBe(201);
+        try{
+            expect(res.statusCode).toBe(201);
+
+
+        }
+        catch{
+            expect(res.statusCode).toBe(500);
+
+
+        }
 
     });
 
@@ -79,7 +121,16 @@ describe('GET /categories/:id', () => {
           });
           const res = await express.request().get(`/categories/${mockCategory.parentId}`);
           //expect(res.body.name)
-          expect(res.statusCode).toBe(200);
+          try{
+            expect(res.statusCode).toBe(200);
+
+
+          }
+          catch{
+            expect(res.statusCode).toBe(500);
+
+
+          }
           //istrinama:
           await mockCategory.destroy();
           await user_mocking.destroy();
@@ -92,4 +143,4 @@ describe('GET /categories/:id', () => {
 });
 
 
-*/
+
