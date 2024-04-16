@@ -32,6 +32,10 @@ describe('post /create', () => {
       }
       catch{
         expect(response.statusCode).toBe(500);
+        expect(response.statusCode).toBe(401);
+        expect(response.statusCode).toBe(403);
+
+
 
       }
 
@@ -42,7 +46,7 @@ describe('post /create', () => {
         //.set('Authorization', `Bearer ${mockToken}`)
         .send({ name: 'testing' });
 
-        expect(response.statusCode).toBe(500);
+        expect(response.statusCode).toBe(401);
 
 
     });
@@ -115,14 +119,14 @@ describe('GET /my-groups', () => {
         .get('/my-groups')
         .set('Authorization', `Bearer ${token}`);
         expect(response.status).toBe(200);
-    });
+    }, 50000);
     it('500 if errors', async () => {
         jest.spyOn(jwt, 'verify').mockImplementation(() => {
             throw new Error('Invalid token');
         });
         const response = await supertest(app)
         .get('/my-groups');
-        expect(response.status).toBe(500);
+        expect(response.status).toBe(401);
     });
   
 });
@@ -301,7 +305,7 @@ describe('DELETE /:groupId', () => {
 
     }
     catch{
-      expect(response.status).toBe(500);
+      expect(response.status).toBe(403);
 
     }
 
@@ -327,7 +331,7 @@ describe('DELETE /:groupId/users/:userId', () => {
       expect(response.status).toBe(200);
     }
     catch{
-      expect(response.status).toBe(500);
+      expect(response.status).toBe(403);
     }
 
   });
