@@ -2,8 +2,7 @@ import { lazy } from "react";
 import { Route } from "react-router-dom";
 import PrivateRoutes from "./utils/PrivateRoutes";
 import PublicRoutes from "./utils/PublicRoutes";
-import TeacherRoutes from "./utils/TeacherRoutes";
-import StudentRoutes from "./utils/StudentRoutes";
+
 import {
   Prisijungimas,
   Registracija,
@@ -27,13 +26,16 @@ import {
   YourGroups,
   NeraPuslapio,
   CategoryTemplate,
+  CreateQuiz,
+  EditQuiz,
+  EditQuizzes,
 } from "./Pages";
 
 export const allRoutes = [
   { path: "/naujienos", element: <Naujienos /> },
-  { path: "/*", element: <NeraPuslapio /> },
   { path: "/apie", element: <Apie /> },
   { path: "/kontaktai", element: <Kontaktai /> },
+  { path: "/*", element: <NeraPuslapio /> },
 ];
 
 export const allPrivateRoutes = [
@@ -59,8 +61,7 @@ export const allPublicRoutes = [
 
 export const allTeacherRoutes = [
   {
-    parent: <PrivateRoutes />,
-    element: <TeacherRoutes />,
+    element: <PrivateRoutes />,
     children: [
       { path: "/valdymas/mokytojas", element: <TeachHub /> },
       {
@@ -91,14 +92,25 @@ export const allTeacherRoutes = [
         path: "/valdymas/mokytojas/tvarkyti/grupes/redaguoti/:groupId",
         element: <EditGroup />,
       },
+      {
+        path: "/valdymas/mokytojas/tvarkyti/testai/kurti",
+        element: <CreateQuiz />,
+      },
+      {
+        path: "/valdymas/mokytojas/tvarkyti/testai/redaguoti/:quizId",
+        element: <EditQuiz />,
+      },
+      {
+        path: "/valdymas/mokytojas/tvarkyti/testai/peržiūra",
+        element: <EditQuizzes />,
+      },
     ],
   },
 ];
 
 export const allStudentRoutes = [
   {
-    parent: <PrivateRoutes />,
-    element: <StudentRoutes />,
+    element: <PrivateRoutes />,
     children: [
       { path: "/valdymas/mokinys", element: <StudentHub /> },
       { path: "/valdymas/mokinys/grupės", element: <YourGroups /> },

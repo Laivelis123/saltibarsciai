@@ -80,6 +80,7 @@ export const AuthProvider = ({ children }) => {
       );
       setUser(response.data);
       localStorage.setItem("token", JSON.stringify(response.data));
+      navigate("/");
     } catch (error) {
       console.error(error);
     } finally {

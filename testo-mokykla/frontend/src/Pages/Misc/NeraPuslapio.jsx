@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import UI from "../components/UI/UI";
+import UI from "../../components/UI/UI";
 
 function NeraPuslapio() {
   return (

@@ -1,9 +1,0 @@
-﻿export { default as Skyryba } from "./Skyryba";
-export { default as Rašyba } from "./Rašyba";
-export { default as Balsės } from "./Balsės";
-export { default as Iterpiniai } from "./Iterpiniai";
-export { default as Kreipiniai } from "./Kreipiniai";
-export { default as Pažyminiai } from "./Pažyminiai";
-export { default as Priebalsės } from "./Priebalsės";
-export { default as Sudurtiniai } from "./Sudurtiniai";
-export { default as Vienarūšės } from "./Vienarūšės";

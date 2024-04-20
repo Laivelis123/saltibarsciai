@@ -83,8 +83,6 @@ router.post("/create", async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: "Vartotojas nerastas" });
     }
-
-    console.log("Kuriama kategorija:", name, bulletPoints, user.id, parentId);
     // Sukuria naują kategoriją su nurodytais duomenimis.
     const category = await Category.create({
       name,

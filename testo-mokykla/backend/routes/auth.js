@@ -47,7 +47,6 @@ router.post("/login", async (req, res) => {
     const { username, password } = req.body;
 
     const user = await User.findOne({ where: { username } });
-
     if (!user || !bcrypt.compareSync(password, user.password)) {
       return res
         .status(401)
@@ -74,11 +73,13 @@ router.post("/login", async (req, res) => {
     const accessToken = generateToken({
       id: user.id,
       username: user.username,
+      accountType: user.accountType,
     });
     const refreshToken = jwt.sign(
       {
         id: user.id,
         username: user.username,
+        accountType: user.accountType,
       },
       process.env.JWT_REFRESH_SECRET
     );
@@ -114,6 +115,7 @@ router.post("/refresh", async (req, res) => {
     const accessToken = generateToken({
       id: decoded.id,
       username: decoded.username,
+      accountType: decoded.accountType,
     });
     res.json({ accessToken });
   } catch (error) {
