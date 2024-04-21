@@ -5,6 +5,7 @@ import UI from "../components/UI/UI";
 import { Card, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import defaultProfile from "../Images/default-profile-picture.jpg";
+import { Link, useNavigate } from "react-router-dom";
 
 function Profilis() {
   const { user, userData, fetchUser } = useAuth();
@@ -13,13 +14,33 @@ function Profilis() {
       fetchUser();
     }
   }, [user]);
+
+  const uploadImage = async (imageData) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/api/profile/upload",
+        {
+          image: imageData,
+          userId: userData.id,
+        }
+      );
+      console.log("Pavyko ikelti nuotrauką: ", response.data.imageUrl);
+    } catch (error) {
+      console.error(
+        "Nepavyko ikelti nuotraukos: ",
+        error.response.data.message
+      );
+    }
+  };
+
   const [profilePicture, setProfilePicture] = useState(null);
-  const handlePictureChange = (e) => {
+  const handlePictureChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = (event) => {
+      reader.onload = async (event) => {
         setProfilePicture(event.target.result);
+        await uploadImage(event.target.result);
       };
       reader.readAsDataURL(file);
     }
