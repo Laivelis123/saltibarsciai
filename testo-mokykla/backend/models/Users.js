@@ -36,6 +36,13 @@ module.exports = (sequelize, DataTypes) => {
         len: [1, 16],
       },
     },
+    pictureUrl: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      validate: {
+        isUrl: true,
+      },
+    },
   });
 
   User.associate = (models) => {
