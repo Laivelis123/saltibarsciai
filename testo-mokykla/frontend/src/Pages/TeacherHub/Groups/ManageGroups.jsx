@@ -20,8 +20,11 @@ function ManageGroups() {
           >
             Redaguoti Grupes
           </Link>
-          <Link to="/" className="btn btn-primary">
-            Peržiūrėti Grupę
+          <Link
+            to="/valdymas/mokytojas/tvarkyti/grupes/įvertinimai"
+            className="btn btn-primary"
+          >
+            Peržiūrėti Įvertinimus
           </Link>
         </div>
       </div>

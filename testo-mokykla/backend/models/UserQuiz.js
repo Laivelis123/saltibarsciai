@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    submitted: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   });
 
   UserQuiz.associate = (models) => {

@@ -12,7 +12,6 @@ const {
   Category,
 } = require("../models");
 
-// Middleware to verify JWT token
 const verifyToken = (req, res, next) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
@@ -20,19 +19,23 @@ const verifyToken = (req, res, next) => {
 
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) return next({ status: 403, message: "Invalid token" });
-    req.userId = decoded.id; // Add user id to request object
+    req.userId = decoded.id;
     next();
   });
 };
 
 router.get("/my-quizzes", verifyToken, async (req, res) => {
   try {
-    const { userId } = req; // Access user id from request object
-    // Find user's quizzes
+    const { userId } = req;
     const quizzes = await Quiz.findAll({
-      include: [{ model: Category, as: "categoryAlias" }],
+      where: { userId },
+      include: [
+        {
+          model: Category,
+          as: "categoryAlias",
+        },
+      ],
     });
-
     res.status(200).json({ success: true, quizzes });
   } catch (error) {
     console.error("Error retrieving user's quizzes:", error);
@@ -42,7 +45,7 @@ router.get("/my-quizzes", verifyToken, async (req, res) => {
 
 router.put("/:quizId", verifyToken, async (req, res) => {
   try {
-    const { name, category } = req.body; // Ensure the request body contains 'name' and 'category'
+    const { name, category } = req.body;
     const quizId = req.params.quizId;
 
     const quiz = await Quiz.findByPk(quizId);
@@ -51,8 +54,8 @@ router.put("/:quizId", verifyToken, async (req, res) => {
       return res.status(404).json({ success: false, error: "Quiz not found" });
     }
 
-    quiz.title = name; // Update quiz title
-    quiz.categoryId = category; // Update quiz category ID
+    quiz.title = name;
+    quiz.categoryId = category;
     await quiz.save();
 
     res.status(200).json({ success: true, quiz });
@@ -64,25 +67,37 @@ router.put("/:quizId", verifyToken, async (req, res) => {
 
 router.get("/:quizId", verifyToken, async (req, res) => {
   try {
-    const quizId = req.params.quizId;
+    const { quizId } = req.params;
+    const userId = req.userId;
 
-    // Find the quiz by its ID
+    const userQuiz = await UserQuiz.findOne({
+      where: { userId, quizId },
+    });
+
+    if (!userQuiz || userQuiz.submitted) {
+      return res
+        .status(400)
+        .json({ message: "Quiz already submitted or not found" });
+    }
+
     const quiz = await Quiz.findByPk(quizId);
 
-    // If quiz is not found, return 404 error
     if (!quiz) {
       return res.status(404).json({ success: false, error: "Quiz not found" });
     }
 
-    // Return the quiz data in the response
-    res.status(200).json({ success: true, quiz });
+    const quizData = {
+      ...quiz.toJSON(),
+      submitted: userQuiz.submitted,
+    };
+
+    res.status(200).json({ success: true, quiz: quizData });
   } catch (error) {
     console.error("Error fetching quiz:", error);
     res.status(500).json({ success: false, error: "Internal server error" });
   }
 });
 
-// Add Group to Quiz Endpoint
 router.post("/:quizId/groups/:groupId", verifyToken, async (req, res) => {
   try {
     const { quizId, groupId } = req.params;
@@ -106,18 +121,15 @@ router.post("/:quizId/groups/:groupId", verifyToken, async (req, res) => {
   }
 });
 
-// Delete quiz by ID
 router.delete("/:quizId", verifyToken, async (req, res) => {
   try {
     const quizId = req.params.quizId;
 
-    // Check if the quiz exists
     const quiz = await Quiz.findByPk(quizId);
     if (!quiz) {
       return res.status(404).json({ error: "Quiz not found" });
     }
 
-    // Delete the quiz
     await quiz.destroy();
 
     res
@@ -129,7 +141,6 @@ router.delete("/:quizId", verifyToken, async (req, res) => {
   }
 });
 
-// Remove Group from Quiz Endpoint
 router.delete("/:quizId/groups/:groupId", verifyToken, async (req, res) => {
   try {
     const { quizId, groupId } = req.params;
@@ -153,19 +164,16 @@ router.delete("/:quizId/groups/:groupId", verifyToken, async (req, res) => {
   }
 });
 
-// Create a new quiz
 router.post("/", verifyToken, async (req, res) => {
   try {
     const { title, categoryId, groupId, studentId } = req.body;
-    const userId = req.userId; // Extracted from middleware
+    const userId = req.userId;
 
-    // Check if the user is authorized to create a quiz
     const user = await User.findByPk(userId);
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
 
-    // Create the quiz
     const quiz = await Quiz.create({
       title,
       categoryId,
@@ -180,58 +188,19 @@ router.post("/", verifyToken, async (req, res) => {
     res.status(500).json({ success: false, error: "Internal server error" });
   }
 });
-// Grade answers for a quiz
-router.post("/:quizId/grade", verifyToken, async (req, res) => {
-  try {
-    const { answers } = req.body;
-    const quizId = req.params.quizId;
-    const userId = req.userId;
 
-    // Calculate total score
-    let totalScore = 0;
-    for (const answer of answers) {
-      const question = await Question.findByPk(answer.questionId);
-      if (!question) {
-        return res.status(400).json({ error: "Question not found" });
-      }
-      const correctAnswer = await Answer.findOne({
-        where: { questionId: answer.questionId, isCorrect: true },
-      });
-      if (correctAnswer && correctAnswer.answerText === answer.answerText) {
-        totalScore += question.points;
-      }
-    }
-
-    // Save grade
-    const grade = await Grade.create({
-      userId,
-      quizId,
-      score: totalScore,
-    });
-
-    res.status(201).json({ success: true, grade });
-  } catch (error) {
-    console.error("Error grading quiz:", error);
-    res.status(500).json({ success: false, error: "Internal server error" });
-  }
-});
-
-// Get assigned groups for a quiz
 router.get("/:quizId/groups", verifyToken, async (req, res) => {
   try {
     const { quizId } = req.params;
 
-    // Find the quiz by its ID
     const quiz = await Quiz.findByPk(quizId, {
-      include: [{ model: Group, as: "groups" }], // Use the correct alias "groups"
+      include: [{ model: Group, as: "groups" }],
     });
 
-    // If quiz is not found, return 404 error
     if (!quiz) {
       return res.status(404).json({ success: false, error: "Quiz not found" });
     }
 
-    // Return the assigned groups for the quiz
     res.status(200).json({ success: true, groups: quiz.groups });
   } catch (error) {
     console.error("Error fetching assigned groups for quiz:", error);
@@ -239,12 +208,10 @@ router.get("/:quizId/groups", verifyToken, async (req, res) => {
   }
 });
 
-// Endpoint to assign quiz to users in a group
 router.post("/assign-quiz", verifyToken, async (req, res) => {
   try {
     const { quizId, groupId } = req.body;
 
-    // Find all users belonging to the specified group
     const group = await Group.findByPk(groupId, { include: User });
     if (!group || !group.Users) {
       return res
@@ -252,20 +219,16 @@ router.post("/assign-quiz", verifyToken, async (req, res) => {
         .json({ success: false, error: "Group not found or has no users" });
     }
 
-    // Extract user ids from the group
     const userIds = group.Users.map((user) => user.id);
 
-    // Check if the user is already assigned to the quiz
     const existingAssignments = await UserQuiz.findAll({
       where: { userId: userIds, quizId },
     });
 
-    // Filter out users who are already assigned to the quiz
     const usersToAdd = userIds.filter(
       (userId) => !existingAssignments.some((a) => a.userId === userId)
     );
 
-    // Assign the quiz to each user
     await Promise.all(
       usersToAdd.map(async (userId) => {
         await UserQuiz.create({ userId, quizId });
@@ -285,18 +248,14 @@ router.get("/:quizId/users", verifyToken, async (req, res) => {
   try {
     const { quizId } = req.params;
 
-    // Here, you can fetch assigned users for the quiz using any method you prefer.
-    // For example, if the assigned users are stored in a separate UserQuiz model, you can query that model.
     const assignedUsers = await UserQuiz.findAll({
-      where: { quizId }, // Query by quizId
-      include: [{ model: User }], // Include User model to get user details
+      where: { quizId },
+      include: [{ model: User }],
     });
 
-    // Extract relevant user information
     const users = assignedUsers.map((userQuiz) => ({
       id: userQuiz.userId,
       username: userQuiz.User.username,
-      // Add more user details if needed
     }));
 
     res.status(200).json({ success: true, assignedUsers: users });
@@ -309,8 +268,6 @@ router.delete("/:quizId/users/:userId", verifyToken, async (req, res) => {
   try {
     const { quizId, userId } = req.params;
 
-    // Here, you would remove the user from the UserQuiz table based on quizId and userId
-    // For example:
     await UserQuiz.destroy({ where: { quizId, userId } });
 
     res.status(200).json({ success: true, message: "User removed from quiz" });

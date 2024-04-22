@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../../context/AuthContext";
+import { Link } from "react-router-dom";
 import UI from "../../../components/UI/UI";
 
 function YourQuizzes() {
@@ -33,18 +34,31 @@ function YourQuizzes() {
             <div key={userQuiz.id} className="card my-3">
               <div className="card-body">
                 <h3 className="card-title">{userQuiz.Quiz.title}</h3>
-                {userQuiz.Quiz && (
+                {userQuiz.submitted ? (
+                  <p>Testas jau pateiktas</p>
+                ) : (
                   <div>
-                    {userQuiz.Quiz.categoryAlias && (
-                      <p>Kategorija: {userQuiz.Quiz.categoryAlias.name}</p>
+                    {userQuiz.Quiz && (
+                      <div>
+                        {userQuiz.Quiz.categoryAlias && (
+                          <p>Kategorija: {userQuiz.Quiz.categoryAlias.name}</p>
+                        )}
+                        {userQuiz.Quiz.Creator && (
+                          <p>Sukurta: {userQuiz.Quiz.Creator.username}</p>
+                        )}
+                        {userQuiz.Quiz.Questions && (
+                          <p>
+                            Klausimų kiekis: {userQuiz.Quiz.Questions.length}
+                          </p>
+                        )}
+                        <Link
+                          to={`/valdymas/mokinys/testai/daryti/${userQuiz.Quiz.id}`}
+                          className="btn btn-primary"
+                        >
+                          Laikyti testą
+                        </Link>
+                      </div>
                     )}
-                    {userQuiz.Quiz.Creator && (
-                      <p>Sukurta: {userQuiz.Quiz.Creator.username}</p>
-                    )}
-                    {userQuiz.Quiz.Questions && (
-                      <p>Klausimų kiekis: {userQuiz.Quiz.Questions.length}</p>
-                    )}
-                    <button className="btn btn-primary">Laikyti testą</button>
                   </div>
                 )}
               </div>

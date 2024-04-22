@@ -39,7 +39,7 @@ function StudentHub() {
           <Link to="/valdymas/mokinys/testai" className="btn btn-primary">
             Priskirti Testai
           </Link>
-          <Link to="/" className="btn btn-primary">
+          <Link to="/valdymas/mokinys/ivertinimai" className="btn btn-primary">
             Įvertinimai
           </Link>
           <Link to="/valdymas/mokinys/grupės" className="btn btn-primary">

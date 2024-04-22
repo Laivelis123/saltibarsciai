@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
-const { Quiz, Question, Answer } = require("../models");
+const { Quiz, Question, Answer, UserQuiz } = require("../models");
 const verifyToken = (req, res, next) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
@@ -9,22 +9,19 @@ const verifyToken = (req, res, next) => {
 
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) return next({ status: 403, message: "Invalid token" });
-    req.userId = decoded.id; // Add user id to request object
+    req.userId = decoded.id;
     next();
   });
 };
-// Add question to a quiz
 
 router.post("/:quizId", verifyToken, async (req, res) => {
   try {
     const { questionText } = req.body;
     const quizId = req.params.quizId;
-    // Check if the quiz exists
     const quiz = await Quiz.findByPk(quizId);
     if (!quiz) {
       return res.status(404).json({ error: "Quiz not found" });
     }
-    // Create the question
     const question = await Question.create({
       questionText,
       quizId,
@@ -39,23 +36,19 @@ router.get("/:quizId/all", verifyToken, async (req, res) => {
   try {
     const quizId = req.params.quizId;
 
-    // Find the quiz by its ID
     const quiz = await Quiz.findByPk(quizId, {
       include: {
         model: Question,
-        include: Answer, // Include answers for each question
+        include: Answer,
       },
     });
 
-    // If quiz is not found, return 404 error
     if (!quiz) {
       return res.status(404).json({ success: false, error: "Quiz not found" });
     }
 
-    // Extract questions with their associated answers
     const questions = quiz.Questions.map((question) => {
       const { id, questionText, Answers } = question;
-      // Extract answers for each question
       const answers = Answers.map((answer) => ({
         id: answer.id,
         answerText: answer.answerText,
@@ -63,10 +56,49 @@ router.get("/:quizId/all", verifyToken, async (req, res) => {
       }));
       return { id, questionText, answers };
     });
-    // Return the questions with their associated answers
     res.status(200).json({ success: true, questions });
   } catch (error) {
     console.error("Error fetching questions for quiz:", error);
+    res.status(500).json({ success: false, error: "Internal server error" });
+  }
+});
+router.get("/:quizId", verifyToken, async (req, res) => {
+  try {
+    const userId = req.userId;
+    const quizId = req.params.quizId;
+    const userQuiz = await UserQuiz.findOne({
+      where: { userId, quizId, submitted: false },
+    });
+    if (!userQuiz) {
+      return res
+        .status(400)
+        .json({ message: "Quiz has already been submitted" });
+    }
+    const quiz = await Quiz.findByPk(quizId, {
+      include: {
+        model: Question,
+        include: Answer,
+      },
+    });
+    if (!quiz) {
+      return res.status(404).json({ success: false, error: "Quiz not found" });
+    }
+
+    const questions = quiz.Questions.map((question) => {
+      const { id, questionText, Answers } = question;
+      const answers = Answers.map((answer) => ({
+        id: answer.id,
+        answerText: answer.answerText,
+      }));
+      return { id, questionText, answers };
+    });
+
+    res.status(200).json({
+      success: true,
+      quiz: { id: quiz.id, title: quiz.title, questions },
+    });
+  } catch (error) {
+    console.error("Error fetching quiz:", error);
     res.status(500).json({ success: false, error: "Internal server error" });
   }
 });
@@ -76,12 +108,10 @@ router.put("/:quizId/all/:questionId", verifyToken, async (req, res) => {
     const { questionText } = req.body;
     const quizId = req.params.quizId;
     const questionId = req.params.questionId;
-    // Check if the quiz exists
     const quiz = await Quiz.findByPk(quizId);
     if (!quiz) {
       return res.status(404).json({ error: "Quiz not found" });
     }
-    // Update the question text
     await Question.update(
       { questionText },
       { where: { id: questionId, quizId } }
@@ -96,16 +126,13 @@ router.delete("/:quizId/all/:questionId", verifyToken, async (req, res) => {
   try {
     const { quizId, questionId } = req.params;
 
-    // Check if the question exists
     const question = await Question.findByPk(questionId);
     if (!question) {
       return res.status(404).json({ error: "Question not found" });
     }
 
-    // Delete associated answers first
     await Answer.destroy({ where: { questionId } });
 
-    // Now delete the question
     await question.destroy();
 
     res
@@ -124,12 +151,10 @@ router.post(
     try {
       const { quizId, questionId } = req.params;
       const { answerText, points } = req.body;
-      // Check if the quiz exists
       const quiz = await Quiz.findByPk(quizId);
       if (!quiz) {
         return res.status(404).json({ error: "Quiz not found" });
       }
-      // Check if the question exists in the quiz
       const question = await Question.findOne({
         where: { id: questionId, quizId },
       });
@@ -139,7 +164,6 @@ router.post(
           .json({ error: "Question not found in the quiz" });
       }
 
-      // Create the answer
       const answer = await Answer.create({
         answerText,
         points,
@@ -160,13 +184,11 @@ router.delete(
     try {
       const { quizId, questionId, answerId } = req.params;
 
-      // Check if the quiz exists
       const quiz = await Quiz.findByPk(quizId);
       if (!quiz) {
         return res.status(404).json({ error: "Quiz not found" });
       }
 
-      // Check if the question exists in the quiz
       const question = await Question.findOne({
         where: { id: questionId, quizId },
       });
@@ -176,7 +198,6 @@ router.delete(
           .json({ error: "Question not found in the quiz" });
       }
 
-      // Check if the answer exists in the question
       const answer = await Answer.findOne({
         where: { id: answerId, questionId },
       });
@@ -186,7 +207,6 @@ router.delete(
           .json({ error: "Answer not found in the question" });
       }
 
-      // Delete the answer
       await answer.destroy();
 
       res

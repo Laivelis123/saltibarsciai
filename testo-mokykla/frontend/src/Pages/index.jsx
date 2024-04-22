@@ -24,3 +24,4 @@ export { default as EditQuiz } from "./TeacherHub/Quizzes/EditQuiz";
 export { default as EditQuizzes } from "./TeacherHub/Quizzes/EditQuizzes";
 export { default as YourQuizzes } from "./StudentHub/Quizzes/YourQuizzes";
 export { default as CreateQuiz } from "./TeacherHub/Quizzes/CreateQuiz";
+export { default as CheckGrades } from "./TeacherHub/Groups/CheckGrades";

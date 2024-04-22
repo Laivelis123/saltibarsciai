@@ -31,7 +31,7 @@ app.use("/api/categories", require("./routes/category"));
 app.use("/api/groups", require("./routes/group"));
 app.use("/api/quizzes", require("./routes/quiz"));
 app.use("/api/quizzes/questions", require("./routes/quest"));
-app.use("/api/quizzes/assigned", require("./routes/asigned"));
+app.use("/api/quizzes/assigned", require("./routes/assigned"));
 app.use("/api/profile", require("./routes/profile"));
 
 db.sequelize.sync().then(() => {
