@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import UI from "../../../components/UI/UI";
 import { useAuth } from "../../../context/AuthContext";
 
-function EditQuiz() {
-  const { quizId } = useParams();
+const EditQuizGroup = ({ quizId }) => {
   const [allGroups, setAllGroups] = useState([]);
   const [assignedUsers, setAssignedUsers] = useState([]);
   const [selectedGroup, setSelectedGroup] = useState("");
   const navigate = useNavigate();
   const { user } = useAuth();
-
   useEffect(() => {
     const fetchAllGroups = async () => {
       try {
@@ -44,7 +41,6 @@ function EditQuiz() {
     fetchAllGroups();
     fetchAssignedUsers(); // Call fetchAssignedUsers when component mounts
   }, [quizId, user.accessToken]);
-
   const handleAssignQuiz = async () => {
     try {
       await axios.post(
@@ -90,50 +86,46 @@ function EditQuiz() {
     }
   };
   return (
-    <UI>
-      <div className="container mt-4">
-        <h2 className="text-center">Redaguoti testą</h2>
-        <div className="mt-3">{/* Display quiz details here */}</div>
-        <div className="mt-3">
-          <h4>Priskirti vartotojai</h4>
-          <ul className="list-group">
-            {assignedUsers.map((user) => (
-              <li
-                key={user.id}
-                className="list-group-item d-flex justify-content-between align-items-center"
+    <div>
+      <div className="mt-3">
+        <h4>Priskirti vartotojai</h4>
+        <ul className="list-group">
+          {assignedUsers.map((user) => (
+            <li
+              key={user.id}
+              className="list-group-item d-flex justify-content-between align-items-center"
+            >
+              {user.username}
+              <button
+                className="btn btn-sm btn-danger"
+                onClick={() => handleRemoveUser(user.id)}
               >
-                {user.username}
-                <button
-                  className="btn btn-sm btn-danger"
-                  onClick={() => handleRemoveUser(user.id)}
-                >
-                  Šalinti
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="mt-3">
-          <h4>Parink grupę priskirti prie testo</h4>
-          <select
-            value={selectedGroup}
-            onChange={(e) => setSelectedGroup(e.target.value)}
-            className="form-select"
-          >
-            <option value="">Parink grupę</option>
-            {allGroups.map((group) => (
-              <option key={group.id} value={group.id}>
-                {group.name}
-              </option>
-            ))}
-          </select>
-          <button className="btn btn-primary mt-2" onClick={handleAssignQuiz}>
-            Priskirti
-          </button>
-        </div>
+                Šalinti
+              </button>
+            </li>
+          ))}
+        </ul>
       </div>
-    </UI>
+      <div className="mt-3">
+        <h4>Parink grupę priskirti prie testo</h4>
+        <select
+          value={selectedGroup}
+          onChange={(e) => setSelectedGroup(e.target.value)}
+          className="form-select"
+        >
+          <option value="">Parink grupę</option>
+          {allGroups.map((group) => (
+            <option key={group.id} value={group.id}>
+              {group.name}
+            </option>
+          ))}
+        </select>
+        <button className="btn btn-primary mt-2" onClick={handleAssignQuiz}>
+          Priskirti
+        </button>
+      </div>
+    </div>
   );
-}
+};
 
-export default EditQuiz;
+export default EditQuizGroup;

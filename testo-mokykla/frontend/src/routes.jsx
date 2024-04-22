@@ -29,6 +29,7 @@ import {
   CreateQuiz,
   EditQuiz,
   EditQuizzes,
+  YourQuizzes,
 } from "./Pages";
 
 export const allRoutes = [
@@ -117,6 +118,7 @@ export const allStudentRoutes = [
       { path: "/valdymas/mokinys/testai/baigti", element: <DoneQuizes /> },
       { path: "/valdymas/mokinys/testai/daryti", element: <TakeQuizes /> },
       { path: "/valdymas/mokinys/ivertinimai", element: <GivenGrades /> },
+      { path: "/valdymas/mokinys/testai", element: <YourQuizzes /> },
     ],
   },
 ];

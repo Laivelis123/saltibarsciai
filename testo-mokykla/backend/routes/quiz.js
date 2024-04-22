@@ -9,7 +9,6 @@ const {
   Grade,
   Group,
   UserQuiz,
-  Student,
   Category,
 } = require("../models");
 
@@ -181,33 +180,6 @@ router.post("/", verifyToken, async (req, res) => {
     res.status(500).json({ success: false, error: "Internal server error" });
   }
 });
-
-// Add question to a quiz
-router.post("/:quizId/questions", verifyToken, async (req, res) => {
-  try {
-    const { questionText, points } = req.body;
-    const quizId = req.params.quizId;
-
-    // Check if the quiz exists
-    const quiz = await Quiz.findByPk(quizId);
-    if (!quiz) {
-      return res.status(404).json({ error: "Quiz not found" });
-    }
-
-    // Create the question
-    const question = await Question.create({
-      questionText,
-      points,
-      quizId,
-    });
-
-    res.status(201).json({ success: true, question });
-  } catch (error) {
-    console.error("Error adding question to quiz:", error);
-    res.status(500).json({ success: false, error: "Internal server error" });
-  }
-});
-
 // Grade answers for a quiz
 router.post("/:quizId/grade", verifyToken, async (req, res) => {
   try {
@@ -347,4 +319,5 @@ router.delete("/:quizId/users/:userId", verifyToken, async (req, res) => {
     res.status(500).json({ success: false, error: "Internal server error" });
   }
 });
+
 module.exports = router;

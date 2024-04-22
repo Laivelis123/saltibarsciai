@@ -27,6 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       as: "categoryAlias",
       foreignKey: "categoryId",
     });
+    Quiz.hasMany(models.Question, { foreignKey: "quizId" });
   };
 
   return Quiz;

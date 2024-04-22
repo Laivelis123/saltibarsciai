@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import UI from "../../../components/UI/UI";
 import { useAuth } from "../../../context/AuthContext";
 
 function CreateQuiz() {

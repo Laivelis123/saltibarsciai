@@ -148,7 +148,7 @@ function EditQuizzes() {
                     to={`/valdymas/mokytojas/tvarkyti/testai/redaguoti/${quiz.id}`}
                     className="btn btn-primary mr-2"
                   >
-                    Edit Group
+                    Platesnis regavimas
                   </Link>
 
                   {/* Button to remove the quiz */}

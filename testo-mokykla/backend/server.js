@@ -29,7 +29,8 @@ app.use("/api/auth", require("./routes/auth"));
 app.use("/api/categories", require("./routes/category"));
 app.use("/api/groups", require("./routes/group"));
 app.use("/api/quizzes", require("./routes/quiz"));
-
+app.use("/api/quizzes/questions", require("./routes/quest"));
+app.use("/api/quizzes/assigned", require("./routes/asigned"));
 db.sequelize.sync().then(() => {
   console.log("Database connected");
   app.listen(port, () => {
