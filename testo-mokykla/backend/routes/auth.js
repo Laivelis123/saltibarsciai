@@ -153,6 +153,7 @@ router.get("/user", async (req, res) => {
       username: user.username,
       email: user.email,
       accountType: user.accountType,
+      pictureUrl: user.pictureUrl,
     });
   } catch (error) {
     console.error("Klaida ieškant vartotojo:", error);

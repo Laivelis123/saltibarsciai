@@ -16,7 +16,8 @@ app.use(
     credentials: true,
   })
 );
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use(
   session({
     secret: "your_session_secret",
@@ -31,6 +32,8 @@ app.use("/api/groups", require("./routes/group"));
 app.use("/api/quizzes", require("./routes/quiz"));
 app.use("/api/quizzes/questions", require("./routes/quest"));
 app.use("/api/quizzes/assigned", require("./routes/asigned"));
+app.use("/api/profile", require("./routes/profile"));
+
 db.sequelize.sync().then(() => {
   console.log("Database connected");
   app.listen(port, () => {
