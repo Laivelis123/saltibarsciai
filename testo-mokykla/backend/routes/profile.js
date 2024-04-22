@@ -18,8 +18,6 @@ router.post("/upload", async (req, res) => {
       return res.status(400).json({ error: "Missing required parameters" });
     }
 
-    console.log("Erroras pries imgbb api naudojima");
-
     let body = new FormData();
     body.append("key", apiKey);
     body.append("image", imgData.split(",").pop());
@@ -39,8 +37,6 @@ router.post("/upload", async (req, res) => {
     //   image: imgData.split(",").pop(),
     //   name: userId,
     // });
-
-    console.log("Erroras po imgbb api naudojimo");
 
     //Grazinama nuotraukos url
     const imageUrl = response.data.data.url;

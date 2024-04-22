@@ -11,7 +11,11 @@ function Profilis() {
   const { user, userData, fetchUser } = useAuth();
   useEffect(() => {
     if (user) {
-      fetchUser();
+      fetchUser().then(() => {
+        if (userData.pictureUrl) {
+          setProfilePicture(userData.pictureUrl);
+        }
+      });
     }
   }, [user]);
 
@@ -87,13 +91,11 @@ function Profilis() {
                     accept="image/*"
                   />
                 </div>
-                {profilePicture ? null : (
-                  <div className="text-center mb-3">
-                    <Button onClick={handleButtonClick}>
-                      Įkelti nuotrauką
-                    </Button>
-                  </div>
-                )}
+                <div className="text-center mb-3">
+                  <Button onClick={handleButtonClick}>
+                    Pakeisti nuotrauką
+                  </Button>
+                </div>
                 {user && (
                   <div className="text-center">
                     <div>Slapyvardis: {userData.username}</div>
