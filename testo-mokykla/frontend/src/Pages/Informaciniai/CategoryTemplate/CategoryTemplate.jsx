@@ -3,8 +3,9 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import UI from "../../../components/UI/UI";
 import styles from "./categoryTemplate.module.css";
-
+import { useAuth } from "../../../context/AuthContext";
 const CategoryTemplate = () => {
+  const { user } = useAuth();
   const { categoryId } = useParams();
   const [category, setCategory] = useState(null);
   const navigate = useNavigate();
@@ -13,7 +14,12 @@ const CategoryTemplate = () => {
     const fetchCategory = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3001/api/categories/${categoryId}`
+          `http://localhost:3001/api/categories/${categoryId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${user.accessToken}`,
+            },
+          }
         );
         setCategory(response.data);
       } catch (error) {

@@ -16,11 +16,6 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Quiz.associate = (models) => {
-    Quiz.belongsToMany(models.Group, {
-      through: "QuizGroup",
-      as: "groups",
-      foreignKey: "quizId",
-    });
     Quiz.hasMany(models.UserQuiz, { foreignKey: "quizId" });
     Quiz.belongsTo(models.User, { as: "Creator", foreignKey: "userId" });
     Quiz.belongsTo(models.Category, {

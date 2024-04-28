@@ -13,8 +13,11 @@ function ManageCategories() {
           >
             Kurti Kategorija
           </Link>
-          <Link to="/" className="btn btn-primary">
-            Redaguoti Kategorija
+          <Link
+            to="/valdymas/mokytojas/tvarkyti/kategorijas/redaguoti"
+            className="btn btn-primary"
+          >
+            Redaguoti Kategorijas
           </Link>
           <Link to="/" className="btn btn-primary">
             Peržiūrėti Kategorija

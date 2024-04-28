@@ -27,10 +27,6 @@ module.exports = (sequelize, DataTypes) => {
       through: "UserGroup",
       foreignKey: "groupId",
     });
-    Group.belongsToMany(models.Quiz, {
-      through: "QuizGroup",
-      foreignKey: "groupId",
-    });
   };
 
   // Generate a random code before creating a new Group

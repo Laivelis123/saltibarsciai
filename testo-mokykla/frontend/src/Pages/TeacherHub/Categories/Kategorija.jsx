@@ -5,7 +5,7 @@ import UI from "../../../components/UI/UI";
 import { useAuth } from "../../../context/AuthContext";
 
 const Kategorija = () => {
-  const { user } = useAuth();
+  const { user, fetchCategories } = useAuth();
   const navigate = useNavigate();
   const [categoryName, setCategoryName] = useState("");
   const [bulletPoints, setBulletPoints] = useState([]);
@@ -14,18 +14,7 @@ const Kategorija = () => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:3001/api/categories/all"
-        );
-        setCategories(response.data);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
-
-    fetchCategories();
+    fetchCategories(null, setCategories);
   }, []);
 
   const handleCategoryNameChange = (event) => {
@@ -56,7 +45,7 @@ const Kategorija = () => {
         {
           name: categoryName,
           bulletPoints: bulletPoints,
-          parentId: parentCategory, // Send parentId instead of parentCategory
+          parentId: parentCategory,
         },
         {
           headers: {
@@ -109,7 +98,7 @@ const Kategorija = () => {
           </div>
           <div className="mb-3">
             <label htmlFor="bulletPoints" className="form-label">
-              Informacija:
+              Bullet Points:
             </label>
             <div className="input-group">
               <input
