@@ -51,18 +51,6 @@ module.exports = (sequelize, DataTypes) => {
       through: "UserGroup",
       foreignKey: "userId",
     });
-    User.belongsToMany(models.Category, {
-      as: "UserCategories",
-      through: "UserCategory",
-    });
-    User.belongsToMany(models.Quiz, {
-      as: "CreatedQuizzes",
-      through: "UserCreatedQuizzes",
-    });
-    User.belongsToMany(models.Quiz, {
-      as: "AllowedQuizzes",
-      through: "UserAllowedQuizzes",
-    });
   };
 
   return User;

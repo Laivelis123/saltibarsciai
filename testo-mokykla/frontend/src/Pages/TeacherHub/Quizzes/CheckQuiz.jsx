@@ -4,7 +4,7 @@ import axios from "axios";
 import { useAuth } from "../../../context/AuthContext";
 import UI from "../../../components/UI/UI";
 
-const GivenGrades = () => {
+const CheckQuiz = () => {
   const { quizId, userId } = useParams();
   const { user } = useAuth();
   const [quiz, setQuiz] = useState(null);
@@ -32,8 +32,10 @@ const GivenGrades = () => {
     <UI>
       {!loading && (
         <>
-          <h2 className="mb-4">Testo {quiz.title} peržiūra</h2>
-          <p>įvertinimas: {quiz.grade}</p>
+          <h2 className="mb-4">
+            {quiz.title} peržiūra, studentui {quiz.user}
+          </h2>
+          <p>Įvertinimas: {quiz.grade}</p>
           <h3 className="mb-4">Testo klausimai</h3>
           {quiz &&
             quiz.questions.map((question) => (
@@ -43,29 +45,21 @@ const GivenGrades = () => {
                 </div>
                 <div className="card-body">
                   <ul className="bg-white">
-                    {question.allAnswers.map((answer) => {
-                      const selectedAnswer = question.allUserAnswers.find(
-                        (userAnswer) => userAnswer.id === answer.id
-                      );
-                      const isSelected = !!selectedAnswer;
-                      const isRed = isSelected && answer.points <= 0;
-                      if (isSelected && answer.points <= 0)
-                        console.log(answer.answerText);
-                      const isPrimary = isSelected && answer.points > 0;
-                      const colorClass = isRed
-                        ? "text-danger"
-                        : isPrimary
-                        ? "text-primary"
-                        : "";
-                      return (
-                        <li
-                          key={answer.id}
-                          className={`bg-white ${colorClass}`}
-                        >
-                          <a>{answer.answerText}</a>
-                        </li>
-                      );
-                    })}
+                    {question.allAnswers.map((answer) => (
+                      <li
+                        key={answer.id}
+                        className={`bg-white ${
+                          question.allUserAnswers.find(
+                            (userAnswer) => userAnswer.id === answer.id
+                          )
+                            ? "text-primary"
+                            : ""
+                        }`}
+                      >
+                        <a>{answer.answerText}</a>
+                        <a>Skiriami balai: {answer.points}</a>
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </div>
@@ -76,4 +70,4 @@ const GivenGrades = () => {
   );
 };
 
-export default GivenGrades;
+export default CheckQuiz;

@@ -31,7 +31,11 @@ export const AuthProvider = ({ children }) => {
         }
       }
 
-      const response = await axios.get(url);
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      });
       setCategories(response.data);
     } catch (error) {
       console.error("Klaida gaunant kategorijas:", error);

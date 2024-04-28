@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../../context/AuthContext";
 import UI from "../../../components/UI/UI";
+import { Link } from "react-router-dom";
 
 function DoneQuizzes() {
-  const { user } = useAuth();
+  const { user, userData } = useAuth();
   const [userGrades, setUserGrades] = useState([]);
 
   useEffect(() => {
@@ -45,6 +46,12 @@ function DoneQuizzes() {
                   <p className="card-text">
                     <strong>Įvertinimas:</strong> {userGrade.score}%
                   </p>
+                  <Link
+                    to={`/valdymas/mokinys/ivertinimai/${userGrade.Quiz.id}/${userData.id}`}
+                    className="btn btn-primary"
+                  >
+                    Peržiūrėti
+                  </Link>
                 </div>
               </div>
             </div>

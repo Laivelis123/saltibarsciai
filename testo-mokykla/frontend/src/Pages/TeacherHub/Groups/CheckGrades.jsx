@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import UI from "../../../components/UI/UI";
 import { useAuth } from "../../../context/AuthContext";
+import { Link } from "react-router-dom";
 
 const CheckGrades = () => {
   const [quizzes, setQuizzes] = useState([]);
   const [grades, setGrades] = useState([]);
   const { user } = useAuth();
-
   useEffect(() => {
     const fetchQuizzes = async () => {
       try {
@@ -62,6 +62,12 @@ const CheckGrades = () => {
                   <div className="col">
                     <p>Mokinys: {grade.User.username}</p>
                     <p>Įvertinimas: {grade.score}</p>
+                    <Link
+                      to={`/valdymas/mokytojas/tvarkyti/grupes/įvertinimai/${quiz.id}/${grade.userId}`}
+                      className="btn btn-primary"
+                    >
+                      Peržiūrėti testą
+                    </Link>
                     <button
                       className="btn btn-danger"
                       onClick={() => removeGrade(quiz.id, grade.userId)}

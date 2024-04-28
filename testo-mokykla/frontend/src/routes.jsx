@@ -31,6 +31,8 @@ import {
   EditQuizzes,
   YourQuizzes,
   CheckGrades,
+  EditCategories,
+  CheckQuiz,
 } from "./Pages";
 
 export const allRoutes = [
@@ -79,6 +81,10 @@ export const allTeacherRoutes = [
         element: <ManageQuizes />,
       },
       {
+        path: "/valdymas/mokytojas/tvarkyti/kategorijas/redaguoti",
+        element: <EditCategories />,
+      },
+      {
         path: "/valdymas/mokytojas/tvarkyti/grupes",
         element: <ManageGroups />,
       },
@@ -110,6 +116,10 @@ export const allTeacherRoutes = [
         path: "/valdymas/mokytojas/tvarkyti/grupes/įvertinimai",
         element: <CheckGrades />,
       },
+      {
+        path: "/valdymas/mokytojas/tvarkyti/grupes/įvertinimai/:quizId/:userId",
+        element: <CheckQuiz />,
+      },
     ],
   },
 ];
@@ -126,6 +136,10 @@ export const allStudentRoutes = [
       },
       { path: "/valdymas/mokinys/ivertinimai", element: <DoneQuizes /> },
       { path: "/valdymas/mokinys/testai", element: <YourQuizzes /> },
+      {
+        path: "/valdymas/mokinys/ivertinimai/:quizId/:userId",
+        element: <GivenGrades />,
+      },
     ],
   },
 ];

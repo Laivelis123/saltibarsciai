@@ -4,14 +4,56 @@ const jwt = require("jsonwebtoken");
 const { Op } = require("sequelize");
 const { User, Category } = require("../models");
 
+const verifyToken = (req, res, next) => {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+  if (!token) return next({ status: 401, message: "Missing token" });
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) return next({ status: 403, message: "Invalid token" });
+    req.userId = decoded.id;
+    next();
+  });
+};
+router.delete("/:categoryId/remove", verifyToken, async (req, res) => {
+  try {
+    const userId = req.userId;
+    const { categoryId } = req.params;
+    const category = await Category.findByPk(categoryId);
+    if (!category) {
+      return res.status(404).json({ error: "Kategorija nerasta" });
+    }
+    if (category.userId !== userId) {
+      return res.status(403).json({ error: "Negalima trinti kategorijos" });
+    }
+    await category.destroy();
+    res.status(200).json({ success: true });
+  } catch (error) {
+    console.error("Klaida trinant kategoriją:", error);
+    res.status(500).json({ error: "Vidinė serverio klaida" });
+  }
+});
+router.get("/my", verifyToken, async (req, res) => {
+  try {
+    const userId = req.userId;
+    const categories = await Category.findAll({
+      where: { userId: userId },
+      include: [{ model: Category, as: "parent" }],
+    });
+    res.status(200).json(categories);
+  } catch (error) {
+    console.error("Error fetching user categories:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 // Gauna visus kategorijas pagal filtrą arba be filtro.
-router.get("/filter", async (req, res) => {
+router.get("/filter", verifyToken, async (req, res) => {
   try {
     const { search } = req.query;
     let categories;
 
     if (search) {
-      // Gauna kategorijas, kurių pavadinime yra nurodytas paieškos žodis.
       categories = await Category.findAll({
         where: {
           name: {
@@ -35,7 +77,7 @@ router.get("/filter", async (req, res) => {
 });
 
 // Gauna visas kategorijas.
-router.get("/all", async (req, res) => {
+router.get("/all", verifyToken, async (req, res) => {
   try {
     // Gauna visas kategorijas.
     const categories = await Category.findAll();
@@ -47,7 +89,7 @@ router.get("/all", async (req, res) => {
 });
 
 // Gauna kategorijos vaikines kategorijas pagal nurodytą ID.
-router.get("/:id/children", async (req, res) => {
+router.get("/:id/children", verifyToken, async (req, res) => {
   try {
     const categoryId = req.params.id;
     // Gauna kategorijos vaikines kategorijas.
@@ -62,32 +104,14 @@ router.get("/:id/children", async (req, res) => {
 });
 
 // Sukuria naują kategoriją.
-router.post("/create", async (req, res) => {
+router.post("/create", verifyToken, async (req, res) => {
   try {
+    const userId = req.userId;
     const { name, bulletPoints, parentId } = req.body;
-
-    const token = req.headers.authorization.split(" ")[1];
-    let decoded;
-    try {
-      decoded = jwt.verify(token, process.env.JWT_SECRET);
-    } catch (error) {
-      console.log(
-        "Sesija pasibaigė arba netinkamas žetonas. Vartotojas atsijungė."
-      );
-      return res
-        .status(401)
-        .json({ error: "Sesija pasibaigė arba netinkamas žetonas." });
-    }
-
-    const user = await User.findOne({ where: { username: decoded.username } });
-    if (!user) {
-      return res.status(404).json({ error: "Vartotojas nerastas" });
-    }
-    // Sukuria naują kategoriją su nurodytais duomenimis.
     const category = await Category.create({
       name,
       bulletPoints,
-      userId: user.id,
+      userId,
       parentId: parentId || null,
     });
 
@@ -99,9 +123,9 @@ router.post("/create", async (req, res) => {
 });
 
 // Gauna kategoriją pagal nurodytą ID.
-router.get("/:id", async (req, res) => {
+router.get("/:id", verifyToken, async (req, res) => {
   try {
-    // Gauna kategoriją pagal nurodytą ID kartu su vartotojo duomenimis.
+    const userId = req.userId;
     const category = await Category.findByPk(req.params.id, {
       include: [{ model: User, attributes: ["username"] }],
     });
@@ -115,4 +139,29 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.put("/:id/update", verifyToken, async (req, res) => {
+  try {
+    const userId = req.userId;
+    const { id } = req.params;
+    const { name, bulletPoints, parentId } = req.body;
+    console.log(parentId, id, name, bulletPoints);
+    const category = await Category.findByPk(id);
+    if (!category || category.userId !== userId) {
+      return res
+        .status(404)
+        .json({ error: "Kategorija nerasta, negalite redaguoti kategorijos" });
+    }
+    if (category.userId !== userId) {
+      return res.status(403).json({ error: "Negalima redaguoti kategorijos" });
+    }
+    category.name = name;
+    category.bulletPoints = bulletPoints;
+    category.parentId = parentId || null;
+    await category.save();
+    res.status(200).json({ success: true, category });
+  } catch (error) {
+    console.error("Klaida redaguojant kategoriją:", error);
+    res.status(500).json({ error: "Vidinė serverio klaida" });
+  }
+});
 module.exports = router;
