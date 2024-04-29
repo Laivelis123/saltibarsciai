@@ -3,8 +3,8 @@ import styles from "./searchBar.module.css";
 
 const SearchBar = ({ filterText, onChange }) => {
   return (
-    <div>
-      <div className={styles.search_input}>
+    <div className="pt-2 m-2">
+      <div className={`${styles.search_input}`}>
         <img src="https://img.icons8.com/search" alt="Icon" />
         <input
           id="input_"

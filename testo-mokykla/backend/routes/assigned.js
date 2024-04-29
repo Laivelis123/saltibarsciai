@@ -192,6 +192,31 @@ router.post("/:quizId/submit", verifyToken, async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+router.get("/average-all-categories", verifyToken, async (req, res) => {
+  try {
+    const userId = req.userId;
+    const userAveragesByCategories = await Grade.findAll({
+      where: {
+        userId,
+      },
+      attributes: [
+        "quizId",
+        [sequelize.fn("AVG", sequelize.col("score")), "average"],
+      ],
+      include: [
+        {
+          model: Quiz,
+          include: [{ model: Category, as: "categoryAlias" }],
+        },
+      ],
+      group: ["quizId"],
+    });
+    res.status(200).json({ success: true, userAveragesByCategories });
+  } catch (error) {
+    console.error("Error fetching user grades:", error);
+    res.status(500).json({ success: false, error: "Internal server error" });
+  }
+});
 
 router.get("/done-quizzes", verifyToken, async (req, res) => {
   try {
@@ -210,6 +235,32 @@ router.get("/done-quizzes", verifyToken, async (req, res) => {
     });
 
     res.status(200).json({ success: true, userGrades });
+  } catch (error) {
+    console.error("Error fetching user grades:", error);
+    res.status(500).json({ success: false, error: "Internal server error" });
+  }
+});
+router.get("/average-all", verifyToken, async (req, res) => {
+  try {
+    const userId = req.userId;
+    const userGrades = await Grade.findAll({
+      where: { userId },
+      include: [
+        {
+          model: Quiz,
+          include: [
+            { model: Category, as: "categoryAlias" },
+            { model: User, as: "Creator" },
+          ],
+        },
+      ],
+    });
+
+    const average =
+      userGrades.reduce((acc, grade) => acc + grade.score, 0) /
+      userGrades.length;
+
+    res.status(200).json({ success: true, average });
   } catch (error) {
     console.error("Error fetching user grades:", error);
     res.status(500).json({ success: false, error: "Internal server error" });

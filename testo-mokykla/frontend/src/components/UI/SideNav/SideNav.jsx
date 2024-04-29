@@ -6,7 +6,12 @@ import { useAuth } from "../../../context/AuthContext";
 import styles from "./sidenav.module.css";
 import SearchBar from "../SearchBar/SearchBar";
 
-const SideNav = ({ filterText, setFilterText }) => {
+const SideNav = ({
+  filterText,
+  setFilterText,
+  showSidebar,
+  setShowSidebar,
+}) => {
   const { fetchCategories } = useAuth();
   const [categories, setCategories] = useState([]);
   const { categoryId } = useParams();
@@ -14,30 +19,50 @@ const SideNav = ({ filterText, setFilterText }) => {
   useEffect(() => {
     fetchCategories(categoryId, setCategories);
   }, [categoryId]);
+  const toggleSidebar = () => {
+    setShowSidebar(!showSidebar);
+  };
 
   return (
-    <nav className="position-fixed top-0 start-0 bottom-0 bg-dark p-3 d-lg-block d-xl-block">
-      <div className={`text-dark px-3 py-2 mb-3 ${styles.titleText}`}>
-        Kategorijų filtras
+    <div className={`bg-dark ${styles.sideNav} pt-4 flex-wrap`}>
+      <div className="pt-2 px-2">
+        <div
+          className={`list-group-item list-group-item-action rounded-pill ${styles.titleText}`}
+        >
+          Kategorijų filtras{" "}
+          {window.innerWidth <= 768 && (
+            <div className="px-5 py-1">
+              <div
+                id="toggleButton"
+                className={`rounded-pill ${styles.toggleButton}`}
+                onClick={toggleSidebar}
+              >
+                {"ΞΞ"}
+              </div>
+            </div>
+          )}
+        </div>
       </div>
       <SearchBar filterText={filterText} onChange={setFilterText} />
-      <ul className="nav flex-column bg-dark">
+      <ul className="bg-dark list-group-item list-group-item-action">
         {categories
           .filter((category) =>
             category.name.toLowerCase().includes(filterText.toLowerCase())
           )
           .map((category) => (
-            <li key={category.id} className="nav-item">
-              <Link
-                to={`/category/${category.id}`}
-                className={`nav-link ${styles.navColor} ${styles.listItem}`}
-              >
-                {category.name}
-              </Link>
-            </li>
+            <div key={category.id} className="pt-2 px-2">
+              <li className="list-group-item list-group-item-action rounded-pill pt-2">
+                <Link
+                  to={`/category/${category.id}`}
+                  className={`list-group-item list-group-item-action px-3 ${styles.navColor} `}
+                >
+                  {category.name}
+                </Link>
+              </li>
+            </div>
           ))}
       </ul>
-    </nav>
+    </div>
   );
 };
 

@@ -18,6 +18,7 @@ function DoneQuizzes() {
           }
         );
         setUserGrades(response.data.userGrades);
+        console.log("User grades:", response.data.userGrades);
       } catch (error) {
         console.error("Error fetching done quizzes:", error);
       }
@@ -35,10 +36,12 @@ function DoneQuizzes() {
               <div className="card">
                 <div className="card-body">
                   <h5 className="card-title">{userGrade.Quiz.title}</h5>
-                  <p className="card-text">
-                    <strong>Kategorija:</strong>{" "}
-                    {userGrade.Quiz.categoryAlias.name}
-                  </p>
+                  {userGrade.Quiz.categoryAlias && ( // Check if categoryAlias exists
+                    <p className="card-text">
+                      <strong>Kategorija:</strong>{" "}
+                      {userGrade.Quiz.categoryAlias.name}
+                    </p>
+                  )}
                   <p className="card-text">
                     <strong>Mokytojas:</strong>{" "}
                     {userGrade.Quiz.Creator.username}

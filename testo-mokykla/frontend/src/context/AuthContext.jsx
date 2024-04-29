@@ -14,29 +14,33 @@ export const AuthProvider = ({ children }) => {
     const storedUser = localStorage.getItem("token");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
+    } else {
+      logout();
     }
     setLoading(false);
   }, []);
   const fetchCategories = async (categoryId, setCategories) => {
     setLoading(true);
     try {
-      let url = "http://localhost:3001/api/categories/filter";
+      if (user) {
+        let url = "http://localhost:3001/api/categories/filter";
 
-      if (categoryId) {
-        url = `http://localhost:3001/api/categories/${categoryId}/children`;
-      } else {
-        const pathname = window.location.pathname;
-        if (pathname === "/") {
-          url = "http://localhost:3001/api/categories/filter?parentId=null";
+        if (categoryId) {
+          url = `http://localhost:3001/api/categories/${categoryId}/children`;
+        } else {
+          const pathname = window.location.pathname;
+          if (pathname === "/") {
+            url = "http://localhost:3001/api/categories/filter?parentId=null";
+          }
         }
-      }
 
-      const response = await axios.get(url, {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
-        },
-      });
-      setCategories(response.data);
+        const response = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        });
+        setCategories(response.data);
+      }
     } catch (error) {
       console.error("Klaida gaunant kategorijas:", error);
     } finally {
@@ -56,13 +60,9 @@ export const AuthProvider = ({ children }) => {
             },
           }
         );
-        if (!response.data) {
-          navigate("/prisijungimas");
-        } else {
-          setUserData(response.data);
-        }
+        setUserData(response.data);
       } else {
-        navigate("/prisijungimas");
+        logout();
       }
     } catch (error) {
       console.error(error);
@@ -100,11 +100,11 @@ export const AuthProvider = ({ children }) => {
       });
       setUser(null);
       localStorage.removeItem("token");
-      navigate("/prisijungimas");
     } catch (error) {
       console.error(error);
     } finally {
       setLoading(false);
+      navigate("/prisijungimas");
     }
   };
 
@@ -122,6 +122,8 @@ export const AuthProvider = ({ children }) => {
           ...prevUser,
           accessToken: response.data.accessToken,
         }));
+      } else {
+        logout();
       }
     } catch (error) {
       console.error(error);
@@ -166,6 +168,7 @@ export const AuthProvider = ({ children }) => {
     login,
     logout,
     loading,
+    setLoading,
     refreshToken,
     fetchCategories,
   };
