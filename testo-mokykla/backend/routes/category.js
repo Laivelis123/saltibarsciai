@@ -40,6 +40,11 @@ router.get("/my", verifyToken, async (req, res) => {
       where: { userId: userId },
       include: [{ model: Category, as: "parent" }],
     });
+    categories.map((category) => {
+      category.bulletPoints.length > 2
+        ? (category.bulletPoints = JSON.parse(category.bulletPoints))
+        : (category.bulletPoints = []);
+    });
     res.status(200).json(categories);
   } catch (error) {
     console.error("Error fetching user categories:", error);
@@ -132,6 +137,9 @@ router.get("/:id", verifyToken, async (req, res) => {
     if (!category) {
       return res.status(404).json({ error: "Kategorija nerasta" });
     }
+    if (category.bulletPoints.length > 2) {
+      category.bulletPoints = JSON.parse(category.bulletPoints);
+    }
     res.status(200).json(category);
   } catch (error) {
     console.error("Klaida gaunant kategoriją:", error);
@@ -144,7 +152,6 @@ router.put("/:id/update", verifyToken, async (req, res) => {
     const userId = req.userId;
     const { id } = req.params;
     const { name, bulletPoints, parentId } = req.body;
-    console.log(parentId, id, name, bulletPoints);
     const category = await Category.findByPk(id);
     if (!category || category.userId !== userId) {
       return res

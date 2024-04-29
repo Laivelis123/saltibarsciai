@@ -1,57 +1,110 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-
-import { useAuth } from "../../../context/AuthContext";
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import styles from "./menu.module.css";
-const Menu = () => {
-  const { user, userData, fetchUser, logout } = useAuth();
+import { useAuth } from "../../../context/AuthContext";
+
+const Menu = ({ showSidebar, setShowSidebar }) => {
+  const { user, logout, userData } = useAuth();
+
   useEffect(() => {
-    if (user) {
-      fetchUser();
-    }
-  }, [user]);
+    const handleResize = () => {
+      if (window.innerWidth > 768) {
+        setShowSidebar(true);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [setShowSidebar]);
+
+  const toggleSidebar = () => {
+    setShowSidebar(!showSidebar);
+  };
+
   return (
     <>
-      <ul>
-        {user && (
-          <li>
-            <Link to="/">Pagrindinis</Link>
+      <ul className="py-3">
+        {window.innerWidth <= 768 && !showSidebar && (
+          <li className="m-2">
+            <Link className="px-2 py-1 rounded-pill" onClick={toggleSidebar}>
+              {"ΞΞ"}
+            </Link>
           </li>
         )}
-        <li>
-          <Link to="/naujienos">Naujienos</Link>
-        </li>
-        {!user && (
-          <li>
-            <Link to="/prisijungimas">Prisijungimas</Link>
-          </li>
-        )}
-        {!user && (
-          <li>
-            <Link to="/registracija">Registracija</Link>
-          </li>
-        )}
-        <li>
-          <Link to="/apie">Apie</Link>
-        </li>
-        <li>
-          <Link to="/kontaktai">Kontaktai</Link>
-        </li>
-        {user && (
-          <li className={styles.non_link_li}>
-            <button
-              onClick={logout}
-              className={`btn btn-lg ${styles.buttonColor}`}
-            >
-              Atsijungti
-            </button>
-          </li>
-        )}
-        {user && (
-          <li className={styles.non_link_li}>
-            <Link to="/profilis">Sveiki, {userData.username}</Link>
-          </li>
-        )}
+        <div className="flex-wrap m-2">
+          {(window.innerWidth > 768 || !showSidebar) && (
+            <>
+              {user && (
+                <div className="menu-item">
+                  <li className="px-2 rounded-pill">
+                    <Link className="px-2 py-1 rounded-pill" to="/">
+                      Pagrindinis
+                    </Link>
+                  </li>
+                </div>
+              )}
+              <div className="menu-item">
+                <li className="px-2">
+                  <Link className="px-2 py-1  rounded-pill" to="/naujienos">
+                    Naujienos
+                  </Link>
+                </li>
+              </div>
+              {!user && (
+                <>
+                  <div className="menu-item">
+                    <li className="px-2">
+                      <Link
+                        className="px-2 py-1  rounded-pill"
+                        to="/prisijungimas"
+                      >
+                        Prisijungimas
+                      </Link>
+                    </li>
+                  </div>
+                  <div className="menu-item">
+                    <li className="px-2">
+                      <Link
+                        className="px-2 py-1  rounded-pill"
+                        to="/registracija"
+                      >
+                        Registracija
+                      </Link>
+                    </li>
+                  </div>
+                </>
+              )}
+              <div className="menu-item">
+                <li className="px-2">
+                  <Link className="px-2 py-1 rounded-pill" to="/apie">
+                    Apie
+                  </Link>
+                </li>
+              </div>
+              <div className="menu-item">
+                <li className="px-2">
+                  <Link className="px-2 py-1  rounded-pill" to="/kontaktai">
+                    Kontaktai
+                  </Link>
+                </li>
+              </div>
+              {user && (
+                <li style={{ float: "right" }}>
+                  <Link className="rounded-pill px-2 py-1 " to="/profilis">
+                    Sveiki, {userData.username}
+                  </Link>
+                  <Link
+                    onClick={logout}
+                    className={`rounded-pill px-2 py-2  ${styles.buttonColor}`}
+                  >
+                    Atsijungti
+                  </Link>
+                </li>
+              )}
+            </>
+          )}
+        </div>
       </ul>
     </>
   );

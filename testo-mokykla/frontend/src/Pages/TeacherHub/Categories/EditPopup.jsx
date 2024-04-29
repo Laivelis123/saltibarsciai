@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../../../context/AuthContext";
 import "./EditPopup.css";
-import PropTypes from "prop-types";
 
 const EditPopup = ({ category, onClose }) => {
   const { user, fetchCategories, loading } = useAuth();
@@ -18,14 +17,9 @@ const EditPopup = ({ category, onClose }) => {
     setEditedCategory(category);
     setParentCategory(category.parentId);
     setCategoryName(category.name);
-    if (category.bulletPoints && category.bulletPoints.length > 2) {
-      setBulletPoints(
-        JSON.parse(category.bulletPoints)
-          .slice(1, -1)
-          .split(",")
-          .map((point) => point.slice(1, -1))
-      );
-    }
+    setBulletPoints(
+      category.bulletPoints ? JSON.parse(category.bulletPoints) : []
+    );
   }, [user.accessToken, category]);
 
   const handleCategoryNameChange = (value) => {

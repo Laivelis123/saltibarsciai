@@ -49,8 +49,7 @@ const GivenGrades = () => {
                       );
                       const isSelected = !!selectedAnswer;
                       const isRed = isSelected && answer.points <= 0;
-                      if (isSelected && answer.points <= 0)
-                        console.log(answer.answerText);
+
                       const isPrimary = isSelected && answer.points > 0;
                       const colorClass = isRed
                         ? "text-danger"
@@ -60,7 +59,7 @@ const GivenGrades = () => {
                       return (
                         <li
                           key={answer.id}
-                          className={`bg-white ${colorClass}`}
+                          className={`bg-white mx-2 ${colorClass}`}
                         >
                           <a>{answer.answerText}</a>
                         </li>

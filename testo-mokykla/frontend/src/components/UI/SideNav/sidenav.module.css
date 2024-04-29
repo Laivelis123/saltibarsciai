@@ -5,8 +5,7 @@
 
 .titleText {
   text-align: center !important;
-  background-color: rgb(60, 188, 113);
-  border-radius: 10px !important;
+  background-color: rgb(60, 188, 113) !important;
 }
 
 .navColor:hover {
@@ -16,4 +15,17 @@
 .listItem {
   border-radius: 10px !important;
   margin-bottom: 5px;
+}
+.sideNav {
+  width: calc(100% / 8);
+  min-width: 200px;
+}
+.toggleButton {
+  cursor: pointer !important;
+}
+
+.toggleButton:hover {
+  background-color: #111 !important;
+  color: rgb(60, 188, 113) !important;
+  font-weight: bold !important;
 }

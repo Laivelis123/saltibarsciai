@@ -7,12 +7,14 @@ import { useAuth } from "../../../context/AuthContext";
 const CategoryTemplate = () => {
   const { user } = useAuth();
   const { categoryId } = useParams();
-  const [category, setCategory] = useState(null);
+  const [category, setCategory] = useState({});
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCategory = async () => {
       try {
+        setLoading(true);
         const response = await axios.get(
           `http://localhost:3001/api/categories/${categoryId}`,
           {
@@ -22,13 +24,14 @@ const CategoryTemplate = () => {
           }
         );
         setCategory(response.data);
+        setLoading(false);
       } catch (error) {
         console.error("Klaida gaudant kategoriją:", error);
       }
     };
 
     fetchCategory();
-  }, [categoryId]);
+  }, [categoryId, user.accessToken]);
 
   const handleGoBack = () => {
     if (category && category.parentId) {
@@ -40,22 +43,25 @@ const CategoryTemplate = () => {
 
   return (
     <UI>
-      {category ? (
+      {!loading && category ? (
         <div className={`container ${styles.containerColor}`}>
           <p>Kategorijos pavadinimas: {category.name}</p>
           <p>Šią kategorija sukūrė: {category.User.username}</p>
-          <ul className={`nav flex-column ${styles.categoryColor}`}>
-            {category.bulletPoints &&
-              JSON.parse(category.bulletPoints).map((point, index) => (
-                <li key={index} className="nav-item">
-                  • {point}
-                </li>
-              ))}
-          </ul>
+          {category.bulletPoints &&
+            JSON.parse(category.bulletPoints).length > 0 && (
+              <>
+                <ul className={`nav flex-column ${styles.categoryColor}`}>
+                  {JSON.parse(category.bulletPoints).map((point, index) => (
+                    <li key={index} className="nav-item">
+                      • {point}
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+
           <div className={`container text-dark ${styles.containerColor}`}>
-            <button className={styles.firstBtn}>Bandomasis testas</button>
-            <button className={styles.nextBtn}>Mokytojo paskirti testai</button>
-            <button onClick={handleGoBack} className={styles.backBtn}>
+            <button onClick={handleGoBack} className={`btn ${styles.backBtn}`}>
               Atgal
             </button>
           </div>

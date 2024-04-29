@@ -3,22 +3,13 @@
   height: 30px;
   display: flex;
   color: white;
-  padding: 5px 5px;
   text-decoration: none;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
   border-radius: 20px;
-  margin-bottom: 5px;
 }
 
 input {
   background: transparent;
   border: none;
-  margin-left: 5px;
   text-align: left;
   color: white;
 }

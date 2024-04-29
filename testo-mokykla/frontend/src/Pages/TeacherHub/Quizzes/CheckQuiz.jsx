@@ -48,7 +48,7 @@ const CheckQuiz = () => {
                     {question.allAnswers.map((answer) => (
                       <li
                         key={answer.id}
-                        className={`bg-white ${
+                        className={`bg-white mx-2 ${
                           question.allUserAnswers.find(
                             (userAnswer) => userAnswer.id === answer.id
                           )
@@ -57,7 +57,7 @@ const CheckQuiz = () => {
                         }`}
                       >
                         <a>{answer.answerText}</a>
-                        <a>Skiriami balai: {answer.points}</a>
+                        <a> Skiriami balai: {answer.points}</a>
                       </li>
                     ))}
                   </ul>
