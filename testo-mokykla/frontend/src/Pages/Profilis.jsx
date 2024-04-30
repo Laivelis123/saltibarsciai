@@ -37,6 +37,18 @@ function Profilis() {
     }
   };
 
+  const deleteImage = async () => {
+    try {
+      await axios.post("http://localhost:3001/api/profile/delete", {
+        userId: userData.id,
+      });
+      setProfilePicture(null);
+      console.log("Nuotrauka ištrinta sėkmingai.");
+    } catch (error) {
+      console.error("Nepavyko ištrinti nuotraukos: ", error.response.data);
+    }
+  };
+
   const [profilePicture, setProfilePicture] = useState(null);
   const handlePictureChange = async (e) => {
     const file = e.target.files[0];
@@ -94,6 +106,11 @@ function Profilis() {
                 <div className="text-center mb-3">
                   <Button onClick={handleButtonClick}>
                     Pakeisti nuotrauką
+                  </Button>
+                </div>
+                <div className="text-center mb-3">
+                  <Button variant="danger" onClick={deleteImage}>
+                    Ištrinti nuotrauką
                   </Button>
                 </div>
                 {user && (
