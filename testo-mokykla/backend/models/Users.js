@@ -36,6 +36,13 @@ module.exports = (sequelize, DataTypes) => {
         len: [1, 16],
       },
     },
+    pictureUrl: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      validate: {
+        isUrl: true,
+      },
+    },
   });
 
   User.associate = (models) => {
@@ -43,18 +50,6 @@ module.exports = (sequelize, DataTypes) => {
     User.belongsToMany(models.Group, {
       through: "UserGroup",
       foreignKey: "userId",
-    });
-    User.belongsToMany(models.Category, {
-      as: "UserCategories",
-      through: "UserCategory",
-    });
-    User.belongsToMany(models.Quiz, {
-      as: "CreatedQuizzes",
-      through: "UserCreatedQuizzes",
-    });
-    User.belongsToMany(models.Quiz, {
-      as: "AllowedQuizzes",
-      through: "UserAllowedQuizzes",
     });
   };
 

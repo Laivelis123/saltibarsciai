@@ -1,26 +1,23 @@
 import React from "react";
 import UI from "../../../components/UI/UI";
 import { Link } from "react-router-dom";
-function ManageCategories() {
+function ManageQuizes() {
   return (
     <UI>
       <div className="container mt-4">
-        <h2>Kategorijų tvarkyklė</h2>
+        <h2>Testų tvarkyklė</h2>
         <div className="d-grid gap-2">
           <Link
-            to="/valdymas/mokytojas/tvarkyti/kategorijas/kurti"
+            to="/valdymas/mokytojas/tvarkyti/testai/kurti"
             className="btn btn-primary"
           >
-            Kurti Kategorija
+            Kurti Testą
           </Link>
           <Link
-            to="/valdymas/mokytojas/tvarkyti/kategorijas/redaguoti"
+            to="/valdymas/mokytojas/tvarkyti/testai/peržiūra"
             className="btn btn-primary"
           >
-            Redaguoti Kategorijas
-          </Link>
-          <Link to="/" className="btn btn-primary">
-            Peržiūrėti Kategorija
+            Redaguoti Testus
           </Link>
         </div>
       </div>
@@ -28,4 +25,4 @@ function ManageCategories() {
   );
 }
 
-export default ManageCategories;
+export default ManageQuizes;

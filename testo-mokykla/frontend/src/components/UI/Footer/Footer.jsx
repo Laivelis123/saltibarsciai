@@ -4,7 +4,7 @@ import styles from "./footer.module.css";
 
 function Footer() {
   return (
-    <footer className={`${styles.footerColor} py-4 mt-5`}>
+    <footer className={`${styles.footerColor}`}>
       <div className="container">
         <div className="row">
           <div className="col-md-6">

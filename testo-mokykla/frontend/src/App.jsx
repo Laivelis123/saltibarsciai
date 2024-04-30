@@ -1,6 +1,8 @@
 import React from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
+import { useAuth } from "./context/AuthContext";
+import { jwtDecode } from "jwt-decode";
 import {
   allRoutes,
   allPrivateRoutes,
@@ -9,25 +11,24 @@ import {
   allStudentRoutes,
 } from "./routes";
 import "./transition.css";
+
 function App() {
   const location = useLocation();
+  const { user } = useAuth();
 
   return (
-    <TransitionGroup>
-      <CSSTransition key={location.key} classNames="fade" timeout={300}>
-        <Routes location={location}>
-          {/* Bet ko pasiekiami puslapiai */}
-          {allRoutes.map(({ path, element }) => (
-            <Route key={path} path={path} element={element} />
-          ))}
-          {/* Tik publikos pasiekiami puslapiai */}
-          {allPublicRoutes.map(({ element, children }) => (
-            <Route key={element} element={element}>
-              {children.map(({ path, element }) => (
-                <Route key={path} path={path} element={element} />
-              ))}
-            </Route>
-          ))}
+    <Routes location={location}>
+      {!user ? (
+        // Tik publikos pasiekiami puslapiai
+        allPublicRoutes.map(({ element, children }) => (
+          <Route key={element} element={element}>
+            {children.map(({ path, element }) => (
+              <Route key={path} path={path} element={element} />
+            ))}
+          </Route>
+        ))
+      ) : (
+        <>
           {/* Privačiai pasiekiami puslapiai */}
           {allPrivateRoutes.map(({ element, children }) => (
             <Route key={element} element={element}>
@@ -36,29 +37,32 @@ function App() {
               ))}
             </Route>
           ))}
-          {/* Mokytojų pasiekiami puslapiai */}
-          {allTeacherRoutes.map(({ parent, element, children }) => (
-            <Route key={parent} element={parent}>
-              <Route key={element} element={element}>
-                {children.map(({ path, element }) => (
-                  <Route key={path} path={path} element={element} />
-                ))}
-              </Route>
-            </Route>
-          ))}
           {/* Mokinių pasiekiami puslapiai */}
-          {allStudentRoutes.map(({ parent, element, children }) => (
-            <Route key={parent} element={parent}>
+          {jwtDecode(user.accessToken).accountType === "student" &&
+            allStudentRoutes.map(({ element, children }) => (
               <Route key={element} element={element}>
                 {children.map(({ path, element }) => (
                   <Route key={path} path={path} element={element} />
                 ))}
               </Route>
-            </Route>
-          ))}
-        </Routes>
-      </CSSTransition>
-    </TransitionGroup>
+            ))}
+          {/* Mokytojų pasiekiami puslapiai */}
+          {jwtDecode(user.accessToken).accountType === "teacher" &&
+            allTeacherRoutes.map(({ element, children }) => (
+              <Route key={element} element={element}>
+                {children.map(({ path, element }) => (
+                  <Route key={path} path={path} element={element} />
+                ))}
+              </Route>
+            ))}
+        </>
+      )}
+
+      {/* Bet ko pasiekiami puslapiai */}
+      {allRoutes.map(({ path, element }) => (
+        <Route key={path} path={path} element={element} />
+      ))}
+    </Routes>
   );
 }
 

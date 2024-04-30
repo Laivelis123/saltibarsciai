@@ -2,8 +2,7 @@ import { lazy } from "react";
 import { Route } from "react-router-dom";
 import PrivateRoutes from "./utils/PrivateRoutes";
 import PublicRoutes from "./utils/PublicRoutes";
-import TeacherRoutes from "./utils/TeacherRoutes";
-import StudentRoutes from "./utils/StudentRoutes";
+
 import {
   Prisijungimas,
   Registracija,
@@ -27,13 +26,20 @@ import {
   YourGroups,
   NeraPuslapio,
   CategoryTemplate,
+  CreateQuiz,
+  EditQuiz,
+  EditQuizzes,
+  YourQuizzes,
+  CheckGrades,
+  EditCategories,
+  CheckQuiz,
 } from "./Pages";
 
 export const allRoutes = [
   { path: "/naujienos", element: <Naujienos /> },
-  { path: "/*", element: <NeraPuslapio /> },
   { path: "/apie", element: <Apie /> },
   { path: "/kontaktai", element: <Kontaktai /> },
+  { path: "/*", element: <NeraPuslapio /> },
 ];
 
 export const allPrivateRoutes = [
@@ -59,8 +65,7 @@ export const allPublicRoutes = [
 
 export const allTeacherRoutes = [
   {
-    parent: <PrivateRoutes />,
-    element: <TeacherRoutes />,
+    element: <PrivateRoutes />,
     children: [
       { path: "/valdymas/mokytojas", element: <TeachHub /> },
       {
@@ -74,6 +79,10 @@ export const allTeacherRoutes = [
       {
         path: "/valdymas/mokytojas/tvarkyti/testus",
         element: <ManageQuizes />,
+      },
+      {
+        path: "/valdymas/mokytojas/tvarkyti/kategorijas/redaguoti",
+        element: <EditCategories />,
       },
       {
         path: "/valdymas/mokytojas/tvarkyti/grupes",
@@ -91,20 +100,46 @@ export const allTeacherRoutes = [
         path: "/valdymas/mokytojas/tvarkyti/grupes/redaguoti/:groupId",
         element: <EditGroup />,
       },
+      {
+        path: "/valdymas/mokytojas/tvarkyti/testai/kurti",
+        element: <CreateQuiz />,
+      },
+      {
+        path: "/valdymas/mokytojas/tvarkyti/testai/redaguoti/:quizId",
+        element: <EditQuiz />,
+      },
+      {
+        path: "/valdymas/mokytojas/tvarkyti/testai/peržiūra",
+        element: <EditQuizzes />,
+      },
+      {
+        path: "/valdymas/mokytojas/tvarkyti/grupes/įvertinimai",
+        element: <CheckGrades />,
+      },
+      {
+        path: "/valdymas/mokytojas/tvarkyti/grupes/įvertinimai/:quizId/:userId",
+        element: <CheckQuiz />,
+      },
     ],
   },
 ];
 
 export const allStudentRoutes = [
   {
-    parent: <PrivateRoutes />,
-    element: <StudentRoutes />,
+    element: <PrivateRoutes />,
     children: [
       { path: "/valdymas/mokinys", element: <StudentHub /> },
       { path: "/valdymas/mokinys/grupės", element: <YourGroups /> },
-      { path: "/valdymas/mokinys/testai/baigti", element: <DoneQuizes /> },
-      { path: "/valdymas/mokinys/testai/daryti", element: <TakeQuizes /> },
-      { path: "/valdymas/mokinys/ivertinimai", element: <GivenGrades /> },
+      {
+        path: "/valdymas/mokinys/testai/daryti/:quizId",
+        element: <TakeQuizes />,
+      },
+      { path: "/valdymas/mokinys/ivertinimai", element: <DoneQuizes /> },
+      { path: "/valdymas/mokinys/testai", element: <YourQuizzes /> },
+      {
+        path: "/valdymas/mokinys/ivertinimai/:quizId/:userId",
+        element: <GivenGrades />,
+      },
     ],
   },
 ];
