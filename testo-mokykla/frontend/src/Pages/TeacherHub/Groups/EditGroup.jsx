@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import UI from "../../../components/UI/UI";
 import { useAuth } from "../../../context/AuthContext";
-
+import ServerPaths from "../../../context/ServerPaths";
 const EditGroup = () => {
   const { groupId } = useParams();
   const [group, setGroup] = useState(null);
@@ -17,7 +17,7 @@ const EditGroup = () => {
     const fetchGroup = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3001/api/groups/${groupId}`,
+          ServerPaths.GroupRoutes.GET_GROUP(groupId),
           { headers: { Authorization: `Bearer ${user.accessToken}` } }
         );
         setGroup(response.data.group);
@@ -29,7 +29,7 @@ const EditGroup = () => {
     };
 
     fetchGroup();
-  }, [groupId]);
+  }, [groupId, user.accessToken]);
 
   const handleGroupNameChange = (event) => {
     setNewGroupName(event.target.value);
@@ -38,7 +38,7 @@ const EditGroup = () => {
   const handleUpdateGroupName = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:3001/api/groups/${groupId}`,
+        ServerPaths.GroupRoutes.UPDATE_GROUP(groupId),
         { name: newGroupName },
         { headers: { Authorization: `Bearer ${user.accessToken}` } }
       );
@@ -51,7 +51,7 @@ const EditGroup = () => {
 
   const handleDeleteGroup = async () => {
     try {
-      await axios.delete(`http://localhost:3001/api/groups/${groupId}`, {
+      await axios.delete(ServerPaths.GroupRoutes.DELETE_GROUP(groupId), {
         headers: { Authorization: `Bearer ${user.accessToken}` },
       });
       navigate("/valdymas/mokytojas/tvarkyti/grupes");
@@ -64,7 +64,7 @@ const EditGroup = () => {
   const handleRemoveUser = async (userId) => {
     try {
       await axios.delete(
-        `http://localhost:3001/api/groups/${groupId}/users/${userId}`,
+        ServerPaths.GroupRoutes.REMOVE_USER_FROM_GROUP(groupId, userId),
         {
           headers: { Authorization: `Bearer ${user.accessToken}` },
         }

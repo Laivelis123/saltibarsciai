@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 import UI from "../components/UI/UI";
 import { Card, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import defaultProfile from "../Images/default-profile-picture.jpg";
-import { Link, useNavigate } from "react-router-dom";
-
+import ServerPaths from "../context/ServerPaths";
 function Profilis() {
   const { user, userData, fetchUser } = useAuth();
   useEffect(() => {
     if (user) {
+      console.log("PROF", userData);
       fetchUser().then(() => {
         if (userData.pictureUrl) {
           setProfilePicture(userData.pictureUrl);
@@ -22,7 +22,7 @@ function Profilis() {
   const uploadImage = async (imageData) => {
     try {
       const response = await axios.post(
-        "http://localhost:3001/api/profile/upload",
+        ServerPaths.ProfileRoutes.UPLOAD_IMAGE,
         {
           image: imageData,
           userId: userData.id,
@@ -56,7 +56,6 @@ function Profilis() {
 
   return (
     <UI>
-      {" "}
       <div className="container mt-5">
         <div className="row justify-content-center">
           <div className="col-md-6">

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import UI from "../../../components/UI/UI";
 import { useAuth } from "../../../context/AuthContext";
 import { Link } from "react-router-dom";
-
+import ServerPaths from "../../../context/ServerPaths";
 const CheckGrades = () => {
   const [quizzes, setQuizzes] = useState([]);
   const [grades, setGrades] = useState([]);
@@ -12,7 +12,7 @@ const CheckGrades = () => {
     const fetchQuizzes = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3001/api/quizzes/assigned/teacher-quizzes",
+          ServerPaths.AssignedRoutes.TEACHER_QUIZZES,
           {
             headers: { Authorization: `Bearer ${user.accessToken}` },
           }
@@ -20,18 +20,17 @@ const CheckGrades = () => {
         setQuizzes(response.data.quizzes);
         setGrades(response.data.grades);
       } catch (error) {
-        console.error("Error fetching quizzes:", error);
+        console.error("Klaida gaunant mokytojo testus:", error);
       }
     };
 
     fetchQuizzes();
-  }, []);
+  }, [user.accessToken]);
 
   const removeGrade = async (quizId, userId) => {
     try {
-      await axios.post(
-        `http://localhost:3001/api/quizzes/assigned/remove-grade/${quizId}/${userId}`,
-        {},
+      await axios.delete(
+        ServerPaths.AssignedRoutes.REMOVE_GRADE(quizId, userId),
         {
           headers: { Authorization: `Bearer ${user.accessToken}` },
         }
@@ -42,7 +41,7 @@ const CheckGrades = () => {
         )
       );
     } catch (error) {
-      console.error("Error removing grade:", error);
+      console.error("Klaida šalinant pažymį:", error);
     }
   };
 

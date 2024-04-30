@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { useAuth } from "../../../context/AuthContext";
-
+import PropTypes from "prop-types";
+import ServerPaths from "../../../context/ServerPaths";
 const EditQuizQuestion = ({ quizId }) => {
   const [questions, setQuestions] = useState([]);
   const [newQuestionText, setNewQuestionText] = useState("");
-  const [newAnswers, setNewAnswers] = useState([]); // State for answer text and points
+  const [newAnswers, setNewAnswers] = useState([]);
   const { user } = useAuth();
   const [questionNumbers, setQuestionNumbers] = useState([]);
 
-  const fetchQuestions = async () => {
+  const fetchQuestions = useCallback(async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3001/api/quizzes/questions/${quizId}/all`,
+        ServerPaths.QuestRoutes.GET_QUESTIONS(quizId),
         {
           headers: { Authorization: `Bearer ${user.accessToken}` },
         }
@@ -28,47 +29,46 @@ const EditQuizQuestion = ({ quizId }) => {
         Array.from({ length: response.data.questions.length }, (_, i) => i + 1)
       );
     } catch (error) {
-      console.error("Error fetching questions:", error);
+      console.error("Klaida gaunant klausimus:", error);
     }
-  };
+  }, [quizId, user.accessToken]);
 
   useEffect(() => {
     fetchQuestions();
-  }, [quizId]);
+  }, [fetchQuestions]);
 
   const handleAddQuestion = async () => {
     try {
-      const response = await axios.post(
-        `http://localhost:3001/api/quizzes/questions/${quizId}`,
+      await axios.post(
+        ServerPaths.QuestRoutes.CREATE_QUESTION(quizId),
         { questionText: newQuestionText },
         { headers: { Authorization: `Bearer ${user.accessToken}` } }
       );
       fetchQuestions();
-      setNewQuestionText(""); // Reset the input field after adding question
+      setNewQuestionText("");
     } catch (error) {
-      console.error("Error adding question:", error);
+      console.error("Klaida pridedant klausimą:", error);
     }
   };
   const handleRemoveQuestion = async (questionId, questionNumber) => {
     try {
       await axios.delete(
-        `http://localhost:3001/api/quizzes/questions/${quizId}/all/${questionId}`,
+        ServerPaths.QuestRoutes.DELETE_QUESTION(quizId, questionId),
         { headers: { Authorization: `Bearer ${user.accessToken}` } }
       );
       fetchQuestions();
-      // Update question numbers after removing a question
       setQuestionNumbers(
         questionNumbers.filter((number) => number !== questionNumber)
       );
     } catch (error) {
-      console.error("Error removing question:", error);
+      console.error("Klaida šalinant klausimą:", error);
     }
   };
 
   const handleAddAnswer = async (questionId, index) => {
     try {
-      const response = await axios.post(
-        `http://localhost:3001/api/quizzes/questions/${quizId}/all/${questionId}/answers`,
+      await axios.post(
+        ServerPaths.QuestRoutes.ADD_ANSWER(quizId, questionId),
         {
           answerText: newAnswers[index].answerText,
           points: newAnswers[index].points,
@@ -76,26 +76,25 @@ const EditQuizQuestion = ({ quizId }) => {
         { headers: { Authorization: `Bearer ${user.accessToken}` } }
       );
       fetchQuestions();
-      // Reset input fields after adding answer
       setNewAnswers((prevState) => {
         const updatedAnswers = [...prevState];
         updatedAnswers[index] = { answerText: "", points: 0 };
         return updatedAnswers;
       });
     } catch (error) {
-      console.error("Error adding answer:", error);
+      console.error("Klaida dedant atsakymą:", error);
     }
   };
 
   const handleRemoveAnswer = async (questionId, answerId) => {
     try {
       await axios.delete(
-        `http://localhost:3001/api/quizzes/questions/${quizId}/all/${questionId}/answers/${answerId}`, // Ensure that the questionId is properly included in the URL
+        ServerPaths.QuestRoutes.DELETE_ANSWER(quizId, questionId, answerId),
         { headers: { Authorization: `Bearer ${user.accessToken}` } }
       );
       fetchQuestions();
     } catch (error) {
-      console.error("Error removing answer:", error);
+      console.error("Klaida šalinant atsakymą:", error);
     }
   };
 
@@ -201,5 +200,7 @@ const EditQuizQuestion = ({ quizId }) => {
     </div>
   );
 };
-
+EditQuizQuestion.propTypes = {
+  quizId: PropTypes.string.isRequired,
+};
 export default EditQuizQuestion;

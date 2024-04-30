@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import UI from "../../../components/UI/UI";
 import EditPopup from "./EditPopup";
 import { useAuth } from "../../../context/AuthContext";
-
+import ServerPaths from "../../../context/ServerPaths";
 const EditCategories = () => {
   const { user } = useAuth();
   const [myCategories, setMyCategories] = useState([]);
@@ -11,15 +11,11 @@ const EditCategories = () => {
   const [showEditPopup, setShowEditPopup] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
-  useEffect(() => {
-    fetchCategories();
-  }, [user.accessToken]);
-
-  const fetchCategories = async () => {
+  const fetchCategories = useCallback(async () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        "http://localhost:3001/api/categories/my",
+        ServerPaths.CategoryRoutes.MY_CATEGORIES,
         {
           headers: {
             Authorization: `Bearer ${user.accessToken}`,
@@ -30,14 +26,18 @@ const EditCategories = () => {
       setMyCategories(response.data);
       setLoading(false);
     } catch (error) {
-      console.error("Error fetching categories:", error);
+      console.error("Klaida gaunant kategorijas:", error);
     }
-  };
+  }, [user.accessToken]);
+
+  useEffect(() => {
+    fetchCategories();
+  }, [fetchCategories]);
 
   const handleRemoval = async (categoryId) => {
     try {
-      const response = await axios.delete(
-        `http://localhost:3001/api/categories/${categoryId}/remove`,
+      await axios.delete(
+        ServerPaths.CategoryRoutes.DELETE_CATEGORY(categoryId),
         {
           headers: {
             Authorization: `Bearer ${user.accessToken}`,
@@ -46,7 +46,7 @@ const EditCategories = () => {
       );
       fetchCategories();
     } catch (error) {
-      console.error("Error removing category:", error);
+      console.error("Klaida šalinant kategoriją:", error);
     }
   };
 

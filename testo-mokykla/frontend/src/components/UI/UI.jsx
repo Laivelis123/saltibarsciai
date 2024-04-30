@@ -1,20 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { useAuth } from "../../context/AuthContext";
+import { useState } from "react";
+import PropTypes from "prop-types";
 import Header from "./Header/Header";
 import Footer from "./Footer/Footer";
 import Menu from "./Menu/Menu";
 import SideNav from "./SideNav/SideNav";
 
 const UI = ({ children }) => {
-  const { user, refreshToken } = useAuth();
   const [filterText, setFilterText] = useState("");
   const [showSidebar, setShowSidebar] = useState(window.innerWidth > 768);
-
-  useEffect(() => {
-    if (user) {
-      refreshToken();
-    }
-  }, []);
 
   return (
     <div
@@ -43,6 +36,10 @@ const UI = ({ children }) => {
       <Footer />
     </div>
   );
+};
+
+UI.propTypes = {
+  children: PropTypes.node,
 };
 
 export default UI;

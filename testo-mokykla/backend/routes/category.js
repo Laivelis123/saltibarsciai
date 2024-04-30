@@ -3,18 +3,10 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const { Op } = require("sequelize");
 const { User, Category } = require("../models");
+const verifyToken = require("./verifyToken");
 
-const verifyToken = (req, res, next) => {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
-  if (!token) return next({ status: 401, message: "Missing token" });
-
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-    if (err) return next({ status: 403, message: "Invalid token" });
-    req.userId = decoded.id;
-    next();
-  });
-};
+//TeacherRoutes
+// Mokytojas gali sukurti, pašalinti, redaguoti, peržiūrėti savo kategorijas
 router.delete("/:categoryId/remove", verifyToken, async (req, res) => {
   try {
     const userId = req.userId;
@@ -47,11 +39,56 @@ router.get("/my", verifyToken, async (req, res) => {
     });
     res.status(200).json(categories);
   } catch (error) {
-    console.error("Error fetching user categories:", error);
-    res.status(500).json({ error: "Internal server error" });
+    console.error("Klaida gaunant vartotojo kategorija:", error);
+    res.status(500).json({ error: "Vidinė serverio klaida" });
   }
 });
 
+// Sukuria naują kategoriją.
+router.post("/create", verifyToken, async (req, res) => {
+  try {
+    const userId = req.userId;
+    const { name, bulletPoints, parentId } = req.body;
+    const category = await Category.create({
+      name,
+      bulletPoints,
+      userId,
+      parentId: parentId || null,
+    });
+
+    res.status(201).json({ success: true, category });
+  } catch (error) {
+    console.error("Klaida kuriant kategoriją:", error);
+    res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
+  }
+});
+
+router.put("/:id/update", verifyToken, async (req, res) => {
+  try {
+    const userId = req.userId;
+    const { id } = req.params;
+    const { name, bulletPoints, parentId } = req.body;
+    const category = await Category.findByPk(id);
+    if (!category || category.userId !== userId) {
+      return res
+        .status(404)
+        .json({ error: "Kategorija nerasta, negalite redaguoti kategorijos" });
+    }
+    if (category.userId !== userId) {
+      return res.status(403).json({ error: "Negalima redaguoti kategorijos" });
+    }
+    category.name = name;
+    category.bulletPoints = bulletPoints;
+    category.parentId = parentId || null;
+    await category.save();
+    res.status(200).json({ success: true, category });
+  } catch (error) {
+    console.error("Klaida redaguojant kategoriją:", error);
+    res.status(500).json({ error: "Vidinė serverio klaida" });
+  }
+});
+//AllRoutes
+// Gauna visas kategorijas, su filtu,be ,su tėvine kategorija ir be.
 // Gauna visus kategorijas pagal filtrą arba be filtro.
 router.get("/filter", verifyToken, async (req, res) => {
   try {
@@ -108,25 +145,6 @@ router.get("/:id/children", verifyToken, async (req, res) => {
   }
 });
 
-// Sukuria naują kategoriją.
-router.post("/create", verifyToken, async (req, res) => {
-  try {
-    const userId = req.userId;
-    const { name, bulletPoints, parentId } = req.body;
-    const category = await Category.create({
-      name,
-      bulletPoints,
-      userId,
-      parentId: parentId || null,
-    });
-
-    res.status(201).json({ success: true, category });
-  } catch (error) {
-    console.error("Klaida kuriant kategoriją:", error);
-    res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
-  }
-});
-
 // Gauna kategoriją pagal nurodytą ID.
 router.get("/:id", verifyToken, async (req, res) => {
   try {
@@ -147,28 +165,4 @@ router.get("/:id", verifyToken, async (req, res) => {
   }
 });
 
-router.put("/:id/update", verifyToken, async (req, res) => {
-  try {
-    const userId = req.userId;
-    const { id } = req.params;
-    const { name, bulletPoints, parentId } = req.body;
-    const category = await Category.findByPk(id);
-    if (!category || category.userId !== userId) {
-      return res
-        .status(404)
-        .json({ error: "Kategorija nerasta, negalite redaguoti kategorijos" });
-    }
-    if (category.userId !== userId) {
-      return res.status(403).json({ error: "Negalima redaguoti kategorijos" });
-    }
-    category.name = name;
-    category.bulletPoints = bulletPoints;
-    category.parentId = parentId || null;
-    await category.save();
-    res.status(200).json({ success: true, category });
-  } catch (error) {
-    console.error("Klaida redaguojant kategoriją:", error);
-    res.status(500).json({ error: "Vidinė serverio klaida" });
-  }
-});
 module.exports = router;

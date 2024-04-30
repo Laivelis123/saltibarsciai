@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import UI from "../../../components/UI/UI";
 import styles from "./categoryTemplate.module.css";
 import { useAuth } from "../../../context/AuthContext";
+import ServerPaths from "../../../context/ServerPaths";
 const CategoryTemplate = () => {
   const { user } = useAuth();
   const { categoryId } = useParams();
@@ -16,7 +17,7 @@ const CategoryTemplate = () => {
       try {
         setLoading(true);
         const response = await axios.get(
-          `http://localhost:3001/api/categories/${categoryId}`,
+          ServerPaths.CategoryRoutes.GET_CATEGORY(categoryId),
           {
             headers: {
               Authorization: `Bearer ${user.accessToken}`,

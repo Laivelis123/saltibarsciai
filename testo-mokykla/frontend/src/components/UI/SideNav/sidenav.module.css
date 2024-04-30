@@ -17,7 +17,7 @@
   margin-bottom: 5px;
 }
 .sideNav {
-  width: calc(100% / 8);
+  width: calc(100% / 4);
   min-width: 200px;
 }
 .toggleButton {

@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../../../context/AuthContext";
 import UI from "../../../components/UI/UI";
+import ServerPaths from "../../../context/ServerPaths";
 
 const CheckQuiz = () => {
   const { quizId, userId } = useParams();
@@ -14,7 +15,7 @@ const CheckQuiz = () => {
       try {
         setLoading(true);
         const response = await axios.get(
-          `http://localhost:3001/api/quizzes/assigned/${quizId}/${userId}`,
+          ServerPaths.AssignedRoutes.GET_QUIZ_FOR_USER(quizId, userId),
           {
             headers: { Authorization: `Bearer ${user.accessToken}` },
           }
@@ -22,7 +23,7 @@ const CheckQuiz = () => {
         setQuiz(response.data.quiz);
         setLoading(false);
       } catch (error) {
-        console.error("Error fetching quiz:", error);
+        console.error("Klaida gaunant testą:", error);
       }
     };
     fetchQuiz();

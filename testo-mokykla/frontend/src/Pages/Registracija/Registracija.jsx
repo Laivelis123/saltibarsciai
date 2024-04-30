@@ -1,14 +1,14 @@
-﻿﻿import React, { useState } from "react";
+﻿﻿import { useState } from "react";
 import { Link } from "react-router-dom";
 import UI from "../../components/UI/UI";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import styles from "./registracija.module.css";
 import * as Yup from "yup";
 import axios from "axios";
-
+import ServerPaths from "../../context/ServerPaths";
 function Registracija() {
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setErrors] = useState("");
 
   const validationSchema = Yup.object().shape({
     username: Yup.string()
@@ -36,15 +36,12 @@ function Registracija() {
     const { username, email, password, confirmPassword, accountType } = values;
 
     try {
-      const response = await axios.post(
-        "http://localhost:3001/api/auth/register",
-        {
-          username,
-          email,
-          password,
-          accountType,
-        }
-      );
+      const response = await axios.post(ServerPaths.AuthRoutes.REGISTER_PATH, {
+        username,
+        email,
+        password,
+        accountType,
+      });
       console.log(response);
       setRegistrationSuccess(true);
     } catch (error) {

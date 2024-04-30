@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../../../context/AuthContext";
 import UI from "../../../components/UI/UI";
+import ServerPaths from "../../../context/ServerPaths";
 function CreateQuiz() {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -17,12 +18,12 @@ function CreateQuiz() {
   const fetchCategories = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3001/api/categories/all",
+        ServerPaths.CategoryRoutes.ALL_CATEGORIES,
         { headers: { Authorization: `Bearer ${user.accessToken}` } }
       );
       setCategories(response.data);
     } catch (error) {
-      console.error("Error fetching categories:", error);
+      console.error("Klaida gaunant kategorijas:", error);
     }
   };
 
@@ -30,14 +31,14 @@ function CreateQuiz() {
     event.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3001/api/quizzes",
+        ServerPaths.QuizRoutes.CREATE_QUIZ,
         { title, categoryId: selectedCategory },
         { headers: { Authorization: `Bearer ${user.accessToken}` } }
       );
       const { quiz } = response.data;
       navigate(`/valdymas/mokytojas/tvarkyti/testai/redaguoti/${quiz.id}`);
     } catch (error) {
-      console.error("Error creating quiz:", error);
+      console.error("Klaida gaunant testą:", error);
     }
   };
 

@@ -1,26 +1,25 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../../context/AuthContext";
 import UI from "../../../components/UI/UI";
 import { Link } from "react-router-dom";
-
+import ServerPaths from "../../../context/ServerPaths";
+import { jwtDecode } from "jwt-decode";
 function DoneQuizzes() {
-  const { user, userData } = useAuth();
+  const { user } = useAuth();
   const [userGrades, setUserGrades] = useState([]);
-
   useEffect(() => {
     const fetchDoneQuizzes = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3001/api/quizzes/assigned/done-quizzes`,
+          ServerPaths.AssignedRoutes.DONE_QUIZZES,
           {
             headers: { Authorization: `Bearer ${user.accessToken}` },
           }
         );
         setUserGrades(response.data.userGrades);
-        console.log("User grades:", response.data.userGrades);
       } catch (error) {
-        console.error("Error fetching done quizzes:", error);
+        console.error("Klaida gaunant baigtus testus:", error);
       }
     };
     fetchDoneQuizzes();
@@ -36,7 +35,7 @@ function DoneQuizzes() {
               <div className="card">
                 <div className="card-body">
                   <h5 className="card-title">{userGrade.Quiz.title}</h5>
-                  {userGrade.Quiz.categoryAlias && ( // Check if categoryAlias exists
+                  {userGrade.Quiz.categoryAlias && (
                     <p className="card-text">
                       <strong>Kategorija:</strong>{" "}
                       {userGrade.Quiz.categoryAlias.name}
@@ -50,7 +49,9 @@ function DoneQuizzes() {
                     <strong>Įvertinimas:</strong> {userGrade.score}%
                   </p>
                   <Link
-                    to={`/valdymas/mokinys/ivertinimai/${userGrade.Quiz.id}/${userData.id}`}
+                    to={`/valdymas/mokinys/ivertinimai/${userGrade.Quiz.id}/${
+                      jwtDecode(user.accessToken).id
+                    }`}
                     className="btn btn-primary"
                   >
                     Peržiūrėti

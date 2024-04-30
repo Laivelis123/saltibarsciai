@@ -1,12 +1,17 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "./menu.module.css";
 import { useAuth } from "../../../context/AuthContext";
-
+import PropTypes from "prop-types";
+import { useState } from "react";
+import { jwtDecode } from "jwt-decode";
 const Menu = ({ showSidebar, setShowSidebar }) => {
-  const { user, logout, userData } = useAuth();
-
+  const { user, logout } = useAuth();
+  const [username, setUsername] = useState("");
   useEffect(() => {
+    if (user) {
+      setUsername(jwtDecode(user.accessToken).username);
+    }
     const handleResize = () => {
       if (window.innerWidth > 768) {
         setShowSidebar(true);
@@ -16,7 +21,7 @@ const Menu = ({ showSidebar, setShowSidebar }) => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [setShowSidebar]);
+  }, [user, setShowSidebar]);
 
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);
@@ -92,7 +97,7 @@ const Menu = ({ showSidebar, setShowSidebar }) => {
               {user && (
                 <li style={{ float: "right" }}>
                   <Link className="rounded-pill px-2 py-1 " to="/profilis">
-                    Sveiki, {userData.username}
+                    Sveiki, {username}
                   </Link>
                   <Link
                     onClick={logout}
@@ -108,6 +113,11 @@ const Menu = ({ showSidebar, setShowSidebar }) => {
       </ul>
     </>
   );
+};
+
+Menu.propTypes = {
+  showSidebar: PropTypes.bool.isRequired,
+  setShowSidebar: PropTypes.func.isRequired,
 };
 
 export default Menu;

@@ -1,4 +1,3 @@
-import React from "react";
 import UI from "../../../components/UI/UI";
 import { Link } from "react-router-dom";
 function ManageCategories() {

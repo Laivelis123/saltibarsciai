@@ -1,88 +1,79 @@
-import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../../context/AuthContext";
-
+import PropTypes from "prop-types";
+import ServerPaths from "../../../context/ServerPaths";
 const EditQuizGroup = ({ quizId }) => {
   const [allGroups, setAllGroups] = useState([]);
   const [assignedUsers, setAssignedUsers] = useState([]);
   const [selectedGroup, setSelectedGroup] = useState("");
-  const navigate = useNavigate();
   const { user } = useAuth();
   useEffect(() => {
     const fetchAllGroups = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:3001/api/groups/my-groups",
-          {
-            headers: { Authorization: `Bearer ${user.accessToken}` },
-          }
-        );
+        const response = await axios.get(ServerPaths.GroupRoutes.MY_GROUPS, {
+          headers: { Authorization: `Bearer ${user.accessToken}` },
+        });
         setAllGroups(response.data.groups);
       } catch (error) {
-        console.error("Error fetching all groups:", error);
+        console.error("Klaida gaunant visas grupes:", error);
       }
     };
 
     const fetchAssignedUsers = async () => {
       try {
+        console.log(ServerPaths.QuizRoutes.GET_USERS_FOR_QUIZ(quizId));
         const response = await axios.get(
-          `http://localhost:3001/api/quizzes/${quizId}/users`,
+          ServerPaths.QuizRoutes.GET_USERS_FOR_QUIZ(quizId),
           {
             headers: { Authorization: `Bearer ${user.accessToken}` },
           }
         );
         setAssignedUsers(response.data.assignedUsers);
       } catch (error) {
-        console.error("Error fetching assigned users:", error);
+        console.error("Klaida gaunant priskirtus vartotojus:", error);
       }
     };
 
     fetchAllGroups();
-    fetchAssignedUsers(); // Call fetchAssignedUsers when component mounts
+    fetchAssignedUsers();
   }, [quizId, user.accessToken]);
   const handleAssignQuiz = async () => {
     try {
       await axios.post(
-        "http://localhost:3001/api/quizzes/assign-quiz",
+        ServerPaths.QuizRoutes.ASSIGN_QUIZ_TO_GROUP,
         { quizId, groupId: selectedGroup },
         {
           headers: { Authorization: `Bearer ${user.accessToken}` },
         }
       );
 
-      // Fetch the updated list of assigned users
+      console.log(ServerPaths.QuizRoutes.GET_USERS_FOR_QUIZ(quizId));
       const response = await axios.get(
-        `http://localhost:3001/api/quizzes/${quizId}/users`,
+        ServerPaths.QuizRoutes.GET_USERS_FOR_QUIZ(quizId),
         {
           headers: { Authorization: `Bearer ${user.accessToken}` },
         }
       );
       setAssignedUsers(response.data.assignedUsers);
-
-      // Handle success, maybe show a success message
     } catch (error) {
-      console.error("Error assigning quiz to group:", error);
-      // Handle error, maybe show an error message
+      console.error("Klaida priskiriant testą prie grupės vartotojų:", error);
     }
   };
 
   const handleRemoveUser = async (userId) => {
     try {
       await axios.delete(
-        `http://localhost:3001/api/quizzes/${quizId}/users/${userId}`,
+        ServerPaths.QuizRoutes.REMOVE_USER_FROM_QUIZ(quizId, userId),
         {
           headers: { Authorization: `Bearer ${user.accessToken}` },
         }
       );
-      // Update assigned users after deletion
       setAssignedUsers((prevUsers) =>
         prevUsers.filter((user) => user.id !== userId)
       );
-      // Handle success, maybe show a success message
     } catch (error) {
-      console.error("Error removing user from quiz:", error);
-      // Handle error, maybe show an error message
+      console.error("Klaida pašalinant vartotoją iš testo:", error);
     }
   };
   return (
@@ -127,5 +118,7 @@ const EditQuizGroup = ({ quizId }) => {
     </div>
   );
 };
-
+EditQuizGroup.propTypes = {
+  quizId: PropTypes.string.isRequired,
+};
 export default EditQuizGroup;

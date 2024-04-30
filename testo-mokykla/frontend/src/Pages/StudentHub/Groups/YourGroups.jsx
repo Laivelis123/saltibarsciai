@@ -1,37 +1,34 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import UI from "../../../components/UI/UI";
 import { useAuth } from "../../../context/AuthContext";
-
+import ServerPaths from "../../../context/ServerPaths";
 const YourGroups = () => {
   const { user } = useAuth();
   const [joinedGroups, setJoinedGroups] = useState([]);
   const [joinCode, setJoinCode] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  useEffect(() => {
-    fetchJoinedGroups();
-  }, []);
-
-  const fetchJoinedGroups = async () => {
+  const fetchJoinedGroups = useCallback(async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:3001/api/groups/joined-groups",
-        {
-          headers: { Authorization: `Bearer ${user.accessToken}` },
-        }
-      );
+      const response = await axios.get(ServerPaths.GroupRoutes.JOINED_GROUPS, {
+        headers: { Authorization: `Bearer ${user.accessToken}` },
+      });
       setJoinedGroups(response.data.groups);
     } catch (error) {
       console.error("Klaida gaudant grupes:", error);
       setErrorMessage("Nepavyko gauti prisijungusių grupių.");
     }
-  };
+  }, [user.accessToken]);
+
+  useEffect(() => {
+    fetchJoinedGroups();
+  }, [fetchJoinedGroups]);
 
   const handleJoinGroup = async () => {
     try {
       await axios.post(
-        "http://localhost:3001/api/groups/join",
+        ServerPaths.GroupRoutes.JOIN_GROUP,
         { code: joinCode },
         {
           headers: { Authorization: `Bearer ${user.accessToken}` },
@@ -47,7 +44,7 @@ const YourGroups = () => {
 
   const handleLeaveGroup = async (groupId) => {
     try {
-      await axios.delete(`http://localhost:3001/api/groups/${groupId}/leave`, {
+      await axios.delete(ServerPaths.GroupRoutes.LEAVE_GROUP(groupId), {
         headers: { Authorization: `Bearer ${user.accessToken}` },
       });
       fetchJoinedGroups();

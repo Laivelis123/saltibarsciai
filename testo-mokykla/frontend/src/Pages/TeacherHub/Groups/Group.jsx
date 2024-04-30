@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import UI from "../../../components/UI/UI";
 import { useAuth } from "../../../context/AuthContext";
-
-const Grupė = () => {
+import ServerPaths from "../../../context/ServerPaths";
+const Group = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [groupName, setGroupName] = useState("");
@@ -16,7 +16,7 @@ const Grupė = () => {
     event.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3001/api/groups/create",
+        ServerPaths.GroupRoutes.CREATE_GROUP,
         { name: groupName },
         { headers: { Authorization: `Bearer ${user.accessToken}` } }
       );
@@ -29,11 +29,11 @@ const Grupė = () => {
   return (
     <UI>
       <div className="container mt-4">
-        <h2>Grupės kūrimas</h2>
+        <h2>Groups kūrimas</h2>
         <div className="mb-3">
           <form onSubmit={handleSubmitCreate}>
             <label htmlFor="groupName" className="form-label">
-              Grupės pavadinimas:
+              Groups pavadinimas:
             </label>
             <input
               type="text"
@@ -52,4 +52,4 @@ const Grupė = () => {
   );
 };
 
-export default Grupė;
+export default Group;

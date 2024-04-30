@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../../context/AuthContext";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import UI from "../../../components/UI/UI";
-
+import ServerPaths from "../../../context/ServerPaths";
 function TakeQuizes() {
   const { user } = useAuth();
   const [quiz, setQuiz] = useState(null);
@@ -14,7 +14,7 @@ function TakeQuizes() {
     const fetchQuiz = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3001/api/quizzes/questions/${quizId}`,
+          ServerPaths.AssignedRoutes.TAKE_QUIZ(quizId),
           {
             headers: { Authorization: `Bearer ${user.accessToken}` },
           }
@@ -26,14 +26,11 @@ function TakeQuizes() {
         });
         setSelectedAnswers(initialSelectedAnswers);
       } catch (error) {
-        if (error.response.status === 400) {
-          navigate("/");
-        }
-        console.error("Error fetching quiz:", error);
+        console.error("Klaida gaunant testą:", error);
       }
     };
     fetchQuiz();
-  }, [user.accessToken, quizId]);
+  }, [user.accessToken, quizId, navigate]);
 
   const handleAnswerSelect = (questionId, answerId, isSelected) => {
     setSelectedAnswers((prevSelectedAnswers) => {
@@ -53,15 +50,8 @@ function TakeQuizes() {
 
   const handleSubmit = async () => {
     try {
-      console.log(
-        selectedAnswers,
-        "selectedAnswers",
-        quizId,
-        "quizId",
-        user.accessToken
-      );
-      const response = await axios.post(
-        `http://localhost:3001/api/quizzes/assigned/${quizId}/submit`,
+      await axios.post(
+        ServerPaths.AssignedRoutes.SUBMIT_QUIZ(quizId),
         {
           answers: selectedAnswers,
         },
@@ -71,10 +61,7 @@ function TakeQuizes() {
       );
       navigate("/valdymas/mokinys/testai");
     } catch (error) {
-      if (error.response.status === 400) {
-        navigate("/");
-      }
-      console.error("Error submitting quiz:", error);
+      console.error("Klaida testo užbaigime:", error);
     }
   };
 

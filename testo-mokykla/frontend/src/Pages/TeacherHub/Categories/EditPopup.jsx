@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../../../context/AuthContext";
 import "./EditPopup.css";
-
+import PropTypes from "prop-types";
+import ServerPaths from "../../../context/ServerPaths";
 const EditPopup = ({ category, onClose }) => {
-  const { user, fetchCategories, loading } = useAuth();
+  const { user, loading, setLoading } = useAuth();
   const [categories, setCategories] = useState([]);
   const [editedCategory, setEditedCategory] = useState({});
   const [categoryName, setCategoryName] = useState("");
@@ -13,14 +14,36 @@ const EditPopup = ({ category, onClose }) => {
   const [parentCategory, setParentCategory] = useState("");
 
   useEffect(() => {
-    fetchCategories(null, setCategories);
+    const fetchCategories = async () => {
+      setLoading(true);
+      try {
+        if (user) {
+          let url = ServerPaths.CategoryRoutes.FILTER_CATEGORIES;
+          const pathname = window.location.pathname;
+          if (pathname === "/") {
+            url = ServerPaths.CategoryRoutes.FILTER_CATEGORIES_NO_PARENT;
+          }
+          const response = await axios.get(url, {
+            headers: {
+              Authorization: `Bearer ${user.accessToken}`,
+            },
+          });
+          setCategories(response.data);
+        }
+      } catch (error) {
+        console.error("Klaida gaunant kategorijas:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCategories();
     setEditedCategory(category);
     setParentCategory(category.parentId);
     setCategoryName(category.name);
     setBulletPoints(
       category.bulletPoints ? JSON.parse(category.bulletPoints) : []
     );
-  }, [user.accessToken, category]);
+  }, [user.accessToken, category, setLoading, user]);
 
   const handleCategoryNameChange = (value) => {
     setCategoryName(value);
@@ -43,7 +66,7 @@ const EditPopup = ({ category, onClose }) => {
     e.preventDefault();
     try {
       await axios.put(
-        `http://localhost:3001/api/categories/${category.id}/update`,
+        ServerPaths.CategoryRoutes.UPDATE_CATEGORY(category.id),
         {
           name: categoryName,
           parentId: parentCategory,
@@ -57,7 +80,7 @@ const EditPopup = ({ category, onClose }) => {
       );
       onClose();
     } catch (error) {
-      console.error("Error editing category:", error);
+      console.error("Klaida redaguojant kategoriją:", error);
     }
   };
 
@@ -162,5 +185,13 @@ const EditPopup = ({ category, onClose }) => {
     </div>
   );
 };
-
+EditPopup.propTypes = {
+  category: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    parentId: PropTypes.number,
+    bulletPoints: PropTypes.string,
+  }).isRequired,
+  onClose: PropTypes.func.isRequired,
+};
 export default EditPopup;

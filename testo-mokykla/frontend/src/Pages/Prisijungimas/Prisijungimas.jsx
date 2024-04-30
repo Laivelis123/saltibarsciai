@@ -1,7 +1,5 @@
-﻿import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+﻿import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
-import axios from "axios";
 import UI from "../../components/UI/UI.jsx";
 import styles from "./prisijungimas.module.css";
 
@@ -9,7 +7,6 @@ function Prisijungimas() {
   const { login, error } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
