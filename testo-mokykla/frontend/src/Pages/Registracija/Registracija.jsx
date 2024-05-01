@@ -36,7 +36,7 @@ function Registracija() {
     const { username, email, password, confirmPassword, accountType } = values;
 
     try {
-      const response = await axios.post(ServerPaths.AuthRoutes.REGISTER_PATH, {
+      const response = await axios.post(ServerPaths.Auth.REGISTER_PATH, {
         username,
         email,
         password,

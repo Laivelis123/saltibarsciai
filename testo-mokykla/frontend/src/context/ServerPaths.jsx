@@ -14,6 +14,7 @@ export const ServerPaths = {
     USER_PATH: `${SERVER_PATH}/${AUTH}/user`,
     LOGOUT_PATH: `${SERVER_PATH}/${AUTH}/logout`,
     REFRESH_PATH: `${SERVER_PATH}/${AUTH}/refresh`,
+    UPDATE_PASSWORD: `${SERVER_PATH}/${AUTH}/update-password`,
   },
   CategoryRoutes: {
     ALL_CATEGORIES: `${SERVER_PATH}/${CATEGORIES}/all`,
@@ -43,6 +44,7 @@ export const ServerPaths = {
   },
   ProfileRoutes: {
     UPLOAD_IMAGE: `${SERVER_PATH}/${PROFILE}/upload`,
+    DELETE_IMAGE: `${SERVER_PATH}/${PROFILE}/delete`,
   },
   GroupRoutes: {
     CREATE_GROUP: `${SERVER_PATH}/${GROUPS}/create`,

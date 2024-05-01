@@ -2,7 +2,7 @@
 import { useAuth } from "../../context/AuthContext";
 import UI from "../../components/UI/UI.jsx";
 import styles from "./prisijungimas.module.css";
-
+import { Link } from "react-router-dom";
 function Prisijungimas() {
   const { login, error } = useAuth();
   const [username, setUsername] = useState("");
@@ -50,7 +50,9 @@ function Prisijungimas() {
               />
             </div>
             <div className="mb-3 text-danger">{error}</div>
-            <Link to="/slaptazodis" className="mb-3">Pamišote slaptažodį?</Link>
+            <Link to="/slaptazodis" className="mb-3">
+              Pamišote slaptažodį?
+            </Link>
             <div className="mb-3">
               <button type="submit" className="btn btn-lg btn-dark">
                 Prisijungti

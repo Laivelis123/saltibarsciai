@@ -39,7 +39,7 @@ function Profilis() {
 
   const deleteImage = async () => {
     try {
-      await axios.post("http://localhost:3001/api/profile/delete", {
+      await axios.post(ServerPaths.ProfileRoutes.DELETE_IMAGE, {
         userId: userData.id,
       });
       setProfilePicture(null);

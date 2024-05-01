@@ -27,11 +27,13 @@ export const AuthProvider = ({ children }) => {
       });
       setUser(null);
       localStorage.removeItem("token");
+      if (user && user.accessToken) {
+        navigate("/prisijungimas");
+      }
     } catch (error) {
       console.error("Klaida atjungiant vartotoją: ", error);
     } finally {
       setLoading(false);
-      navigate("/prisijungimas");
     }
   }, [navigate]);
 
@@ -56,11 +58,10 @@ export const AuthProvider = ({ children }) => {
         });
         setUserData(response.data);
       } else {
-        logout();
+        setUserData(null);
       }
     } catch (error) {
       console.error("Klaida gaunant vartotojo duomenis: ", error);
-      navigate("/prisijungimas");
     } finally {
       setLoading(false);
     }
