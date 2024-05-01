@@ -9,51 +9,58 @@ import {
   faChalkboardTeacher,
   faUserGraduate,
 } from "@fortawesome/free-solid-svg-icons";
+import GroupAverages from "./TeacherHub/Groups/GroupAverages";
 import Averages from "./StudentHub/Grades/Averages";
 import ServerPaths from "../context/ServerPaths";
 function Pagrindinis() {
   const { user, loading, setLoading } = useAuth();
   const [userAverage, setUserAverage] = useState(0);
   const [userAllAverages, setUserAllAverages] = useState([]);
+  const [userGroups, setUserGroups] = useState([]);
   const [accountType, setAccountType] = useState("");
   useEffect(() => {
-    const fetUserAllAverages = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get(
-          ServerPaths.AssignedRoutes.AVERAGE_ALL_CATEGORIES,
-          {
-            headers: { Authorization: `Bearer ${user.accessToken}` },
-          }
-        );
-        setUserAllAverages(response.data.userAveragesByCategories);
+        setLoading(true);
+        setAccountType(jwtDecode(user.accessToken).accountType);
+        if (accountType === "student") {
+          const responseAllCategories = await axios.get(
+            ServerPaths.AssignedRoutes.AVERAGE_ALL_CATEGORIES,
+            {
+              headers: { Authorization: `Bearer ${user.accessToken}` },
+            }
+          );
+          setUserAllAverages(
+            responseAllCategories.data.userAveragesByCategories
+          );
+
+          const responseOverall = await axios.get(
+            ServerPaths.AssignedRoutes.AVERAGE_ALL,
+            {
+              headers: { Authorization: `Bearer ${user.accessToken}` },
+            }
+          );
+          setUserAverage(responseOverall.data.average);
+        } else if (accountType === "teacher") {
+          setLoading(true);
+          const response = await axios.get(
+            ServerPaths.AssignedRoutes.GET_MY_STUDENT_AVERAGES,
+            {
+              headers: { Authorization: `Bearer ${user.accessToken}` },
+            }
+          );
+          setUserGroups(response.data.groups);
+          console.log("response", response.data.groups);
+        }
       } catch (error) {
-        console.error("Klaida gaunant vidurkius:", error);
+        console.error("Klaida gaunant duomenis:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
-    const fetchUserAverage = async () => {
-      try {
-        const response = await axios.get(
-          ServerPaths.AssignedRoutes.AVERAGE_ALL,
-          {
-            headers: {
-              Authorization: `Bearer ${user.accessToken}`,
-            },
-          }
-        );
-        setUserAverage(response.data.average);
-      } catch (error) {
-        console.log("Klaida gaunant bendrą vidurkį:", error);
-      }
-    };
     if (user) {
-      setLoading(true);
-      setAccountType(jwtDecode(user.accessToken).accountType);
-      if (accountType === "student") {
-        fetchUserAverage();
-        fetUserAllAverages();
-      }
-      setLoading(false);
+      fetchData();
     }
   }, [user, accountType, setLoading]);
 
@@ -111,7 +118,7 @@ function Pagrindinis() {
               </div>
             </div>
           </main>
-          {!loading && accountType === "student" && (
+          {!loading && (
             <div
               style={{ width: "100%", borderRadius: "100px" }}
               className="bg-secondary "
@@ -125,20 +132,34 @@ function Pagrindinis() {
                     className="card  bg-secondary text-white text-center mb-2"
                     style={{ borderRadius: "30px" }}
                   >
-                    <div className="h3 card-body">
-                      <h5 className="display-5 card-title">
-                        Kategorijų vidurkiai
-                      </h5>
-                    </div>
+                    {accountType === "teacher" && (
+                      <div className="h3 card-body">
+                        <h5 className="display-5 card-title">
+                          Grupių vidurkiai
+                        </h5>
+                      </div>
+                    )}
+                    {accountType === "student" && (
+                      <div className="h3 card-body">
+                        <h5 className="display-5 card-title">
+                          Kategorijų vidurkiai
+                        </h5>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
               <div>
                 <div>
-                  <Averages
-                    userAllAverages={userAllAverages}
-                    userAverage={userAverage}
-                  />
+                  {accountType === "teacher" && (
+                    <GroupAverages userGroups={userGroups} />
+                  )}
+                  {accountType === "student" && (
+                    <Averages
+                      userAllAverages={userAllAverages}
+                      userAverage={userAverage}
+                    />
+                  )}
                 </div>
               </div>
             </div>

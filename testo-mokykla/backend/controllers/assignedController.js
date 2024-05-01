@@ -3,6 +3,7 @@ const {
   User,
   Quiz,
   Question,
+  Group,
   Answer,
   Grade,
   UserAnswer,
@@ -171,6 +172,106 @@ const getMyCreatedQuizzes = async (req, res) => {
   } catch (error) {
     console.error("Klaida gaunant mokytojo testus:", error);
     res.status(500).json({ error: "Vidinė serverio klaida" });
+  }
+};
+const getAllUsersAverage = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const groups = await Group.findAll({
+      where: { userId },
+      include: [
+        {
+          model: User,
+          attributes: ["id", "username"],
+        },
+      ],
+    });
+
+    if (!groups || groups.length === 0) {
+      return res.status(404).json({ success: false, error: "Grupės nerastos" });
+    }
+
+    const result = [];
+
+    for (const group of groups) {
+      const userIds = group.Users.map((user) => user.id);
+      const userGrades = await Grade.findAll({
+        where: { userId: userIds },
+        include: [
+          {
+            model: Quiz,
+            include: [
+              { model: Category, as: "categoryAlias", attributes: ["name"] },
+            ],
+            attributes: ["id", "categoryId"],
+          },
+        ],
+      });
+
+      const categoryAverages = {};
+
+      for (const grade of userGrades) {
+        const categoryId = grade.Quiz.categoryId;
+        const categoryName = grade.Quiz.categoryAlias.name;
+
+        const score = grade.score;
+
+        if (!categoryAverages[categoryId]) {
+          categoryAverages[categoryId] = {
+            name: categoryName,
+            totalScore: 0,
+            totalCount: 0,
+          };
+        }
+
+        categoryAverages[categoryId].totalScore += score;
+        categoryAverages[categoryId].totalCount++;
+      }
+
+      const userAverages = group.Users.map((user) => {
+        const userGradesFiltered = userGrades.filter(
+          (grade) => grade.userId === user.id
+        );
+
+        const userAverage =
+          userGradesFiltered.reduce((acc, grade) => acc + grade.score, 0) /
+          userGradesFiltered.length;
+
+        return {
+          id: user.id,
+          username: user.username,
+          averageGrade: userAverage,
+        };
+      });
+
+      const groupCategoryAverages = Object.entries(categoryAverages).map(
+        ([categoryId, categoryData]) => ({
+          categoryId,
+          categoryName: categoryData.name,
+          averageGrade:
+            categoryData.totalCount !== 0
+              ? categoryData.totalScore / categoryData.totalCount
+              : 0,
+        })
+      );
+
+      const groupAverage =
+        userAverages.reduce((acc, user) => acc + user.averageGrade, 0) /
+        userAverages.length;
+
+      result.push({
+        id: group.id,
+        name: group.name,
+        users: userAverages,
+        groupCategoryAverages,
+        averageGrade: groupAverage,
+      });
+    }
+
+    res.status(200).json({ success: true, groups: result });
+  } catch (error) {
+    console.error("Klaida gaunant mokinių vidurkius:", error);
+    res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
   }
 };
 
@@ -371,4 +472,5 @@ module.exports = {
   getQuizForTake,
   submitQuiz,
   getQuizPreview,
+  getAllUsersAverage,
 };

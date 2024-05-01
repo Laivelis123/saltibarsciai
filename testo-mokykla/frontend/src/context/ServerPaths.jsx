@@ -68,6 +68,7 @@ export const ServerPaths = {
       `${SERVER_PATH}/${QUIZZES}/${quizId}/users/${userId}`,
   },
   AssignedRoutes: {
+    GET_MY_STUDENT_AVERAGES: `${SERVER_PATH}/${ASSIGNED}/students-averages`,
     GET_QUIZ_FOR_USER: (quizId, userId) =>
       `${SERVER_PATH}/${ASSIGNED}/review/${quizId}/${userId}`,
     MY_QUIZZES: `${SERVER_PATH}/${ASSIGNED}/my-quizzes`,

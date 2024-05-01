@@ -47,8 +47,6 @@ const EditQuizGroup = ({ quizId }) => {
           headers: { Authorization: `Bearer ${user.accessToken}` },
         }
       );
-
-      console.log(ServerPaths.QuizRoutes.GET_USERS_FOR_QUIZ(quizId));
       const response = await axios.get(
         ServerPaths.QuizRoutes.GET_USERS_FOR_QUIZ(quizId),
         {

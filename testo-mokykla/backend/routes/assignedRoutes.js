@@ -15,6 +15,11 @@ router.get(
   assignedController.getMyAllAverages
 );
 
+router.get(
+  "/students-averages",
+  verifyToken,
+  assignedController.getAllUsersAverage
+);
 router.get("/average-all", verifyToken, assignedController.getMyAverage);
 
 //TeacherRoutes

@@ -1,9 +1,5 @@
 import PropTypes from "prop-types";
 const Averages = ({ userAllAverages, userAverage }) => {
-  if (!userAllAverages || userAllAverages.length === 0) {
-    return <p>Neturite dar pažymių</p>;
-  }
-
   const numRows = Math.ceil(userAllAverages.length / 3);
   const rows = [];
 
@@ -52,19 +48,23 @@ const Averages = ({ userAllAverages, userAverage }) => {
           <tbody>{rows}</tbody>
         </table>
       </div>
-      <div className="row mt-3" style={{ width: "40%", margin: "auto" }}>
-        <div className="col ">
-          <div
-            className="card  bg-secondary text-white text-center mb-2"
-            style={{ borderRadius: "30px" }}
-          >
-            <div className="h3 card-body">
-              <h5 className="h3 card-title">Bendras vidurkis</h5>
-              <p className="card-text">{userAverage.toFixed(3)}%</p>
+      {userAllAverages && userAllAverages.length > 0 ? (
+        <div className="row mt-3" style={{ width: "40%", margin: "auto" }}>
+          <div className="col ">
+            <div
+              className="card  bg-secondary text-white text-center mb-2"
+              style={{ borderRadius: "30px" }}
+            >
+              <div className="h3 card-body">
+                <h5 className="h3 card-title">Bendras vidurkis</h5>
+                <p className="card-text">{userAverage.toFixed(3)}%</p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="h3 text-white text-center">Nėra vidurkių</div>
+      )}
     </>
   );
 };

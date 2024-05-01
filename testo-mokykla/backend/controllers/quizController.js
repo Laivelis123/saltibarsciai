@@ -171,13 +171,13 @@ const getAssignedQuizUsers = async (req, res) => {
 const removeUserFromAssignedQuiz = async (req, res) => {
   try {
     const { quizId, userId } = req.params;
-
+    const user = req.userId;
     const quiz = await Quiz.findByPk(quizId);
     if (!quiz) {
       return res.status(404).json({ success: false, error: "Testas nerastas" });
     }
 
-    if (quiz.userId !== userId) {
+    if (quiz.userId !== user) {
       return res
         .status(403)
         .json({ error: "Neturite teisių pašalinti vartotojo nuo testo" });
