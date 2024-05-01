@@ -171,5 +171,25 @@ router.get("/user", async (req, res) => {
     res.status(500).json({ error: "Vidinė serverio klaida" });
   }
 });
+router.post("/slaptazodis", async (req, res) => {
+    try {
+        const { username, password } = req.body;
 
+        const existingUser = await User.findOne({
+            where: {
+                [Op.or]: [{ username }],
+            },
+        });
+
+        if (existingUser) {
+            const hashedPassword = await bcrypt.hash(password, 10);
+            existingUser.password = hashedPassword;
+        } else { return res.status(404).json({ message: "Vartotojas neegzistuoja" }); }
+
+        res.status(201).json({ message: "Slaptažodis sėkmingai pakeistas" });
+    } catch (error) {
+        console.error("Klaida keičiant slaptažodį:", error);
+        res.status(500).json({ error: "Vidinė serverio klaida" });
+    }
+});
 module.exports = router;

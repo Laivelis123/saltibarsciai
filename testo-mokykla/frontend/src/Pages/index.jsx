@@ -1,3 +1,4 @@
+export { default as Slaptazodis } from "./Prisijungimas/Slaptazodis";
 export { default as Registracija } from "./Registracija/Registracija";
 export { default as Prisijungimas } from "./Prisijungimas/Prisijungimas";
 export { default as Naujienos } from "./Misc/Naujienos";

@@ -53,6 +53,7 @@ function Prisijungimas() {
               />
             </div>
             <div className="mb-3 text-danger">{error}</div>
+            <Link to="/slaptazodis" className="mb-3">Pamišote slaptažodį?</Link>
             <div className="mb-3">
               <button type="submit" className="btn btn-lg btn-dark">
                 Prisijungti
