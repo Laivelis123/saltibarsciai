@@ -1,5 +1,3 @@
-const express = require("express");
-const router = express.Router();
 const {
   sequelize,
   User,
@@ -11,45 +9,141 @@ const {
   UserQuiz,
   Category,
 } = require("../models");
-const verifyToken = require("./verifyToken");
 
+//StudentAverages
+
+const getMyQuizzes = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const userQuizzes = await UserQuiz.findAll({
+      where: { userId },
+      include: [
+        {
+          model: Quiz,
+          include: [
+            { model: Category, as: "categoryAlias" },
+            { model: User, as: "Creator" },
+            {
+              model: Question,
+              required: false,
+            },
+          ],
+        },
+      ],
+    });
+    res.status(200).json({ success: true, userQuizzes });
+  } catch (error) {
+    console.error("Klaida gaunant priskirtus testus:", error);
+    res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
+  }
+};
+const getMyAllAverages = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const userAveragesByCategories = await Grade.findAll({
+      where: {
+        userId,
+      },
+      attributes: [
+        "quizId",
+        [sequelize.fn("AVG", sequelize.col("score")), "average"],
+      ],
+      include: [
+        {
+          model: Quiz,
+          include: [{ model: Category, as: "categoryAlias" }],
+        },
+      ],
+      group: ["quizId"],
+    });
+    res.status(200).json({ success: true, userAveragesByCategories });
+  } catch (error) {
+    console.error("Klaida gaunant visus vidurkius:", error);
+    res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
+  }
+};
+
+const getMyAverage = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const userGrades = await Grade.findAll({
+      where: { userId },
+      include: [
+        {
+          model: Quiz,
+          include: [
+            { model: Category, as: "categoryAlias" },
+            { model: User, as: "Creator" },
+          ],
+        },
+      ],
+    });
+
+    const average =
+      userGrades.reduce((acc, grade) => acc + grade.score, 0) /
+      userGrades.length;
+
+    res.status(200).json({ success: true, average });
+  } catch (error) {
+    console.error("Klaida gaunant bendrą vidurkį:", error);
+    res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
+  }
+};
+
+const getDoneQuizzes = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const userGrades = await Grade.findAll({
+      where: { userId },
+      include: [
+        {
+          model: Quiz,
+          include: [
+            { model: Category, as: "categoryAlias" },
+            { model: User, as: "Creator" },
+          ],
+        },
+      ],
+    });
+
+    res.status(200).json({ success: true, userGrades });
+  } catch (error) {
+    console.error("Klaida gaunant vartotojo baigtus testus:", error);
+    res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
+  }
+};
 //TeacherRoutes
 // Mokytojas gali pašalinti pažymį, gali gauti visus savo sukurtus testus
-router.delete(
-  "/remove-grade/:quizId/:userId",
-  verifyToken,
-  async (req, res) => {
-    try {
-      const { quizId, userId } = req.params;
-      const user = req.userId;
-      const quiz = await Quiz.findByPk(quizId);
-      if (!quiz) {
-        return res.status(404).json({ message: "Testas nerastas" });
-      }
-      if (quiz.userId !== user) {
-        return res
-          .status(403)
-          .json({ message: "Neturite teisių pašalinti vartotojo pažymio" });
-      }
-      await Grade.destroy({ where: { quizId, userId } });
-      await UserAnswer.destroy({ where: { quizId, userId } });
-      const userQuiz = await UserQuiz.findOne({
-        where: { userId, quizId, submitted: true },
-      });
-      if (userQuiz) {
-        await userQuiz.update({ submitted: false });
-      } else {
-        return res.status(400).json({ message: "Testas nebuvo priduotas" });
-      }
-      res.status(200).json({ message: "Pažymys sėkmingai pašalintas" });
-    } catch (error) {
-      console.error("Klaida šalinant pažymį:", error);
-      res.status(500).json({ error: "Vidinė serverio klaida" });
+const removeStudentGradeFromQuiz = async (req, res) => {
+  try {
+    const { quizId, userId } = req.params;
+    const user = req.userId;
+    const quiz = await Quiz.findByPk(quizId);
+    if (!quiz) {
+      return res.status(404).json({ message: "Testas nerastas" });
     }
+    if (quiz.userId !== user) {
+      return res
+        .status(403)
+        .json({ message: "Neturite teisių pašalinti vartotojo pažymio" });
+    }
+    await Grade.destroy({ where: { quizId, userId } });
+    await UserAnswer.destroy({ where: { quizId, userId } });
+    const userQuiz = await UserQuiz.findOne({
+      where: { userId, quizId, submitted: true },
+    });
+    if (userQuiz) {
+      await userQuiz.update({ submitted: false });
+    } else {
+      return res.status(400).json({ message: "Testas nebuvo priduotas" });
+    }
+    res.status(200).json({ message: "Pažymys sėkmingai pašalintas" });
+  } catch (error) {
+    console.error("Klaida šalinant pažymį:", error);
+    res.status(500).json({ error: "Vidinė serverio klaida" });
   }
-);
-
-router.get("/teacher-quizzes", verifyToken, async (req, res) => {
+};
+const getMyCreatedQuizzes = async (req, res) => {
   try {
     const userId = req.userId;
     const quizzes = await Quiz.findAll({
@@ -78,12 +172,12 @@ router.get("/teacher-quizzes", verifyToken, async (req, res) => {
     console.error("Klaida gaunant mokytojo testus:", error);
     res.status(500).json({ error: "Vidinė serverio klaida" });
   }
-});
+};
 
 //StudentRoutes
 //Studentai galės gauti testą, jį atlikti ir pateikti, gauti pažymį, gauti visų kategorijų vidurkius,
 //gauti visų testų vidurkį, gauti visus atliktus testus
-router.get("/:quizId", verifyToken, async (req, res) => {
+const getQuizForTake = async (req, res) => {
   try {
     const userId = req.userId;
     const quizId = req.params.quizId;
@@ -120,34 +214,9 @@ router.get("/:quizId", verifyToken, async (req, res) => {
     console.error("Klaida gaunant testą:", error);
     res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
   }
-});
+};
 
-router.get("/my-quizzes", verifyToken, async (req, res) => {
-  try {
-    const userId = req.userId;
-    const userQuizzes = await UserQuiz.findAll({
-      where: { userId },
-      include: [
-        {
-          model: Quiz,
-          include: [
-            { model: Category, as: "categoryAlias" },
-            { model: User, as: "Creator" },
-            {
-              model: Question,
-              required: false,
-            },
-          ],
-        },
-      ],
-    });
-    res.status(200).json({ success: true, userQuizzes });
-  } catch (error) {
-    console.error("Klaida gaunant priskirtus testus:", error);
-    res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
-  }
-});
-router.post("/:quizId/submit", verifyToken, async (req, res) => {
+const submitQuiz = async (req, res) => {
   try {
     const { quizId } = req.params;
     const userId = req.userId;
@@ -156,12 +225,10 @@ router.post("/:quizId/submit", verifyToken, async (req, res) => {
     });
 
     if (!userQuiz) {
-      return res
-        .status(400)
-        .json({
-          message:
-            "Testas jau priteiktas, nerastas arba neturite teisių priduoti testo ",
-        });
+      return res.status(400).json({
+        message:
+          "Testas jau priteiktas, nerastas arba neturite teisių priduoti testo ",
+      });
     }
 
     const quiz = await Quiz.findByPk(quizId, {
@@ -228,84 +295,10 @@ router.post("/:quizId/submit", verifyToken, async (req, res) => {
     console.error("Klaida priduodant testą:", error);
     res.status(500).json({ message: "Vidinė serverio klaida" });
   }
-});
-router.get("/average-all-categories", verifyToken, async (req, res) => {
-  try {
-    const userId = req.userId;
-    const userAveragesByCategories = await Grade.findAll({
-      where: {
-        userId,
-      },
-      attributes: [
-        "quizId",
-        [sequelize.fn("AVG", sequelize.col("score")), "average"],
-      ],
-      include: [
-        {
-          model: Quiz,
-          include: [{ model: Category, as: "categoryAlias" }],
-        },
-      ],
-      group: ["quizId"],
-    });
-    res.status(200).json({ success: true, userAveragesByCategories });
-  } catch (error) {
-    console.error("Klaida gaunant visus vidurkius:", error);
-    res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
-  }
-});
-
-router.get("/done-quizzes", verifyToken, async (req, res) => {
-  try {
-    const userId = req.userId;
-    const userGrades = await Grade.findAll({
-      where: { userId },
-      include: [
-        {
-          model: Quiz,
-          include: [
-            { model: Category, as: "categoryAlias" },
-            { model: User, as: "Creator" },
-          ],
-        },
-      ],
-    });
-
-    res.status(200).json({ success: true, userGrades });
-  } catch (error) {
-    console.error("Klaida gaunant vartotojo baigtus testus:", error);
-    res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
-  }
-});
-router.get("/average-all", verifyToken, async (req, res) => {
-  try {
-    const userId = req.userId;
-    const userGrades = await Grade.findAll({
-      where: { userId },
-      include: [
-        {
-          model: Quiz,
-          include: [
-            { model: Category, as: "categoryAlias" },
-            { model: User, as: "Creator" },
-          ],
-        },
-      ],
-    });
-
-    const average =
-      userGrades.reduce((acc, grade) => acc + grade.score, 0) /
-      userGrades.length;
-
-    res.status(200).json({ success: true, average });
-  } catch (error) {
-    console.error("Klaida gaunant bendrą vidurkį:", error);
-    res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
-  }
-});
+};
 //TeacherStudentRoutes
 //Abu gali peržiūrėti baigtą testą
-router.get("/:quizId/:userId", verifyToken, async (req, res) => {
+const getQuizPreview = async (req, res) => {
   try {
     const { quizId, userId } = req.params;
     const user = req.userId;
@@ -367,5 +360,15 @@ router.get("/:quizId/:userId", verifyToken, async (req, res) => {
     console.error("Klaida gaunant baigtą testą:", error);
     res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
   }
-});
-module.exports = router;
+};
+module.exports = {
+  getMyQuizzes,
+  getMyAllAverages,
+  getMyAverage,
+  getDoneQuizzes,
+  removeStudentGradeFromQuiz,
+  getMyCreatedQuizzes,
+  getQuizForTake,
+  submitQuiz,
+  getQuizPreview,
+};

@@ -1,9 +1,6 @@
-const express = require("express");
 const axios = require("axios");
 const { User } = require("../models");
-const router = express.Router();
-
-router.post("/upload", async (req, res) => {
+const uploadPicture = async (req, res) => {
   try {
     const imgData = req.body.image;
     const userId = req.body.userId;
@@ -50,6 +47,6 @@ router.post("/upload", async (req, res) => {
     console.error("Error:", error.response.data);
     res.status(500).json({ error: "Vidinė serverio klaida" });
   }
-});
+};
 
-module.exports = router;
+module.exports = { uploadPicture };

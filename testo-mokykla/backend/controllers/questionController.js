@@ -1,10 +1,6 @@
-const express = require("express");
-const router = express.Router();
 const { Quiz, Question, Answer, UserQuiz } = require("../models");
-const verifyToken = require("./verifyToken");
-
 //Testo klausimų/atsakymų CRUD operacijos
-router.post("/:quizId", verifyToken, async (req, res) => {
+const addQuestionToQuiz = async (req, res) => {
   try {
     const { questionText } = req.body;
     const quizId = req.params.quizId;
@@ -27,45 +23,41 @@ router.post("/:quizId", verifyToken, async (req, res) => {
     console.error("Klaida pridedant klausimą prie testo:", error);
     res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
   }
-});
-router.post(
-  "/:quizId/all/:questionId/answers",
-  verifyToken,
-  async (req, res) => {
-    try {
-      const { quizId, questionId } = req.params;
-      const { answerText, points } = req.body;
-      const quiz = await Quiz.findByPk(quizId);
-      if (!quiz) {
-        return res.status(404).json({ error: "Testas nerastas" });
-      }
-      if (quiz.userId !== req.userId) {
-        return res
-          .status(403)
-          .json({ error: "Neturite teisių pridėti atsakymą prie šio testo" });
-      }
-
-      const question = await Question.findOne({
-        where: { id: questionId, quizId },
-      });
-      if (!question) {
-        return res.status(404).json({ error: "Klausimas nerastas teste" });
-      }
-
-      const answer = await Answer.create({
-        answerText,
-        points,
-        questionId,
-      });
-
-      res.status(201).json({ success: true, answer });
-    } catch (error) {
-      console.error("Klaida pridedant atsakymą prie klausimo:", error);
-      res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
+};
+const addAnswerToQuestion = async (req, res) => {
+  try {
+    const { quizId, questionId } = req.params;
+    const { answerText, points } = req.body;
+    const quiz = await Quiz.findByPk(quizId);
+    if (!quiz) {
+      return res.status(404).json({ error: "Testas nerastas" });
     }
+    if (quiz.userId !== req.userId) {
+      return res
+        .status(403)
+        .json({ error: "Neturite teisių pridėti atsakymą prie šio testo" });
+    }
+
+    const question = await Question.findOne({
+      where: { id: questionId, quizId },
+    });
+    if (!question) {
+      return res.status(404).json({ error: "Klausimas nerastas teste" });
+    }
+
+    const answer = await Answer.create({
+      answerText,
+      points,
+      questionId,
+    });
+
+    res.status(201).json({ success: true, answer });
+  } catch (error) {
+    console.error("Klaida pridedant atsakymą prie klausimo:", error);
+    res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
   }
-);
-router.put("/:quizId/all/:questionId", verifyToken, async (req, res) => {
+};
+const updateQuizQuestion = async (req, res) => {
   try {
     const { questionText } = req.body;
     const quizId = req.params.quizId;
@@ -89,8 +81,8 @@ router.put("/:quizId/all/:questionId", verifyToken, async (req, res) => {
     console.error("Klaida atnaujinant klausimą:", error);
     res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
   }
-});
-router.delete("/:quizId/all/:questionId", verifyToken, async (req, res) => {
+};
+const removeQuizQuestion = async (req, res) => {
   try {
     const { quizId, questionId } = req.params;
 
@@ -118,50 +110,46 @@ router.delete("/:quizId/all/:questionId", verifyToken, async (req, res) => {
     console.error("Klaida šalinant klausimą:", error);
     res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
   }
-});
-router.delete(
-  "/:quizId/all/:questionId/answers/:answerId",
-  verifyToken,
-  async (req, res) => {
-    try {
-      const { quizId, questionId, answerId } = req.params;
+};
+const removeQuestionAnswer = async (req, res) => {
+  try {
+    const { quizId, questionId, answerId } = req.params;
 
-      const quiz = await Quiz.findByPk(quizId);
-      if (!quiz) {
-        return res.status(404).json({ error: "Testas nerastas" });
-      }
-      if (quiz.userId !== req.userId) {
-        return res
-          .status(403)
-          .json({ error: "Neturite teisių pašalinti šio atsakymo" });
-      }
-      const question = await Question.findOne({
-        where: { id: questionId, quizId },
-      });
-      if (!question) {
-        return res.status(404).json({ error: "Klausimas nerastas teste" });
-      }
-
-      const answer = await Answer.findOne({
-        where: { id: answerId, questionId },
-      });
-      if (!answer) {
-        return res.status(404).json({ error: "Atsakymas nerastas klausime" });
-      }
-
-      await answer.destroy();
-
-      res
-        .status(200)
-        .json({ success: true, message: "Atsakymas sėkmingai pašalintas" });
-    } catch (error) {
-      console.error("Klaida šalinant atsakymą:", error);
-      res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
+    const quiz = await Quiz.findByPk(quizId);
+    if (!quiz) {
+      return res.status(404).json({ error: "Testas nerastas" });
     }
+    if (quiz.userId !== req.userId) {
+      return res
+        .status(403)
+        .json({ error: "Neturite teisių pašalinti šio atsakymo" });
+    }
+    const question = await Question.findOne({
+      where: { id: questionId, quizId },
+    });
+    if (!question) {
+      return res.status(404).json({ error: "Klausimas nerastas teste" });
+    }
+
+    const answer = await Answer.findOne({
+      where: { id: answerId, questionId },
+    });
+    if (!answer) {
+      return res.status(404).json({ error: "Atsakymas nerastas klausime" });
+    }
+
+    await answer.destroy();
+
+    res
+      .status(200)
+      .json({ success: true, message: "Atsakymas sėkmingai pašalintas" });
+  } catch (error) {
+    console.error("Klaida šalinant atsakymą:", error);
+    res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
   }
-);
+};
 //Testo klausimų gavimas
-router.get("/:quizId/all", verifyToken, async (req, res) => {
+const getQuizQuestAnswers = async (req, res) => {
   try {
     const quizId = req.params.quizId;
     const userId = req.userId;
@@ -199,5 +187,12 @@ router.get("/:quizId/all", verifyToken, async (req, res) => {
     console.error("Klaida gaunant testo klausimus:", error);
     res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
   }
-});
-module.exports = router;
+};
+module.exports = {
+  addQuestionToQuiz,
+  addAnswerToQuestion,
+  updateQuizQuestion,
+  removeQuizQuestion,
+  removeQuestionAnswer,
+  getQuizQuestAnswers,
+};

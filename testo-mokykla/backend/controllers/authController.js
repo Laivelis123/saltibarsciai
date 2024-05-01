@@ -1,5 +1,3 @@
-const express = require("express");
-const router = express.Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { User, Session } = require("../models");
@@ -10,7 +8,7 @@ const generateToken = (user) => {
   return jwt.sign(user, process.env.JWT_SECRET, { expiresIn: "2h" });
 };
 // Registruoja naują vartotoją.
-router.post("/register", async (req, res) => {
+const registerUser = async (req, res) => {
   try {
     const { username, email, password, accountType } = req.body;
 
@@ -39,10 +37,10 @@ router.post("/register", async (req, res) => {
     console.error("Klaida registruojant vartotoją:", error);
     res.status(500).json({ error: "Vidinė serverio klaida" });
   }
-});
+};
 
 // Prisijungia vartotoją.
-router.post("/login", async (req, res) => {
+const loginUser = async (req, res) => {
   try {
     const { username, password } = req.body;
 
@@ -88,8 +86,8 @@ router.post("/login", async (req, res) => {
     console.error("Klaida prisijungiant vartotoją:", error);
     res.status(500).json({ error: "Vidinė serverio klaida" });
   }
-});
-router.post("/logout", (req, res) => {
+};
+const logoutUser = async (req, res) => {
   try {
     res.clearCookie("refreshToken");
     res.sendStatus(204);
@@ -97,8 +95,8 @@ router.post("/logout", (req, res) => {
     console.error("Klaida atsijungiant:", error);
     res.status(500).json({ error: "Vidinė serverio klaida" });
   }
-});
-router.post("/refresh", async (req, res) => {
+};
+const refreshToken = async (req, res) => {
   const refreshToken = req.body.refreshToken;
   if (!refreshToken) return res.sendStatus(401);
 
@@ -122,9 +120,9 @@ router.post("/refresh", async (req, res) => {
     console.error("Klaida atnaujintant žetoną:", error);
     return res.sendStatus(500);
   }
-});
+};
 // Gauna vartotojo duomenis pagal žetoną.
-router.get("/user", async (req, res) => {
+const getUserData = async (req, res) => {
   try {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
@@ -170,6 +168,12 @@ router.get("/user", async (req, res) => {
     }
     res.status(500).json({ error: "Vidinė serverio klaida" });
   }
-});
+};
 
-module.exports = router;
+module.exports = {
+  registerUser,
+  loginUser,
+  logoutUser,
+  refreshToken,
+  getUserData,
+};

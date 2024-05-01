@@ -1,13 +1,10 @@
-const express = require("express");
-const router = express.Router();
 const { User, Group } = require("../models");
 const { v4: uuidv4 } = require("uuid");
-const verifyToken = require("./verifyToken");
 
 //TeacherRoutes
 // Endpoint to create a new group
 // Mokytojas gali sukurti, pašalinti,redaguoti, peržiūrėti savo grupes, išmesti vartotojus iš savo grupės
-router.post("/create", verifyToken, async (req, res, next) => {
+const createGroup = async (req, res, next) => {
   try {
     const { name } = req.body;
     const { userId } = req;
@@ -20,10 +17,10 @@ router.post("/create", verifyToken, async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-});
+};
 
 // Endpoint to retrieve user's groups
-router.get("/my-groups", verifyToken, async (req, res) => {
+const getUserGroups = async (req, res) => {
   try {
     const { userId } = req; // Access user id from request object
     // Find user's groups
@@ -34,10 +31,10 @@ router.get("/my-groups", verifyToken, async (req, res) => {
     console.error("Klaida gaunant vartotojo sukurtas grupes:", error);
     res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
   }
-});
+};
 
 // Update Group Name Endpoint
-router.put("/:groupId", verifyToken, async (req, res) => {
+const updateGroup = async (req, res) => {
   try {
     const { name } = req.body;
     const { groupId } = req.params;
@@ -58,10 +55,10 @@ router.put("/:groupId", verifyToken, async (req, res) => {
     console.error("Klaida atnaujinant grupės pavadinimą:", error);
     res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
   }
-});
+};
 
 // Grupės trynimas
-router.delete("/:groupId", verifyToken, async (req, res) => {
+const deleteGroup = async (req, res) => {
   try {
     const { groupId } = req.params; // Išgryninamas grupės ID iš užklausos parametrų
     const userId = req.userId;
@@ -84,9 +81,9 @@ router.delete("/:groupId", verifyToken, async (req, res) => {
     console.error("Klaida trinant grupę:", error);
     res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
   }
-});
+};
 // Vartotojo šalinimas iš grupės
-router.delete("/:groupId/users/:userId", verifyToken, async (req, res) => {
+const removeUserFromGroup = async (req, res) => {
   try {
     const { groupId, userId } = req.params; // Išgryninamas grupės ID ir vartotojo ID iš užklausos parametrų
 
@@ -120,11 +117,11 @@ router.delete("/:groupId/users/:userId", verifyToken, async (req, res) => {
     console.error("Klaida šalinant vartotoją iš grupės:", error);
     res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
   }
-});
+};
 //StudentRoutes
 // Vartotojas prisijungia prie grupės
 // Studentas gali prisijungti, išeiti, peržiūrėti savo grupes
-router.post("/join", async (req, res) => {
+const joinGroup = async (req, res) => {
   try {
     const { code } = req.body; // Išgryninamas prisijungimo kodas iš užklausos
     const userId = req.userId; // Išgryninamas vartotojo ID iš užklausos
@@ -144,10 +141,10 @@ router.post("/join", async (req, res) => {
     console.error("Klaida prisijungiant prie grupės:", error);
     res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
   }
-});
+};
 
 // Gaunamos prisijungusios vartotojo grupės
-router.get("/joined-groups", verifyToken, async (req, res) => {
+const getUserJoinedGroups = async (req, res) => {
   try {
     const userId = req.userId;
     const user = await User.findByPk(userId, { include: [{ model: Group }] }); // Surandamas vartotojas su prisijungusiomis grupėmis
@@ -164,10 +161,10 @@ router.get("/joined-groups", verifyToken, async (req, res) => {
     console.error("Klaida gaunant prisijungusias vartotojo grupes:", error);
     res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
   }
-});
+};
 
 // Vartotojas išeina iš grupės
-router.delete("/:groupId/leave", verifyToken, async (req, res) => {
+const leaveGroup = async (req, res) => {
   try {
     const { groupId } = req.params; // Išgryninamas grupės ID iš užklausos parametrų
 
@@ -205,10 +202,10 @@ router.delete("/:groupId/leave", verifyToken, async (req, res) => {
     console.error("Klaida pašalinant vartotoją iš grupės:", error);
     res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
   }
-});
+};
 //AllRoutes
 // Gaunama grupė pagal ID
-router.get("/:groupId", verifyToken, async (req, res) => {
+const getGroupById = async (req, res) => {
   try {
     const { groupId } = req.params; // Išgryninamas grupės ID iš užklausos parametrų
     const userId = req.userId;
@@ -244,6 +241,16 @@ router.get("/:groupId", verifyToken, async (req, res) => {
     console.error("Klaida gaunant grupę:", error);
     res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
   }
-});
+};
 
-module.exports = router;
+module.exports = {
+  createGroup,
+  getUserGroups,
+  updateGroup,
+  deleteGroup,
+  removeUserFromGroup,
+  joinGroup,
+  getUserJoinedGroups,
+  leaveGroup,
+  getGroupById,
+};

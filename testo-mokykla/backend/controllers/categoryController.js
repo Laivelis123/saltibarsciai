@@ -1,13 +1,19 @@
-const express = require("express");
-const router = express.Router();
-const jwt = require("jsonwebtoken");
 const { Op } = require("sequelize");
 const { User, Category } = require("../models");
-const verifyToken = require("./verifyToken");
 
-//TeacherRoutes
-// Mokytojas gali sukurti, pašalinti, redaguoti, peržiūrėti savo kategorijas
-router.delete("/:categoryId/remove", verifyToken, async (req, res) => {
+// Gauna visas kategorijas.
+const getAllCategories = async (req, res) => {
+  try {
+    // Gauna visas kategorijas.
+    const categories = await Category.findAll();
+    res.status(200).json(categories);
+  } catch (error) {
+    console.error("Klaida gaunant kategorijas:", error);
+    res.status(500).json({ error: "Vidinė serverio klaida" });
+  }
+};
+
+const deleteCategory = async (req, res) => {
   try {
     const userId = req.userId;
     const { categoryId } = req.params;
@@ -24,8 +30,8 @@ router.delete("/:categoryId/remove", verifyToken, async (req, res) => {
     console.error("Klaida trinant kategoriją:", error);
     res.status(500).json({ error: "Vidinė serverio klaida" });
   }
-});
-router.get("/my", verifyToken, async (req, res) => {
+};
+const getMyCategories = async (req, res) => {
   try {
     const userId = req.userId;
     const categories = await Category.findAll({
@@ -42,10 +48,10 @@ router.get("/my", verifyToken, async (req, res) => {
     console.error("Klaida gaunant vartotojo kategorija:", error);
     res.status(500).json({ error: "Vidinė serverio klaida" });
   }
-});
+};
 
 // Sukuria naują kategoriją.
-router.post("/create", verifyToken, async (req, res) => {
+const createCategory = async (req, res) => {
   try {
     const userId = req.userId;
     const { name, bulletPoints, parentId } = req.body;
@@ -61,9 +67,9 @@ router.post("/create", verifyToken, async (req, res) => {
     console.error("Klaida kuriant kategoriją:", error);
     res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
   }
-});
+};
 
-router.put("/:id/update", verifyToken, async (req, res) => {
+const updateCategory = async (req, res) => {
   try {
     const userId = req.userId;
     const { id } = req.params;
@@ -86,11 +92,8 @@ router.put("/:id/update", verifyToken, async (req, res) => {
     console.error("Klaida redaguojant kategoriją:", error);
     res.status(500).json({ error: "Vidinė serverio klaida" });
   }
-});
-//AllRoutes
-// Gauna visas kategorijas, su filtu,be ,su tėvine kategorija ir be.
-// Gauna visus kategorijas pagal filtrą arba be filtro.
-router.get("/filter", verifyToken, async (req, res) => {
+};
+const filterCategories = async (req, res) => {
   try {
     const { search } = req.query;
     let categories;
@@ -116,22 +119,10 @@ router.get("/filter", verifyToken, async (req, res) => {
     console.error("Klaida gaunant kategorijas:", error);
     res.status(500).json({ error: "Vidinė serverio klaida" });
   }
-});
-
-// Gauna visas kategorijas.
-router.get("/all", verifyToken, async (req, res) => {
-  try {
-    // Gauna visas kategorijas.
-    const categories = await Category.findAll();
-    res.status(200).json(categories);
-  } catch (error) {
-    console.error("Klaida gaunant kategorijas:", error);
-    res.status(500).json({ error: "Vidinė serverio klaida" });
-  }
-});
+};
 
 // Gauna kategorijos vaikines kategorijas pagal nurodytą ID.
-router.get("/:id/children", verifyToken, async (req, res) => {
+const getChildrenCategories = async (req, res) => {
   try {
     const categoryId = req.params.id;
     // Gauna kategorijos vaikines kategorijas.
@@ -143,10 +134,10 @@ router.get("/:id/children", verifyToken, async (req, res) => {
     console.error("Klaida gaunant vaikines kategorijas:", error);
     res.status(500).json({ error: "Vidinė serverio klaida" });
   }
-});
+};
 
 // Gauna kategoriją pagal nurodytą ID.
-router.get("/:id", verifyToken, async (req, res) => {
+const getCategoryById = async (req, res) => {
   try {
     const userId = req.userId;
     const category = await Category.findByPk(req.params.id, {
@@ -163,6 +154,15 @@ router.get("/:id", verifyToken, async (req, res) => {
     console.error("Klaida gaunant kategoriją:", error);
     res.status(500).json({ error: "Vidinė serverio klaida" });
   }
-});
+};
 
-module.exports = router;
+module.exports = {
+  getAllCategories,
+  getMyCategories,
+  createCategory,
+  updateCategory,
+  deleteCategory,
+  filterCategories,
+  getChildrenCategories,
+  getCategoryById,
+};

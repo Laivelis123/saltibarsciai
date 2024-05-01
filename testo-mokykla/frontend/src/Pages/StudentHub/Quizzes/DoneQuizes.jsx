@@ -6,11 +6,13 @@ import { Link } from "react-router-dom";
 import ServerPaths from "../../../context/ServerPaths";
 import { jwtDecode } from "jwt-decode";
 function DoneQuizzes() {
-  const { user } = useAuth();
+  const { user, loading, setLoading } = useAuth();
   const [userGrades, setUserGrades] = useState([]);
   useEffect(() => {
     const fetchDoneQuizzes = async () => {
       try {
+        if (!user) console.log("ner");
+        setLoading(true);
         const response = await axios.get(
           ServerPaths.AssignedRoutes.DONE_QUIZZES,
           {
@@ -20,46 +22,50 @@ function DoneQuizzes() {
         setUserGrades(response.data.userGrades);
       } catch (error) {
         console.error("Klaida gaunant baigtus testus:", error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchDoneQuizzes();
-  }, [user.accessToken]);
+  }, [user]);
 
   return (
     <UI>
       <div className="container">
         <h2 className="mb-4">Baigti testai</h2>
         <div className="row">
-          {userGrades.map((userGrade) => (
-            <div key={userGrade.id} className="col-md-6 mb-3">
-              <div className="card">
-                <div className="card-body">
-                  <h5 className="card-title">{userGrade.Quiz.title}</h5>
-                  {userGrade.Quiz.categoryAlias && (
+          {!loading &&
+            userGrades &&
+            userGrades.map((userGrade) => (
+              <div key={userGrade.id} className="col-md-6 mb-3">
+                <div className="card">
+                  <div className="card-body">
+                    <h5 className="card-title">{userGrade.Quiz.title}</h5>
+                    {userGrade.Quiz.categoryAlias && (
+                      <p className="card-text">
+                        <strong>Kategorija:</strong>{" "}
+                        {userGrade.Quiz.categoryAlias.name}
+                      </p>
+                    )}
                     <p className="card-text">
-                      <strong>Kategorija:</strong>{" "}
-                      {userGrade.Quiz.categoryAlias.name}
+                      <strong>Mokytojas:</strong>{" "}
+                      {userGrade.Quiz.Creator.username}
                     </p>
-                  )}
-                  <p className="card-text">
-                    <strong>Mokytojas:</strong>{" "}
-                    {userGrade.Quiz.Creator.username}
-                  </p>
-                  <p className="card-text">
-                    <strong>Įvertinimas:</strong> {userGrade.score}%
-                  </p>
-                  <Link
-                    to={`/valdymas/mokinys/ivertinimai/${userGrade.Quiz.id}/${
-                      jwtDecode(user.accessToken).id
-                    }`}
-                    className="btn btn-primary"
-                  >
-                    Peržiūrėti
-                  </Link>
+                    <p className="card-text">
+                      <strong>Įvertinimas:</strong> {userGrade.score}%
+                    </p>
+                    <Link
+                      to={`/valdymas/mokinys/ivertinimai/${userGrade.Quiz.id}/${
+                        jwtDecode(user.accessToken).id
+                      }`}
+                      className="btn btn-primary"
+                    >
+                      Peržiūrėti
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       </div>
     </UI>

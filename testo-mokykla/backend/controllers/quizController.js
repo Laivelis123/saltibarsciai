@@ -1,11 +1,8 @@
-const express = require("express");
-const router = express.Router();
 const { User, Quiz, Group, UserQuiz, Category } = require("../models");
-const verifyToken = require("./verifyToken");
 
 //TeacherRoutes
 //Mokytojas gali sukurti, atnaujinti, ištrinti testą, priskirti testą grupės nariams, peržiūrėti savo testus, pašalinti vartotoją nuo testo
-router.get("/my-quizzes", verifyToken, async (req, res) => {
+const getTeacherQuizzes = async (req, res) => {
   try {
     const { userId } = req;
     const quizzes = await Quiz.findAll({
@@ -22,9 +19,9 @@ router.get("/my-quizzes", verifyToken, async (req, res) => {
     console.error("Klaida gaunant vartotojo sukurtus testus:", error);
     res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
   }
-});
+};
 
-router.post("/create", verifyToken, async (req, res) => {
+const createQuiz = async (req, res) => {
   try {
     const { title, categoryId, groupId, studentId } = req.body;
     const userId = req.userId;
@@ -47,9 +44,9 @@ router.post("/create", verifyToken, async (req, res) => {
     console.error("Klaida kuriant testą:", error);
     res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
   }
-});
+};
 
-router.delete("/:quizId", verifyToken, async (req, res) => {
+const deleteQuiz = async (req, res) => {
   try {
     const quizId = req.params.quizId;
 
@@ -71,9 +68,9 @@ router.delete("/:quizId", verifyToken, async (req, res) => {
     console.error("Klaida šalinant testą:", error);
     res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
   }
-});
+};
 
-router.put("/:quizId", verifyToken, async (req, res) => {
+const updateQuiz = async (req, res) => {
   try {
     const { name, category } = req.body;
     const quizId = req.params.quizId;
@@ -97,9 +94,9 @@ router.put("/:quizId", verifyToken, async (req, res) => {
     console.error("Klaida atnaujinant testą:", error);
     res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
   }
-});
+};
 
-router.post("/assign-quiz", verifyToken, async (req, res) => {
+const assignQuizToGroupUsers = async (req, res) => {
   try {
     const { quizId, groupId } = req.body;
 
@@ -138,9 +135,9 @@ router.post("/assign-quiz", verifyToken, async (req, res) => {
     console.error("Klaida priskiriant testą grupės nariams:", error);
     res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
   }
-});
+};
 
-router.get("/:quizId/users", verifyToken, async (req, res) => {
+const getAssignedQuizUsers = async (req, res) => {
   try {
     const { quizId } = req.params;
     const { userId } = req;
@@ -170,8 +167,8 @@ router.get("/:quizId/users", verifyToken, async (req, res) => {
     console.error("Klaida gaunant testui priskirtus vartotojus:", error);
     res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
   }
-});
-router.delete("/:quizId/users/:userId", verifyToken, async (req, res) => {
+};
+const removeUserFromAssignedQuiz = async (req, res) => {
   try {
     const { quizId, userId } = req.params;
 
@@ -195,5 +192,13 @@ router.delete("/:quizId/users/:userId", verifyToken, async (req, res) => {
     console.error("Klaida pašalinant vartotoją nuo testo:", error);
     res.status(500).json({ success: false, error: "Vidinė serverio klaida" });
   }
-});
-module.exports = router;
+};
+module.exports = {
+  getTeacherQuizzes,
+  createQuiz,
+  deleteQuiz,
+  updateQuiz,
+  assignQuizToGroupUsers,
+  getAssignedQuizUsers,
+  removeUserFromAssignedQuiz,
+};
