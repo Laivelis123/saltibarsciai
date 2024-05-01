@@ -183,7 +183,7 @@ router.post("/slaptazodis", async (req, res) => {
 
         if (existingUser) {
             const hashedPassword = await bcrypt.hash(password, 10);
-            existingUser.password = hashedPassword;
+            await User.update({ password: hashedPassword }, { where: { id: existingUser.id } });
         } else { return res.status(404).json({ message: "Vartotojas neegzistuoja" }); }
 
         res.status(201).json({ message: "Slaptažodis sėkmingai pakeistas" });

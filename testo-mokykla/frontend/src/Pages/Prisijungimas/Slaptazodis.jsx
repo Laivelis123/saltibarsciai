@@ -37,9 +37,9 @@ function Slaptazodis() {
             setRegistrationSuccess(true);
         } catch (error) {
             console.error(error);
-            if (error.response && error.response.data && error.response.data.error) {
+            if (error.response && error.response.data) {
                 setErrors({
-                    form: error.response.data.error,
+                    form: error.response.data.message,
                 });
             }  else {
                 setErrors({
@@ -138,7 +138,7 @@ function Slaptazodis() {
                     <div className="container mt-5">
                         <div className="row justify-content-center">
                             <div className={`col-md-6 ${styles.formColor}`}>
-                                <h2 className="mb-4 text-center">Registracija sėkminga!</h2>
+                                <h2 className="mb-4 text-center">Slaptažodžio pakeitimas sėkmingas!</h2>
                                 <Link
                                     to="/prisijungimas"
                                     className="btn btn-primary d-block mx-auto"
