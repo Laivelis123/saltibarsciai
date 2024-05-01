@@ -49,4 +49,23 @@ const uploadPicture = async (req, res) => {
   }
 };
 
-module.exports = { uploadPicture };
+const deletePicture = async (req, res) => {
+  try {
+    const userId = req.body.userId;
+
+    // Patikrinti reiksmes
+    if (!userId) {
+      return res.status(400).json({ error: "Nenusiustas user id" });
+    }
+
+    // Istrinama nuotraukos url is duomenu bazes
+    await User.update({ pictureUrl: null }, { where: { id: userId } });
+
+    res.status(200).json({ message: "Nuotrauka ištrinta sėkmingai" });
+  } catch (error) {
+    console.error("Error:", error.response.data);
+    res.status(500).json({ error: "Vidinė serverio klaida" });
+  }
+};
+
+module.exports = { uploadPicture, deletePicture };
