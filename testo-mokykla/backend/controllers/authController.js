@@ -169,11 +169,37 @@ const getUserData = async (req, res) => {
     res.status(500).json({ error: "Vidinė serverio klaida" });
   }
 };
+const updatePassword = async (req, res) => {
+  try {
+    const { username, password } = req.body;
 
+    const existingUser = await User.findOne({
+      where: {
+        [Op.or]: [{ username }],
+      },
+    });
+
+    if (existingUser) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      await User.update(
+        { password: hashedPassword },
+        { where: { id: existingUser.id } }
+      );
+    } else {
+      return res.status(404).json({ message: "Vartotojas neegzistuoja" });
+    }
+
+    res.status(201).json({ message: "Slaptažodis sėkmingai pakeistas" });
+  } catch (error) {
+    console.error("Klaida keičiant slaptažodį:", error);
+    res.status(500).json({ error: "Vidinė serverio klaida" });
+  }
+};
 module.exports = {
   registerUser,
   loginUser,
   logoutUser,
   refreshToken,
   getUserData,
+  updatePassword,
 };

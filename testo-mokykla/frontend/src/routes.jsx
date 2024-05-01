@@ -2,6 +2,7 @@ import PrivateRoutes from "./utils/PrivateRoutes";
 import PublicRoutes from "./utils/PublicRoutes";
 
 import {
+  Slaptazodis,
   Prisijungimas,
   Registracija,
   Pagrindinis,
@@ -54,7 +55,8 @@ export const allPrivateRoutes = [
 export const allPublicRoutes = [
   {
     element: <PublicRoutes />,
-    children: [
+        children: [
+      { path: "slaptazodis", element: <Slaptazodis /> },
       { path: "prisijungimas", element: <Prisijungimas /> },
       { path: "registracija", element: <Registracija /> },
     ],
