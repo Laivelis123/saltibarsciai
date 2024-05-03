@@ -56,36 +56,48 @@ const YourGroups = () => {
 
   return (
     <UI>
-      <div className="container mt-4">
-        <h2>Tavo grupės</h2>
-        {errorMessage && <p className="text-danger">{errorMessage}</p>}
-        <ul className="bg-light">
-          {joinedGroups.map((group) => (
-            <li className="bg-light" key={group.id}>
-              {group.name}
-              <button
-                className="btn btn-danger m-4"
-                onClick={() => handleLeaveGroup(group.id)}
-              >
-                Palikti grupę
-              </button>
-            </li>
-          ))}
-        </ul>
-        <div className="mt-4">
-          <h2>Prisijungite prie grupės</h2>
-          <div className="mb-3">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Įveskite grupės kodą"
-              value={joinCode}
-              onChange={(e) => setJoinCode(e.target.value)}
-            />
+      <div className="container my-4 ">
+        <div className="row justify-content-center">
+          <div className="col-md-8">
+            <div
+              className="my-5 py-4 card text-center"
+              style={{
+                borderRadius: "30px",
+                backgroundColor: "rgba(78, 174, 18, 0.878)",
+              }}
+            >
+              <h2>Tavo grupės</h2>
+              {errorMessage && <p className="text-danger">{errorMessage}</p>}
+              <ul className="py-5 mx-5" style={{ background: "none" }}>
+                {joinedGroups.map((group) => (
+                  <li className="" key={group.id}>
+                    {group.name}
+                    <button
+                      className="btn btn-danger m-4"
+                      onClick={() => handleLeaveGroup(group.id)}
+                    >
+                      Palikti grupę
+                    </button>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-4">
+                <h2>Prisijungite prie grupės</h2>
+                <div className="mb-3 mx-5 px-5">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Įveskite grupės kodą"
+                    value={joinCode}
+                    onChange={(e) => setJoinCode(e.target.value)}
+                  />
+                </div>
+                <button className="btn btn-primary" onClick={handleJoinGroup}>
+                  Pridėti
+                </button>
+              </div>
+            </div>
           </div>
-          <button className="btn btn-primary" onClick={handleJoinGroup}>
-            Pridėti
-          </button>
         </div>
       </div>
     </UI>

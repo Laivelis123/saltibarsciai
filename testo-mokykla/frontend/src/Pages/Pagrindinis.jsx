@@ -93,7 +93,11 @@ function Pagrindinis() {
           )}
           {user && accountType === "student" && (
             <>
-              <Link to="/valdymas/mokinys" className={getLinkStyle()}>
+              <Link
+                to="/valdymas/mokinys"
+                className={getLinkStyle()}
+                style={{ borderRadius: "20px" }}
+              >
                 <div className="card-body">
                   <FontAwesomeIcon icon={faUserGraduate} size="4x" />
                   <h5 className="card-title">Valdyti kaip mokinys</h5>

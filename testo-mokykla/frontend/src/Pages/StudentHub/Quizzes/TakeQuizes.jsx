@@ -67,67 +67,101 @@ function TakeQuizes() {
 
   return (
     <UI>
-      <div>
-        {quiz ? (
-          <>
-            <h2 style={{ width: "50%", margin: "auto" }}>{quiz.title}</h2>
-            <div>
-              {quiz.questions &&
-                quiz.questions.map((question) => (
-                  <div key={question.id} className="card my-3">
-                    <div className="card-body">
-                      <h4 style={{ width: "50%", margin: "auto" }}>
-                        {question.questionText}
-                      </h4>
-                      <ul className="list-group bg-white">
-                        {question.answers.map((answer) => (
-                          <li
-                            key={answer.id}
-                            className="list-group-item d-flex justify-content-between align-items-center"
-                            style={{ width: "50%", margin: "auto" }}
+      <div className="container my-4 ">
+        <div className="row justify-content-center">
+          <div className="col-md-8">
+            <div
+              className="my-5 py-4 card text-center"
+              style={{
+                borderRadius: "30px",
+                backgroundColor: "rgba(78, 174, 18, 0.878)",
+              }}
+            >
+              {quiz ? (
+                <div className="px-4">
+                  <h2 style={{ width: "50%", margin: "auto" }}>{quiz.title}</h2>
+                  <div>
+                    {quiz.questions &&
+                      quiz.questions.map((question) => (
+                        <div
+                          key={question.id}
+                          className="card my-3 mx-3 "
+                          style={{ background: "none", border: "none" }}
+                        >
+                          <div
+                            className="card-body"
+                            style={{
+                              backgroundColor: "rgba(78, 174, 18, 0.878)",
+                              borderRadius: "30px",
+                            }}
                           >
-                            <label
-                              htmlFor={answer.id}
-                              style={{ flex: "1", marginRight: "10px" }}
+                            <h4
+                              className="py-3"
+                              style={{ width: "50%", margin: "auto" }}
                             >
-                              {answer.answerText}
-                            </label>
-                            <input
-                              type="checkbox"
-                              id={answer.id}
-                              checked={selectedAnswers[question.id].includes(
-                                answer.id
-                              )}
-                              onChange={(e) =>
-                                handleAnswerSelect(
-                                  question.id,
-                                  answer.id,
-                                  e.target.checked
-                                )
-                              }
-                              style={{
-                                flex: "1",
-                                width: "30px",
-                                height: "30px",
-                              }}
-                            />
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                              {question.questionText}
+                            </h4>
+                            <ul
+                              className="list-group"
+                              style={{ background: "none" }}
+                            >
+                              {question.answers.map((answer) => (
+                                <li
+                                  key={answer.id}
+                                  className="overflow-x-auto my-4 rounded-pill list-group-item d-flex justify-content-between align-items-center "
+                                  style={{
+                                    width: "50%",
+                                    margin: "auto",
+                                    backgroundColor: "rgba(78, 174, 18, 0.878)",
+                                    border: "none",
+                                  }}
+                                >
+                                  <label
+                                    htmlFor={answer.id}
+                                    style={{ flex: "1", marginRight: "10px" }}
+                                  >
+                                    {answer.answerText}
+                                  </label>
+                                  <input
+                                    type="checkbox"
+                                    id={answer.id}
+                                    checked={selectedAnswers[
+                                      question.id
+                                    ].includes(answer.id)}
+                                    onChange={(e) =>
+                                      handleAnswerSelect(
+                                        question.id,
+                                        answer.id,
+                                        e.target.checked
+                                      )
+                                    }
+                                  />
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
+                      ))}
                   </div>
-                ))}
+                  <button
+                    onClick={handleSubmit}
+                    className="btn btn-primary mr-2"
+                  >
+                    Teikti
+                  </button>
+                  <Link
+                    to="/valdymas/mokinys/testai"
+                    className="btn btn-secondary"
+                  >
+                    Atgal
+                  </Link>
+                </div>
+              ) : (
+                <div>Krauna...</div>
+              )}
             </div>
-            <button onClick={handleSubmit} className="btn btn-primary mr-2">
-              Teikti
-            </button>
-            <Link to="/valdymas/mokinys/testai" className="btn btn-secondary">
-              Atgal
-            </Link>
-          </>
-        ) : (
-          <div>Krauna...</div>
-        )}
+          </div>
+        </div>
       </div>
     </UI>
   );

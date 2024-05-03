@@ -31,41 +31,62 @@ function DoneQuizzes() {
 
   return (
     <UI>
-      <div className="container">
-        <h2 className="mb-4">Baigti testai</h2>
-        <div className="row">
-          {!loading &&
-            userGrades &&
-            userGrades.map((userGrade) => (
-              <div key={userGrade.id} className="col-md-6 mb-3">
-                <div className="card">
-                  <div className="card-body">
-                    <h5 className="card-title">{userGrade.Quiz.title}</h5>
-                    {userGrade.Quiz.categoryAlias && (
-                      <p className="card-text">
-                        <strong>Kategorija:</strong>{" "}
-                        {userGrade.Quiz.categoryAlias.name}
-                      </p>
-                    )}
-                    <p className="card-text">
-                      <strong>Mokytojas:</strong>{" "}
-                      {userGrade.Quiz.Creator.username}
-                    </p>
-                    <p className="card-text">
-                      <strong>Įvertinimas:</strong> {userGrade.score}%
-                    </p>
-                    <Link
-                      to={`/valdymas/mokinys/ivertinimai/${userGrade.Quiz.id}/${
-                        jwtDecode(user.accessToken).id
-                      }`}
-                      className="btn btn-primary"
-                    >
-                      Peržiūrėti
-                    </Link>
-                  </div>
-                </div>
+      <div className="container my-4 ">
+        <div className="row justify-content-center">
+          <div className="col-md-8">
+            <div
+              className="my-5 py-4 card text-center"
+              style={{
+                borderRadius: "30px",
+                backgroundColor: "rgba(78, 174, 18, 0.878)",
+              }}
+            >
+              <h2 className="mb-4">Baigti testai</h2>
+              <div className="row px-5">
+                {!loading &&
+                  userGrades &&
+                  userGrades.map((userGrade) => (
+                    <div key={userGrade.id} className="col-md-6 mb-3">
+                      <div
+                        className="card"
+                        style={{ background: "none", border: "none" }}
+                      >
+                        <div
+                          className="card-body"
+                          style={{
+                            borderRadius: "30px",
+                            backgroundColor: "rgba(78, 174, 18, 0.878)",
+                          }}
+                        >
+                          <h5 className="card-title">{userGrade.Quiz.title}</h5>
+                          {userGrade.Quiz.categoryAlias && (
+                            <p className="card-text">
+                              <strong>Kategorija:</strong>{" "}
+                              {userGrade.Quiz.categoryAlias.name}
+                            </p>
+                          )}
+                          <p className="card-text">
+                            <strong>Mokytojas:</strong>{" "}
+                            {userGrade.Quiz.Creator.username}
+                          </p>
+                          <p className="card-text">
+                            <strong>Įvertinimas:</strong> {userGrade.score}%
+                          </p>
+                          <Link
+                            to={`/valdymas/mokinys/ivertinimai/${
+                              userGrade.Quiz.id
+                            }/${jwtDecode(user.accessToken).id}`}
+                            className="btn btn-primary"
+                          >
+                            Peržiūrėti
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
               </div>
-            ))}
+            </div>
+          </div>
         </div>
       </div>
     </UI>
