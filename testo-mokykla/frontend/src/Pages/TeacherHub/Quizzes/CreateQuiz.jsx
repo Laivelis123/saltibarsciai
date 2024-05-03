@@ -8,6 +8,7 @@ function CreateQuiz() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
+  const [titleError, setTitleError] = useState("");
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
 
@@ -26,9 +27,21 @@ function CreateQuiz() {
       console.error("Klaida gaunant kategorijas:", error);
     }
   };
-
+  const handleChangeTitle = (event) => {
+    const value = event.target.value;
+    setTitle(value);
+    if (!value.trim()) {
+      setTitleError("Pavadinimas negali būti tuščias");
+    } else {
+      setTitleError("");
+    }
+  };
   const handleSubmitCreate = async (event) => {
     event.preventDefault();
+    if (titleError || !title) {
+      setTitleError("Pavadinimas negali būti tuščias");
+      return;
+    }
     try {
       const response = await axios.post(
         ServerPaths.QuizRoutes.CREATE_QUIZ,
@@ -44,40 +57,61 @@ function CreateQuiz() {
 
   return (
     <UI>
-      <div className="container mt-4">
-        <h2>Kurti Testą</h2>
-        <div className="mb-3">
-          <form onSubmit={handleSubmitCreate}>
-            <label htmlFor="title" className="form-label">
-              Pavadinimas:
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
-            <label htmlFor="category" className="form-label">
-              Kategorija:
-            </label>
-            <select
-              id="category"
-              className="form-select"
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
+      <div className="container my-4 ">
+        <div className="row justify-content-center">
+          <div className="col-md-6">
+            <div
+              className="my-5 py-4 card"
+              style={{
+                borderRadius: "30px",
+                backgroundColor: "rgba(78, 174, 18, 0.878)",
+              }}
             >
-              <option value="">Pasirinkite kategoriją</option>
-              {categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
-            <button type="submit" className="btn btn-primary mt-2">
-              Kurti Testą
-            </button>
-          </form>
+              <h2 className="px-3">Kurti Testą</h2>
+              <form onSubmit={handleSubmitCreate}>
+                <label htmlFor="title" className="form-label px-3">
+                  Pavadinimas:
+                </label>
+                <div className="mx-3">
+                  <input
+                    type="text"
+                    className={`form-control ${titleError ? "is-invalid" : ""}`}
+                    id="title"
+                    value={title}
+                    onChange={handleChangeTitle}
+                  />
+                  {titleError && (
+                    <div className="invalid-feedback">{titleError}</div>
+                  )}
+                  <label htmlFor="category" className="form-label">
+                    Kategorija:
+                  </label>
+                  <select
+                    id="category"
+                    className="form-select"
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                  >
+                    <option value="">Pasirinkite kategoriją</option>
+                    {categories.map((category) => (
+                      <option key={category.id} value={category.id}>
+                        {category.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="text-center">
+                  {" "}
+                  <button
+                    type="submit"
+                    className="btn btn-primary mt-2 py-2 px-1"
+                  >
+                    Kurti Testą
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </UI>

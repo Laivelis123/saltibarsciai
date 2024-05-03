@@ -64,8 +64,8 @@ function Registracija() {
 
   return (
     <UI>
-      {error && <div className="mb-3 text-danger">{error}</div>}
-      <div className="container mt-5">
+      {error && <div className="mb-3 text-danger ">{error}</div>}
+      <div className="container mt-5 py-4">
         {!registrationSuccess && (
           <Formik
             initialValues={{
@@ -91,7 +91,7 @@ function Registracija() {
                     type="text"
                     id="username"
                     name="username"
-                    className="form-control  bg-secondary text-light"
+                    className="form-control  bg-light text-dark"
                     placeholder="Petras"
                   />
                   <ErrorMessage
@@ -109,7 +109,7 @@ function Registracija() {
                     type="email"
                     id="email"
                     name="email"
-                    className="form-control bg-secondary text-light"
+                    className="form-control bg-light text-dark"
                     placeholder="El. paštas"
                   />
                   <ErrorMessage
@@ -127,7 +127,7 @@ function Registracija() {
                     type="password"
                     id="password"
                     name="password"
-                    className="form-control  bg-secondary text-light"
+                    className="form-control  bg-light text-dark"
                     placeholder="Slaptažodis"
                   />
                   <ErrorMessage
@@ -145,7 +145,7 @@ function Registracija() {
                     type="password"
                     id="confirmPassword"
                     name="confirmPassword"
-                    className="form-control bg-secondary text-light"
+                    className="form-control bg-light text-dark"
                     placeholder="Pakartokite slaptažodį"
                   />
                   <ErrorMessage

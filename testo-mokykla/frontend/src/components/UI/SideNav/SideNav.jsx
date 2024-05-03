@@ -61,26 +61,20 @@ const SideNav = ({
         <div
           className={`h2  list-group-item list-group-item-action rounded-pill ${styles.titleText}`}
         >
-          {user ? (
-            <>
-              Kategorijų filtras
-              {window.innerWidth <= 768 && (
-                <div className="px-5 py-1">
-                  <div
-                    id="toggleButton"
-                    className={`rounded-pill ${styles.toggleButton}`}
-                    onClick={toggleSidebar}
-                  >
-                    {"ΞΞ"}
-                  </div>
+          <div className="px-4 py-1">
+            {user ? "Kategorijų filtras" : "Prisijunkite prie sistemos"}
+            {window.innerWidth <= 768 && (
+              <div className="px-5 py-1">
+                <div
+                  id="toggleButton"
+                  className={`rounded-pill ${styles.toggleButton}`}
+                  onClick={toggleSidebar}
+                >
+                  {"ΞΞ"}
                 </div>
-              )}
-            </>
-          ) : (
-            <div className="px-4">
-              Testo Mokykla - prisijunkite prie sistemos
-            </div>
-          )}
+              </div>
+            )}
+          </div>
         </div>
       </div>
       {user && <SearchBar filterText={filterText} onChange={setFilterText} />}

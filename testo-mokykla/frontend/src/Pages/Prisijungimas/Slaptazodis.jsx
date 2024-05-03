@@ -75,7 +75,7 @@ function Slaptazodis() {
                     type="text"
                     id="username"
                     name="username"
-                    className="form-control  bg-secondary text-light"
+                    className="form-control  bg-light text-dark"
                     placeholder="Petras"
                   />
                   <ErrorMessage
@@ -93,7 +93,7 @@ function Slaptazodis() {
                     type="password"
                     id="password"
                     name="password"
-                    className="form-control  bg-secondary text-light"
+                    className="form-control  bg-light text-dark"
                     placeholder="Slaptažodis"
                   />
                   <ErrorMessage
@@ -111,7 +111,7 @@ function Slaptazodis() {
                     type="password"
                     id="confirmPassword"
                     name="confirmPassword"
-                    className="form-control bg-secondary text-light"
+                    className="form-control bg-light text-dark"
                     placeholder="Pakartokite slaptažodį"
                   />
                   <ErrorMessage

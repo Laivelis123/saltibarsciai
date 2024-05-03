@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const session = require("express-session");
+const morgan = require("morgan");
 const dotenv = require("dotenv");
 const db = require("./models");
 
@@ -32,7 +33,7 @@ app.use(
     saveUninitialized: false,
   })
 );
-
+app.use(morgan("dev"));
 app.use("/api/auth", authRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/groups", groupRoutes);

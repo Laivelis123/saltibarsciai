@@ -101,70 +101,99 @@ function EditQuizzes() {
 
   return (
     <UI>
-      <div className="container mt-4">
-        <h2 className="text-center">Redaguoti testus</h2>
-        <div className="mt-3">
-          <ul className="list-group">
-            {!loading &&
-              quizzes &&
-              quizzes.map((quiz) => (
-                <li key={quiz.id} className="list-group-item">
-                  <div>
-                    <p>Pavadinimas:</p>
-                    <input
-                      type="text"
-                      value={editedQuizNames[quiz.id]}
-                      className="form-control mb-2 bg-dark text-light"
-                      onChange={(e) => handleInputChange(e, quiz.id)}
-                    />
-                  </div>
-                  <div>
-                    <p>Kategorija: </p>
-                    <p>
-                      <select
-                        value={editedQuizCategory[quiz.id] || quiz.categoryId}
-                        onChange={(e) => handleCategoryChange(e, quiz.id)}
-                      >
-                        <option disabled value="">
-                          Pasirinkite kategoriją
-                        </option>
-                        {categories.map((category) => (
-                          <option key={category.id} value={category.id}>
-                            {category.name}
-                          </option>
-                        ))}
-                      </select>
-                    </p>
+      <div className="container my-4 ">
+        <div className="row justify-content-center">
+          <div className="col-md-7">
+            <div
+              className="my-5 py-4 card"
+              style={{
+                borderRadius: "30px",
+                backgroundColor: "rgba(78, 174, 18, 0.878)",
+              }}
+            >
+              <h2 className="text-center">Redaguoti testus</h2>
+              <ul
+                className="list-group mx-2"
+                style={{
+                  backgroundColor: "rgba(78, 174, 18, 0.878)",
+                  border: "none",
+                  borderRadius: "30px",
+                }}
+              >
+                {!loading &&
+                  quizzes &&
+                  quizzes.map((quiz) => (
+                    <li
+                      key={quiz.id}
+                      className="list-group-item"
+                      style={{ background: "none", border: "none" }}
+                    >
+                      <div>
+                        <p>Pavadinimas:</p>
+                        <input
+                          type="text"
+                          value={editedQuizNames[quiz.id]}
+                          className="form-control mb-2 text-dark"
+                          onChange={(e) => handleInputChange(e, quiz.id)}
+                        />
+                      </div>
+                      <div>
+                        <p>Kategorija: </p>
+                        <p>
+                          <select
+                            value={
+                              editedQuizCategory[quiz.id] || quiz.categoryId
+                            }
+                            onChange={(e) => handleCategoryChange(e, quiz.id)}
+                            className="form-select"
+                          >
+                            <option disabled value="">
+                              Pasirinkite kategoriją
+                            </option>
+                            {categories.map((category) => (
+                              <option key={category.id} value={category.id}>
+                                {category.name}
+                              </option>
+                            ))}
+                          </select>
+                        </p>
 
-                    <button
-                      onClick={() => {
-                        handleEditQuiz(
-                          quiz.id,
-                          editedQuizNames[quiz.id],
-                          editedQuizCategory[quiz.id]
-                        );
-                      }}
-                      className="btn btn-success mr-2"
-                    >
-                      Patvirtinti pakeitimus
-                    </button>
-                    <Link
-                      to={`/valdymas/mokytojas/tvarkyti/testai/redaguoti/${quiz.id}`}
-                      className="btn btn-primary mr-2"
-                    >
-                      Platesnis regavimas
-                    </Link>
+                        <div className="m-2">
+                          <button
+                            onClick={() => {
+                              handleEditQuiz(
+                                quiz.id,
+                                editedQuizNames[quiz.id],
+                                editedQuizCategory[quiz.id]
+                              );
+                            }}
+                            className="btn btn-success mx-2 my-1 flex-grow-1"
+                            style={{ minWidth: "200px", maxWidth: "400px" }}
+                          >
+                            Patvirtinti pakeitimus
+                          </button>
+                          <Link
+                            to={`/valdymas/mokytojas/tvarkyti/testai/redaguoti/${quiz.id}`}
+                            className="btn btn-primary mx-2 my-1 flex-grow-1"
+                            style={{ minWidth: "200px", maxWidth: "400px" }}
+                          >
+                            Platesnis regavimas
+                          </Link>
 
-                    <button
-                      onClick={() => handleRemoveQuiz(quiz.id)}
-                      className="btn btn-danger"
-                    >
-                      Pašalinti testą
-                    </button>
-                  </div>
-                </li>
-              ))}
-          </ul>
+                          <button
+                            onClick={() => handleRemoveQuiz(quiz.id)}
+                            className="btn btn-danger mx-2 my-1 flex-grow-1"
+                            style={{ minWidth: "200px", maxWidth: "400px" }}
+                          >
+                            Pašalinti testą
+                          </button>
+                        </div>
+                      </div>
+                    </li>
+                  ))}
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </UI>

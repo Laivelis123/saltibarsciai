@@ -50,7 +50,6 @@ function Pagrindinis() {
             }
           );
           setUserGroups(response.data.groups);
-          console.log("response", response.data.groups);
         }
       } catch (error) {
         console.error("Klaida gaunant duomenis:", error);
@@ -79,12 +78,16 @@ function Pagrindinis() {
       return <p>Krauna...</p>;
     } else {
       return (
-        <div>
+        <div className="text-center">
           {user && accountType === "teacher" && (
-            <Link to="/valdymas/mokytojas" className={getLinkStyle()}>
+            <Link
+              to="/valdymas/mokytojas"
+              className={getLinkStyle()}
+              style={{ borderRadius: "20px" }}
+            >
               <div className="card-body">
                 <FontAwesomeIcon icon={faChalkboardTeacher} size="4x" />
-                <h5 className="card-title mt-2">Valdyti kaip mokytojas</h5>
+                <h5 className="card-title">Valdyti kaip mokytojas</h5>
               </div>
             </Link>
           )}
@@ -93,7 +96,7 @@ function Pagrindinis() {
               <Link to="/valdymas/mokinys" className={getLinkStyle()}>
                 <div className="card-body">
                   <FontAwesomeIcon icon={faUserGraduate} size="4x" />
-                  <h5 className="card-title mt-2">Valdyti kaip mokinys</h5>
+                  <h5 className="card-title">Valdyti kaip mokinys</h5>
                 </div>
               </Link>
             </>
@@ -109,61 +112,42 @@ function Pagrindinis() {
 
   return (
     <UI>
-      <div className="container-fluid ">
-        <div className="row p-4 m-2 ">
-          <main role="main" className="row p-4 m-2">
-            <div className="d-flex justify-content-center align-items-center p-3">
-              <div className="text-center ">
-                <div>{renderLinks()}</div>
-              </div>
-            </div>
-          </main>
-          {!loading && (
-            <div
-              style={{ width: "100%", borderRadius: "100px" }}
-              className="bg-secondary "
-            >
+      <div className="container my-4 ">
+        <div className="row justify-content-center">
+          <div className="col-md-6">
+            <div>{renderLinks()}</div>
+            {!loading && (
               <div
-                className="row mt-3"
-                style={{ width: "40%", margin: "auto" }}
+                className="my-5 py-4 card text-center"
+                style={{
+                  borderRadius: "30px",
+                  backgroundColor: "rgba(78, 174, 18, 0.878)",
+                }}
               >
-                <div className="col ">
-                  <div
-                    className="card  bg-secondary text-white text-center mb-2"
-                    style={{ borderRadius: "30px" }}
-                  >
-                    {accountType === "teacher" && (
-                      <div className="h3 card-body">
-                        <h5 className="display-5 card-title">
-                          Grupių vidurkiai
-                        </h5>
-                      </div>
-                    )}
-                    {accountType === "student" && (
-                      <div className="h3 card-body">
-                        <h5 className="display-5 card-title">
-                          Kategorijų vidurkiai
-                        </h5>
-                      </div>
-                    )}
+                {accountType === "teacher" && (
+                  <div className="h3 card-body">
+                    <h5 className="display-5 card-title">Grupių vidurkiai</h5>
                   </div>
-                </div>
+                )}
+                {accountType === "student" && (
+                  <div className="h3 card-body">
+                    <h5 className="display-5 card-title">
+                      Kategorijų vidurkiai
+                    </h5>
+                  </div>
+                )}
+                {accountType === "teacher" && (
+                  <GroupAverages userGroups={userGroups} />
+                )}
+                {accountType === "student" && (
+                  <Averages
+                    userAllAverages={userAllAverages}
+                    userAverage={userAverage}
+                  />
+                )}
               </div>
-              <div>
-                <div>
-                  {accountType === "teacher" && (
-                    <GroupAverages userGroups={userGroups} />
-                  )}
-                  {accountType === "student" && (
-                    <Averages
-                      userAllAverages={userAllAverages}
-                      userAverage={userAverage}
-                    />
-                  )}
-                </div>
-              </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </UI>

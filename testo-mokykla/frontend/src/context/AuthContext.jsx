@@ -17,6 +17,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [userData, setUserData] = useState([{}]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const logout = useCallback(async () => {
@@ -31,6 +32,7 @@ export const AuthProvider = ({ children }) => {
         navigate("/prisijungimas");
       }
     } catch (error) {
+      setError(error.response.data.error);
       console.error("Klaida atjungiant vartotoją: ", error);
     } finally {
       setLoading(false);
@@ -61,6 +63,7 @@ export const AuthProvider = ({ children }) => {
         setUserData(null);
       }
     } catch (error) {
+      setError(error.response.data.error);
       console.error("Klaida gaunant vartotojo duomenis: ", error);
     } finally {
       setLoading(false);
@@ -78,7 +81,9 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("token", JSON.stringify(response.data));
       navigate("/");
     } catch (error) {
+      setError(error.response.data.error);
       console.error("Klaida prijungiant vartotoją: ", error);
+      console;
     } finally {
       setLoading(false);
     }
@@ -99,7 +104,8 @@ export const AuthProvider = ({ children }) => {
         logout();
       }
     } catch (error) {
-      console.error(error);
+      setError(error.response.data.error);
+      console.error("Klaida atnaujinant tokeną: ", error);
       setUser(null);
     } finally {
       setLoading(false);
@@ -142,6 +148,8 @@ export const AuthProvider = ({ children }) => {
     loading,
     setLoading,
     refreshToken,
+    setError,
+    error,
   };
 
   return (

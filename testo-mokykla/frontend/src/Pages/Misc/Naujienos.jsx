@@ -3,7 +3,19 @@
 function Naujienos() {
   return (
     <UI>
-      <h2>Kolkas naujienų nėra</h2>;
+      <div
+        className="container mt-5"
+        style={{
+          width: "75%",
+        }}
+      >
+        <div
+          className="row justify-content-center text-center"
+          style={{ margin: "auto" }}
+        >
+          <h2>Kolkas naujienų nėra</h2>
+        </div>
+      </div>
     </UI>
   );
 }

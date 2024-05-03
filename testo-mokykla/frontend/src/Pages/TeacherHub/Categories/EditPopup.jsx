@@ -9,6 +9,8 @@ const EditPopup = ({ category, onClose }) => {
   const [categories, setCategories] = useState([]);
   const [editedCategory, setEditedCategory] = useState({});
   const [categoryName, setCategoryName] = useState("");
+
+  const [catNameError, setCatNameError] = useState("");
   const [bulletPoints, setBulletPoints] = useState([]);
   const [newBulletPoint, setNewBulletPoint] = useState("");
   const [parentCategory, setParentCategory] = useState("");
@@ -48,6 +50,11 @@ const EditPopup = ({ category, onClose }) => {
   const handleCategoryNameChange = (value) => {
     setCategoryName(value);
     setEditedCategory({ ...editedCategory, name: value });
+    if (!value.trim()) {
+      setCatNameError("Pavadinimas negali būti tuščias");
+    } else {
+      setCatNameError("");
+    }
   };
 
   const handleAddBulletPoint = () => {
@@ -64,6 +71,10 @@ const EditPopup = ({ category, onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!categoryName) {
+      setCatNameError("Pavadinimas negali būti tuščias");
+      return;
+    }
     try {
       await axios.put(
         ServerPaths.CategoryRoutes.UPDATE_CATEGORY(category.id),
@@ -86,7 +97,13 @@ const EditPopup = ({ category, onClose }) => {
 
   return (
     <div className="popup-overlay">
-      <div className="popup-container">
+      <div
+        className="popup-container m-3"
+        style={{
+          borderRadius: "30px",
+          backgroundColor: "rgba(78, 174, 18, 0.878)",
+        }}
+      >
         <button className="close-btn" onClick={onClose}>
           &times;
         </button>
@@ -100,11 +117,13 @@ const EditPopup = ({ category, onClose }) => {
               type="text"
               id="name"
               name="name"
-              className="form-control"
+              className={`form-control ${catNameError ? "is-invalid" : ""}`}
               value={categoryName}
               onChange={(e) => handleCategoryNameChange(e.target.value)}
-              required
             />
+            {catNameError && (
+              <div className="invalid-feedback">{catNameError}</div>
+            )}
           </div>
           <div className="mb-3">
             <label htmlFor="parentId" className="form-label">
@@ -129,13 +148,16 @@ const EditPopup = ({ category, onClose }) => {
             <label htmlFor="bulletPoints" className="form-label">
               Punktai:
             </label>
-            <ul className="list-group mt-2 text-black bg-white">
+            <ul
+              className="list-group mt-2 text-black"
+              style={{ background: "none" }}
+            >
               {!loading &&
                 bulletPoints.length > 0 &&
                 bulletPoints.map((point, index) => (
                   <li
                     key={index}
-                    className="nav-item text-black bg-white"
+                    className="nav-item text-black bg-white my-2"
                     style={{ display: "flex", alignItems: "center" }}
                   >
                     <input
@@ -166,7 +188,7 @@ const EditPopup = ({ category, onClose }) => {
                   />
                   <button
                     type="button"
-                    className="btn btn-outline-primary"
+                    className="btn btn-primary"
                     onClick={handleAddBulletPoint}
                   >
                     Pridėti

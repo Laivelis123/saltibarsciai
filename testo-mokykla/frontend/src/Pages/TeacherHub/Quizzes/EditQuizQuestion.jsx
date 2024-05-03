@@ -9,6 +9,8 @@ const EditQuizQuestion = ({ quizId }) => {
   const [newAnswers, setNewAnswers] = useState([]);
   const { user } = useAuth();
   const [questionNumbers, setQuestionNumbers] = useState([]);
+  const [newQuestionError, setNewQuestionError] = useState("");
+  const [newAnsError, setNewAnsError] = useState("");
 
   const fetchQuestions = useCallback(async () => {
     try {
@@ -38,6 +40,11 @@ const EditQuizQuestion = ({ quizId }) => {
   }, [fetchQuestions]);
 
   const handleAddQuestion = async () => {
+    if (!newQuestionText.trim()) {
+      setNewQuestionError("Klausimo tekstas negali būti tuščias");
+      return;
+    }
+
     try {
       await axios.post(
         ServerPaths.QuestRoutes.CREATE_QUESTION(quizId),
@@ -46,6 +53,7 @@ const EditQuizQuestion = ({ quizId }) => {
       );
       fetchQuestions();
       setNewQuestionText("");
+      setNewQuestionError("");
     } catch (error) {
       console.error("Klaida pridedant klausimą:", error);
     }
@@ -67,6 +75,10 @@ const EditQuizQuestion = ({ quizId }) => {
 
   const handleAddAnswer = async (questionId, index) => {
     try {
+      if (!newAnswers[index].answerText.trim() || newAnsError) {
+        setNewAnsError("Atsakymo tekstas negali būti tuščias");
+        return;
+      }
       await axios.post(
         ServerPaths.QuestRoutes.ADD_ANSWER(quizId, questionId),
         {
@@ -104,6 +116,11 @@ const EditQuizQuestion = ({ quizId }) => {
       updatedAnswers[index].answerText = value;
       return updatedAnswers;
     });
+    if (!value.trim()) {
+      setNewAnsError("Atsakymo tekstas negali būti tuščias");
+    } else {
+      setNewAnsError("");
+    }
   };
 
   const handlePointsChange = (index, value) => {
@@ -115,41 +132,51 @@ const EditQuizQuestion = ({ quizId }) => {
   };
 
   return (
-    <div>
+    <div className="mx-4">
       <hr />
-      <div className="mt-3">
+      <div className="mt-3 mx-3">
         <h4>Pridėti klausimą</h4>
         <div className="mb-3">
           <label className="form-label">Klausimas</label>
           <input
             type="text"
-            className="form-control"
+            className={`form-control ${newQuestionError ? "is-invalid" : ""}`}
             value={newQuestionText}
-            onChange={(e) => setNewQuestionText(e.target.value)}
+            onChange={(e) => {
+              setNewQuestionText(e.target.value);
+              setNewQuestionError("");
+            }}
           />
+          {newQuestionError && (
+            <div className="invalid-feedback">{newQuestionError}</div>
+          )}
         </div>
         <button className="btn btn-primary" onClick={handleAddQuestion}>
           Pridėti klausimą
         </button>
       </div>
       <hr />
-      <div className="mt-3">
+      <div className="mt-3 mx-3">
         <h4>Klausimai</h4>
         {questions.map((question, index) => (
-          <div key={question.id} className="card mb-3">
+          <div
+            key={question.id}
+            className="card mb-3"
+            style={{ background: "none", borderRadius: "10px" }}
+          >
             <div className="card-body">
               <h5 className="card-title">Klausimas {questionNumbers[index]}</h5>
-              <p className="card-text">{question.questionText}</p>
+              <p className="card-text mx-5">{question.questionText}</p>
               <div>
                 <h6>Atsakymai:</h6>
                 {question.answers &&
                   question.answers.map((answer) => (
-                    <div key={answer.id} className=" align-items-center">
+                    <div key={answer.id} className=" mx-4 align-items-center">
                       <p>Atsakymas : {answer.answerText}</p>
-                      <p className="ms-auto">
+                      <p className="ms-auto ">
                         Taškai: {answer.points}
                         <button
-                          className="btn btn-sm btn-danger ms-2"
+                          className="btn btn-sm btn-danger ms-2 p-2 my-2"
                           onClick={() =>
                             handleRemoveAnswer(question.id, answer.id)
                           }
@@ -162,13 +189,18 @@ const EditQuizQuestion = ({ quizId }) => {
                 <div className="mb-3">
                   <input
                     type="text"
-                    className="form-control"
+                    className={`form-control ${
+                      newAnsError ? "is-invalid" : ""
+                    }`}
                     placeholder="Naujas atsakymas"
                     value={newAnswers[index].answerText}
                     onChange={(e) =>
                       handleAnswerTextChange(index, e.target.value)
                     }
                   />
+                  {newAnsError && (
+                    <div className="invalid-feedback">{newAnsError}</div>
+                  )}
                   <input
                     type="number"
                     min="0"
@@ -178,7 +210,7 @@ const EditQuizQuestion = ({ quizId }) => {
                     onChange={(e) => handlePointsChange(index, e.target.value)}
                   />
                   <button
-                    className="btn btn-outline-primary mt-2"
+                    className="btn btn-primary mt-2"
                     onClick={() => handleAddAnswer(question.id, index)}
                   >
                     Pridėti atsakymą

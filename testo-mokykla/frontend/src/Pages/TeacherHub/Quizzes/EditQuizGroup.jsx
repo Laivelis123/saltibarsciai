@@ -75,14 +75,15 @@ const EditQuizGroup = ({ quizId }) => {
     }
   };
   return (
-    <div>
-      <div className="mt-3">
+    <div className="mx-5 my-2">
+      <div className="mt-2">
         <h4>Priskirti vartotojai</h4>
-        <ul className="list-group">
+        <ul className="list-group" style={{ background: "none" }}>
           {assignedUsers.map((user) => (
             <li
               key={user.id}
-              className="list-group-item d-flex justify-content-between align-items-center"
+              className="list-group-item d-flex justify-content-between align-items-center m-2"
+              style={{ borderRadius: "10px" }}
             >
               {user.username}
               <button

@@ -3,17 +3,17 @@ import { useAuth } from "../../context/AuthContext";
 import UI from "../../components/UI/UI.jsx";
 import styles from "./prisijungimas.module.css";
 import { Link } from "react-router-dom";
+
 function Prisijungimas() {
-  const { login, error } = useAuth();
+  const { login, error, setError } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       await login(username, password);
-    } catch (error) {
-      console.error(error);
+    } catch {
+      console.log(error);
     }
   };
 
@@ -23,6 +23,7 @@ function Prisijungimas() {
         <div className={styles.formColor}>
           <form onSubmit={handleLogin}>
             <h2 className="mb-4">Prisijungimas</h2>
+            {error && <div className="mb-3 text-danger">{error}</div>}
             <div className="mb-3">
               <label htmlFor="username" className="form-label">
                 Vartotojo vardas
@@ -33,7 +34,7 @@ function Prisijungimas() {
                 id="username"
                 onChange={(e) => setUsername(e.target.value)}
                 name="username"
-                className="form-control bg-secondary text-light"
+                className="form-control bg-light text-dark"
               />
             </div>
             <div className="mb-3">
@@ -46,10 +47,9 @@ function Prisijungimas() {
                 id="password"
                 onChange={(e) => setPassword(e.target.value)}
                 name="password"
-                className="form-control  bg-secondary text-light"
+                className="form-control  bg-light text-dark"
               />
             </div>
-            <div className="mb-3 text-danger">{error}</div>
             <Link to="/slaptazodis" className="mb-3">
               Pamišote slaptažodį?
             </Link>

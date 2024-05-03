@@ -1,26 +1,51 @@
 import UI from "../../../components/UI/UI";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBookOpenReader,
+  faMicroscope,
+} from "@fortawesome/free-solid-svg-icons";
 function ManageCategories() {
   return (
     <UI>
-      <div className="container mt-4">
-        <h2>Kategorijų tvarkyklė</h2>
-        <div className="d-grid gap-2">
-          <Link
-            to="/valdymas/mokytojas/tvarkyti/kategorijas/kurti"
-            className="btn btn-primary"
-          >
-            Kurti Kategorija
-          </Link>
-          <Link
-            to="/valdymas/mokytojas/tvarkyti/kategorijas/redaguoti"
-            className="btn btn-primary"
-          >
-            Redaguoti Kategorijas
-          </Link>
-          <Link to="/" className="btn btn-primary">
-            Peržiūrėti Kategorija
-          </Link>
+      <div className="container my-5">
+        <div className="row justify-content-center">
+          <div>
+            <h2 className="text-center">Kategorijų tvarkyklė</h2>
+            <ul
+              className="list-unstyled d-flex flex-wrap justify-content-center"
+              style={{ background: "none" }}
+            >
+              <li
+                className="mx-2 my-2 flex-grow-1"
+                style={{ minWidth: "250px", maxWidth: "300px" }}
+              >
+                <Link
+                  to="/valdymas/mokytojas/tvarkyti/kategorijas/kurti"
+                  className="card bg-primary d-block h-100"
+                >
+                  <div className="card-body text-center text-white">
+                    <FontAwesomeIcon icon={faMicroscope} size="4x" />
+                    <h5>Kurti Kategoriją</h5>
+                  </div>
+                </Link>
+              </li>
+              <li
+                className="mx-2 my-2 flex-grow-1"
+                style={{ minWidth: "250px", maxWidth: "300px" }}
+              >
+                <Link
+                  to="/valdymas/mokytojas/tvarkyti/kategorijas/redaguoti"
+                  className="card bg-primary d-block h-100"
+                >
+                  <div className="card-body text-center text-white">
+                    <FontAwesomeIcon icon={faBookOpenReader} size="4x" />
+                    <h5>Redaguoti kategorijas</h5>
+                  </div>
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </UI>

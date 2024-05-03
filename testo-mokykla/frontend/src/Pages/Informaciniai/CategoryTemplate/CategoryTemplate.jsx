@@ -45,7 +45,7 @@ const CategoryTemplate = () => {
   return (
     <UI>
       {!loading && category ? (
-        <div className={`container ${styles.containerColor}`}>
+        <div className={`container ${styles.containerColor} p-4 m-4`}>
           <p>Kategorijos pavadinimas: {category.name}</p>
           <p>Šią kategorija sukūrė: {category.User.username}</p>
           {category.bulletPoints &&
@@ -53,7 +53,7 @@ const CategoryTemplate = () => {
               <>
                 <ul className={`nav flex-column ${styles.categoryColor}`}>
                   {JSON.parse(category.bulletPoints).map((point, index) => (
-                    <li key={index} className="nav-item">
+                    <li key={index} className="nav-item px-2">
                       • {point}
                     </li>
                   ))}
@@ -61,8 +61,11 @@ const CategoryTemplate = () => {
               </>
             )}
 
-          <div className={`container text-dark ${styles.containerColor}`}>
-            <button onClick={handleGoBack} className={`btn ${styles.backBtn}`}>
+          <div className={`container text-dark py-2`}>
+            <button
+              onClick={handleGoBack}
+              className={`btn ${styles.backBtn} my-1`}
+            >
               Atgal
             </button>
           </div>

@@ -13,10 +13,22 @@ const GroupAverages = ({ userGroups }) => {
   userGroups.forEach((group) => {
     rows.push(
       <tr key={group.id}>
-        <td style={{ borderRadius: "30px" }} className="h3 bg-dark text-white ">
+        <td
+          style={{
+            borderRadius: "30px",
+            backgroundColor: "rgba(78, 174, 18, 0.878)",
+          }}
+          className="h3 mx-4 text-white "
+        >
           Grupė: {group.name}
         </td>
-        <td style={{ borderRadius: "30px" }} className="h3 bg-dark text-white">
+        <td
+          style={{
+            borderRadius: "30px",
+            backgroundColor: "rgba(78, 174, 18, 0.878)",
+          }}
+          className="h3  text-white"
+        >
           Vidurkis: {calculateGroupAverage(group.users).toFixed(3)}%
         </td>
       </tr>
@@ -26,8 +38,11 @@ const GroupAverages = ({ userGroups }) => {
         <tr key={`${group.id}_categories`}>
           <td
             colSpan="2"
-            style={{ borderRadius: "30px" }}
-            className="h3 px-4 bg-secondary text-white "
+            style={{
+              borderRadius: "30px",
+              backgroundColor: "rgba(78, 174, 18, 0.878)",
+            }}
+            className="h3 px-4 text-white "
           >
             Kategorijos:
           </td>
@@ -37,14 +52,20 @@ const GroupAverages = ({ userGroups }) => {
         rows.push(
           <tr key={`${group.id}_${category.categoryId}`}>
             <td
-              style={{ borderRadius: "30px" }}
-              className="h3 px-5 bg-black text-white "
+              style={{
+                borderRadius: "30px",
+                backgroundColor: "rgba(78, 174, 18, 0.878)",
+              }}
+              className="h3  text-white "
             >
               {category.categoryName}
             </td>
             <td
-              style={{ borderRadius: "30px" }}
-              className="h3 px-5 bg-black text-white"
+              style={{
+                borderRadius: "30px",
+                backgroundColor: "rgba(78, 174, 18, 0.878)",
+              }}
+              className="h3 px-5 text-white"
             >
               Vidurkis: {category.averageGrade.toFixed(3)}%
             </td>
@@ -87,7 +108,7 @@ GroupAverages.propTypes = {
       ),
       groupCategoryAverages: PropTypes.arrayOf(
         PropTypes.shape({
-          categoryId: PropTypes.number.isRequired,
+          categoryId: PropTypes.string.isRequired,
           categoryName: PropTypes.string.isRequired,
           averageGrade: PropTypes.number.isRequired,
         })

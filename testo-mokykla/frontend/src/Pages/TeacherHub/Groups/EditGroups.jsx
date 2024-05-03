@@ -25,23 +25,39 @@ const EditGroups = () => {
 
   return (
     <UI>
-      <div className="container mt-4">
-        <h2>Mano grupės</h2>
-        <div className="mb-3">
-          {groups.map((group) => (
-            <div key={group.id} className="card mb-3">
-              <div className="card-body">
-                <h5 className="card-title">{group.name}</h5>
-                <p className="card-text">Prisijungimo kodas: {group.code}</p>
-                <Link
-                  to={`/valdymas/mokytojas/tvarkyti/grupes/redaguoti/${group.id}`}
-                  className="btn btn-primary mr-2"
+      <div className="container my-4 ">
+        <div className="row justify-content-center">
+          <div className="col-md-7">
+            <div
+              className="mt-5 py-4 card"
+              style={{
+                borderRadius: "30px",
+                backgroundColor: "rgba(78, 174, 18, 0.878)",
+              }}
+            >
+              <h2 className="px-3 text-center">Mano grupės</h2>
+              {groups.map((group) => (
+                <div
+                  key={group.id}
+                  className="card mb-3 px-3"
+                  style={{ background: "none", border: "none" }}
                 >
-                  Redaguoti
-                </Link>
-              </div>
+                  <div className="card-body">
+                    <h5 className="card-title">{group.name}</h5>
+                    <p className="card-text">
+                      Prisijungimo kodas: {group.code}
+                    </p>
+                    <Link
+                      to={`/valdymas/mokytojas/tvarkyti/grupes/redaguoti/${group.id}`}
+                      className="btn btn-primary mr-2"
+                    >
+                      Redaguoti
+                    </Link>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </UI>

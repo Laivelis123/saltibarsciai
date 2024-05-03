@@ -31,42 +31,71 @@ const CheckQuiz = () => {
 
   return (
     <UI>
-      {!loading && (
-        <>
-          <h2 className="mb-4">
-            {quiz.title} peržiūra, studentui {quiz.user}
-          </h2>
-          <p>Įvertinimas: {quiz.grade}</p>
-          <h3 className="mb-4">Testo klausimai</h3>
-          {quiz &&
-            quiz.questions.map((question) => (
-              <div key={question.id} className="card mb-4">
-                <div className="card-header">
-                  <h3 className="card-title">{question.questionText}</h3>
-                </div>
-                <div className="card-body">
-                  <ul className="bg-white">
-                    {question.allAnswers.map((answer) => (
-                      <li
-                        key={answer.id}
-                        className={`bg-white mx-2 ${
-                          question.allUserAnswers.find(
-                            (userAnswer) => userAnswer.id === answer.id
-                          )
-                            ? "text-primary"
-                            : ""
-                        }`}
+      <div className="container my-4 ">
+        <div className="row justify-content-center">
+          <div className="col-md-7">
+            <div
+              className="mt-5 py-4 card"
+              style={{
+                borderRadius: "30px",
+                backgroundColor: "rgba(78, 174, 18, 0.878)",
+              }}
+            >
+              {!loading && (
+                <>
+                  <h2 className="mb-4 text-center">
+                    {quiz.title} peržiūra, studentui {quiz.user}
+                  </h2>
+                  <p className="mb-4 h3  text-center">
+                    Įvertinimas: {quiz.grade}%
+                  </p>
+                  <h3 className="mb-4 text-center">Testo klausimai</h3>
+                  {quiz &&
+                    quiz.questions.map((question) => (
+                      <div
+                        key={question.id}
+                        className="card mb-4 mx-3"
+                        style={{ background: "none", borderRadius: "30px" }}
                       >
-                        <a>{answer.answerText}</a>
-                        <a> Skiriami balai: {answer.points}</a>
-                      </li>
+                        <div className="card-header">
+                          <h3 className="card-title mx-5">
+                            {question.questionText}
+                          </h3>
+                        </div>
+                        <div className="card-body">
+                          <ul
+                            className="list-group"
+                            style={{ background: "none", borderRadius: "30px" }}
+                          >
+                            {question.allAnswers.map((answer) => (
+                              <li
+                                key={answer.id}
+                                style={{
+                                  background: "none",
+                                  borderRadius: "30px",
+                                }}
+                                className={`my-3 list-group-item d-flex justify-content-between align-items-center ${
+                                  question.allUserAnswers.find(
+                                    (userAnswer) => userAnswer.id === answer.id
+                                  )
+                                    ? "text-primary"
+                                    : ""
+                                }`}
+                              >
+                                <div>{answer.answerText}</div>
+                                <div> Skiriami balai: {answer.points}</div>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
                     ))}
-                  </ul>
-                </div>
-              </div>
-            ))}
-        </>
-      )}
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
     </UI>
   );
 };

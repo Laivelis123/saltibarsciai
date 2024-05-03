@@ -15,14 +15,20 @@ const Averages = ({ userAllAverages, userAverage }) => {
       rowItems.push(
         <tr key={quiz.quizId}>
           <td
-            style={{ width: "40%", borderRadius: "30px" }}
-            className="h3 bg-secondary text-white "
+            style={{
+              borderRadius: "30px",
+              backgroundColor: "rgba(78, 174, 18, 0.878)",
+            }}
+            className="h3 text-white "
           >
             Kategorija: {categoryName}
           </td>
           <td
-            style={{ width: "40%", borderRadius: "30px" }}
-            className="h3 bg-secondary text-white"
+            style={{
+              borderRadius: "30px",
+              backgroundColor: "rgba(78, 174, 18, 0.878)",
+            }}
+            className="h3 text-white"
           >
             Vidurkis: {quiz.average}%
           </td>
@@ -52,8 +58,11 @@ const Averages = ({ userAllAverages, userAverage }) => {
         <div className="row mt-3" style={{ width: "40%", margin: "auto" }}>
           <div className="col ">
             <div
-              className="card  bg-secondary text-white text-center mb-2"
-              style={{ borderRadius: "30px" }}
+              className="card text-white text-center mb-2"
+              style={{
+                borderRadius: "30px",
+                backgroundColor: "rgba(78, 174, 18, 0.878)",
+              }}
             >
               <div className="h3 card-body">
                 <h5 className="h3 card-title">Bendras vidurkis</h5>

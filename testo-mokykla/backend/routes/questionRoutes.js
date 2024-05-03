@@ -24,7 +24,7 @@ router.delete(
 router.delete(
   "/:quizId/all/:questionId/answers/:answerId",
   verifyToken,
-  questionController.getQuizQuestAnswers
+  questionController.removeQuestionAnswer
 );
 
 module.exports = router;
