@@ -50,7 +50,7 @@ function Prisijungimas() {
               />
             </div>
             <div className="mb-3 text-danger">{error}</div>
-            <Link to="/slaptazodis" className="mb-3">
+            <Link to="/email" className="mb-3">
               Pamišote slaptažodį?
             </Link>
             <div className="mb-3">

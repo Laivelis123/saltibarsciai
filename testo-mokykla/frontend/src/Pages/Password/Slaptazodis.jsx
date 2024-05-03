@@ -2,7 +2,7 @@
 import { Link } from "react-router-dom";
 import UI from "../../components/UI/UI";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import styles from "./prisijungimas.module.css";
+import styles from "../Prisijungimas/prisijungimas.module.css";
 import * as Yup from "yup";
 import axios from "axios";
 import ServerPaths from "../../context/ServerPaths";

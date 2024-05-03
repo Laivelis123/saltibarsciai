@@ -2,6 +2,7 @@ import PrivateRoutes from "./utils/PrivateRoutes";
 import PublicRoutes from "./utils/PublicRoutes";
 
 import {
+  Email,
   Slaptazodis,
   Prisijungimas,
   Registracija,
@@ -55,7 +56,8 @@ export const allPrivateRoutes = [
 export const allPublicRoutes = [
   {
     element: <PublicRoutes />,
-    children: [
+      children: [
+      { path: "email", element: <Email /> },
       { path: "slaptazodis", element: <Slaptazodis /> },
       { path: "prisijungimas", element: <Prisijungimas /> },
       { path: "registracija", element: <Registracija /> },

@@ -15,6 +15,7 @@ export const ServerPaths = {
     LOGOUT_PATH: `${SERVER_PATH}/${AUTH}/logout`,
     REFRESH_PATH: `${SERVER_PATH}/${AUTH}/refresh`,
     UPDATE_PASSWORD: `${SERVER_PATH}/${AUTH}/update-password`,
+    CHECK_EMAIL: `${SERVER_PATH}/${AUTH}/check-email`,
   },
   CategoryRoutes: {
     ALL_CATEGORIES: `${SERVER_PATH}/${CATEGORIES}/all`,

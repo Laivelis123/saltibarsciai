@@ -12,10 +12,17 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@vituum/vite-plugin-juice": "^1.2.0",
+    "@vituum/vite-plugin-postcss": "^1.1.0",
+    "@vituum/vite-plugin-posthtml": "^1.1.0",
+    "@vituum/vite-plugin-send": "^1.1.0",
     "jest": "^29.7.0",
-    "nodemon": "^3.1.0"
+    "nodemon": "^3.1.0",
+    "vite-email": "^0.8.3",
+    "vituum": "^1.1.0"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.3.3",
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/react-fontawesome": "^0.2.0"
