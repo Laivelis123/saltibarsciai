@@ -16,13 +16,24 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Quiz.associate = (models) => {
-    Quiz.hasMany(models.UserQuiz, { foreignKey: "quizId" });
-    Quiz.belongsTo(models.User, { as: "Creator", foreignKey: "userId" });
+    Quiz.hasMany(models.UserQuiz, {
+      foreignKey: "quizId",
+      onDelete: "CASCADE",
+    });
+    Quiz.belongsTo(models.User, {
+      as: "Creator",
+      foreignKey: "userId",
+      onDelete: "CASCADE",
+    });
     Quiz.belongsTo(models.Category, {
       as: "categoryAlias",
       foreignKey: "categoryId",
+      onDelete: "CASCADE",
     });
-    Quiz.hasMany(models.Question, { foreignKey: "quizId" });
+    Quiz.hasMany(models.Question, {
+      foreignKey: "quizId",
+      onDelete: "CASCADE",
+    });
   };
 
   return Quiz;

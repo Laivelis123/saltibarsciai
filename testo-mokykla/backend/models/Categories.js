@@ -28,16 +28,24 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Category.associate = (models) => {
-    Category.belongsTo(models.User, { foreignKey: "userId" });
-    Category.hasMany(models.Quiz, { foreignKey: "categoryId" });
+    Category.belongsTo(models.User, {
+      foreignKey: "userId",
+      onDelete: "CASCADE",
+    });
+    Category.hasMany(models.Quiz, {
+      foreignKey: "categoryId",
+      onDelete: "CASCADE",
+    });
     // Define the parent-child relationship
     Category.hasMany(models.Category, {
       foreignKey: "parentId",
       as: "children",
+      onDelete: "CASCADE",
     });
     Category.belongsTo(models.Category, {
       foreignKey: "parentId",
       as: "parent",
+      onDelete: "CASCADE",
     });
   };
 

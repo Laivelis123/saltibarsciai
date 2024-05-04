@@ -46,10 +46,11 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   User.associate = (models) => {
-    User.hasOne(models.Session, { foreignKey: "userId" });
+    User.hasOne(models.Session, { foreignKey: "userId", onDelete: "CASCADE" });
     User.belongsToMany(models.Group, {
       through: "UserGroup",
       foreignKey: "userId",
+      onDelete: "CASCADE",
     });
   };
 
