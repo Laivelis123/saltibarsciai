@@ -7,6 +7,7 @@ const {
   getUserData,
   logoutUser,
   updatePassword,
+  checkEmail,
 } = require("../controllers/authController");
 
 router.post("/register", registerUser);
@@ -15,4 +16,5 @@ router.post("/logout", logoutUser);
 router.post("/refresh", refreshToken);
 router.get("/user", getUserData);
 router.post("/update-password", updatePassword);
+router.post("/check-email", checkEmail);
 module.exports = router;

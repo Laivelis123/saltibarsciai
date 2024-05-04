@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { User, Session } = require("../models");
 const { Op } = require("sequelize");
+const emailjs = require("@emailjs/browser");
 
 // Generuoja žetoną pagal vartotoją su nurodytu galiojimo laiku.
 const generateToken = (user) => {
@@ -195,6 +196,31 @@ const updatePassword = async (req, res) => {
     res.status(500).json({ error: "Vidinė serverio klaida" });
   }
 };
+const checkEmail = async (req, res) => {
+    try {
+        const { email, link } = req.body;
+        const existingUser = await User.findOne({
+            where: {
+                [Op.or]: [{ email }],
+            },
+        });
+
+        if (existingUser) {
+            emailjs.init(process.env.VITE_EMAIL_USER_ID);
+            emailjs.send(process.env.VITE_EMAIL_SERVICE_ID, process.env.VITE_EMAIL_TEMPLATE_ID, {
+                link: "http://localhost:5173/slaptazodis",
+                    to_email: email,
+            })
+        } else {
+            return res.status(404).json({ message: "Vartotojas neegzistuoja" });
+        }
+
+        res.status(201).json({ message: "Laiškas sėkmingai išsiūstas" });
+    } catch (error) {
+        console.error("Klaida siunčiant laišką:", error);
+        res.status(500).json({ error: "Vidinė serverio klaida" });
+    }
+};
 module.exports = {
   registerUser,
   loginUser,
@@ -202,4 +228,5 @@ module.exports = {
   refreshToken,
   getUserData,
   updatePassword,
+  checkEmail,
 };

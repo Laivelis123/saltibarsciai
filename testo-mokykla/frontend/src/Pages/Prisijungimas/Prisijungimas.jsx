@@ -50,7 +50,8 @@ function Prisijungimas() {
                 className="form-control  bg-light text-dark"
               />
             </div>
-            <Link to="/slaptazodis" className="mb-3">
+            <div className="mb-3 text-danger">{error}</div>
+            <Link to="/email" className="mb-3">
               Pamišote slaptažodį?
             </Link>
             <div className="mb-3">
