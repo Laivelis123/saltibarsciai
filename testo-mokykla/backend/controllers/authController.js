@@ -197,29 +197,33 @@ const updatePassword = async (req, res) => {
   }
 };
 const checkEmail = async (req, res) => {
-    try {
-        const { email, link } = req.body;
-        const existingUser = await User.findOne({
-            where: {
-                [Op.or]: [{ email }],
-            },
-        });
+  try {
+    const { email, link } = req.body;
+    const existingUser = await User.findOne({
+      where: {
+        [Op.or]: [{ email }],
+      },
+    });
 
-        if (existingUser) {
-            emailjs.init(process.env.VITE_EMAIL_USER_ID);
-            emailjs.send(process.env.VITE_EMAIL_SERVICE_ID, process.env.VITE_EMAIL_TEMPLATE_ID, {
-                link: "http://localhost:5173/slaptazodis",
-                    to_email: email,
-            })
-        } else {
-            return res.status(404).json({ message: "Vartotojas neegzistuoja" });
+    if (existingUser) {
+      emailjs.init(process.env.VITE_EMAIL_USER_ID);
+      emailjs.send(
+        process.env.VITE_EMAIL_SERVICE_ID,
+        process.env.VITE_EMAIL_TEMPLATE_ID,
+        {
+          link: "http://localhost:5173/slaptazodis",
+          to_email: email,
         }
-
-        res.status(201).json({ message: "Laiškas sėkmingai išsiūstas" });
-    } catch (error) {
-        console.error("Klaida siunčiant laišką:", error);
-        res.status(500).json({ error: "Vidinė serverio klaida" });
+      );
+    } else {
+      return res.status(404).json({ message: "Vartotojas neegzistuoja" });
     }
+
+    res.status(201).json({ message: "Laiškas sėkmingai išsiūstas" });
+  } catch (error) {
+    console.error("Klaida siunčiant laišką:", error);
+    res.status(500).json({ error: "Vidinė serverio klaida" });
+  }
 };
 module.exports = {
   registerUser,

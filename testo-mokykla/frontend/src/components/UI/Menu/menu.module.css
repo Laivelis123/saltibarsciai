@@ -1,11 +1,6 @@
 ul {
   list-style-type: none;
   overflow: hidden;
-  background-color: #333;
-}
-
-li {
-  float: left;
 }
 
 li a {
@@ -29,4 +24,5 @@ li a:hover {
   background-color: #111;
   color: rgb(60, 188, 113);
   font-weight: bold;
+  border-radius: 20px;
 }

@@ -29,88 +29,87 @@ const Menu = ({ showSidebar, setShowSidebar }) => {
 
   return (
     <>
-      <ul className="py-3">
-        {window.innerWidth <= 768 && !showSidebar && (
-          <li className="m-2">
-            <Link className="px-2 py-1 rounded-pill" onClick={toggleSidebar}>
+      {window.innerWidth <= 768 && !showSidebar && (
+        <ul className="pt-3 mb-0 text-center bg-dark">
+          <li>
+            <Link className="display-1 rounded-pill" onClick={toggleSidebar}>
               {"ΞΞ"}
             </Link>
           </li>
-        )}
-        <div className="flex-wrap m-2">
-          {(window.innerWidth > 768 || !showSidebar) && (
-            <>
-              {user && (
-                <div className="menu-item">
-                  <li className="px-2 rounded-pill">
-                    <Link className="px-2 py-1 rounded-pill" to="/">
-                      Pagrindinis
-                    </Link>
-                  </li>
-                </div>
-              )}
-              <div className="menu-item">
-                <li className="px-2">
-                  <Link className="px-2 py-1  rounded-pill" to="/naujienos">
-                    Naujienos
-                  </Link>
-                </li>
-              </div>
-              {!user && (
-                <>
-                  <div className="menu-item">
-                    <li className="px-2">
-                      <Link
-                        className="px-2 py-1  rounded-pill"
-                        to="/prisijungimas"
-                      >
-                        Prisijungimas
-                      </Link>
-                    </li>
-                  </div>
-                  <div className="menu-item">
-                    <li className="px-2">
-                      <Link
-                        className="px-2 py-1  rounded-pill"
-                        to="/registracija"
-                      >
-                        Registracija
-                      </Link>
-                    </li>
-                  </div>
-                </>
-              )}
-              <div className="menu-item">
-                <li className="px-2">
-                  <Link className="px-2 py-1 rounded-pill" to="/apie">
-                    Apie
-                  </Link>
-                </li>
-              </div>
-              <div className="menu-item">
-                <li className="px-2">
-                  <Link className="px-2 py-1  rounded-pill" to="/kontaktai">
-                    Kontaktai
-                  </Link>
-                </li>
-              </div>
-              {user && (
-                <li style={{ float: "right" }}>
+        </ul>
+      )}
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark py-3">
+        <div className="container-fluid">
+          <ul className="navbar-nav me-auto my-2 my-lg-0">
+            {user && (
+              <li className="px-2 py-2 text-center">
+                <Link className="px-2 py-1 " to="/">
+                  Pagrindinis
+                </Link>
+              </li>
+            )}
+            <li className="px-2 py-2  text-center">
+              <Link className="px-2 py-1 " to="/naujienos">
+                Naujienos
+              </Link>
+            </li>
+            <li className="px-2 py-2  text-center">
+              <Link className="px-2 py-1 " to="/apie">
+                Apie
+              </Link>
+            </li>
+            <li className="px-2 py-2  text-center">
+              <Link className="px-2 py-1 " to="/kontaktai">
+                Kontaktai
+              </Link>
+            </li>
+          </ul>
+          <form className="d-flex">
+            {user ? (
+              <ul className="navbar-nav me-auto my-2 my-lg-0">
+                <li
+                  className="px-2 py-2 text-center"
+                  style={{ listStyleType: "none" }}
+                >
                   <Link className="rounded-pill px-2 py-1 " to="/profilis">
                     Sveiki, {username}
                   </Link>
+                </li>
+                <li
+                  className="px-2 py-2 text-center"
+                  style={{ listStyleType: "none" }}
+                >
                   <Link
                     onClick={logout}
-                    className={`rounded-pill px-2 py-2  ${styles.buttonColor}`}
+                    className={`rounded-pill px-2 py-1  ${styles.buttonColor}`}
                   >
                     Atsijungti
                   </Link>
                 </li>
-              )}
-            </>
-          )}
+              </ul>
+            ) : (
+              <ul className="navbar-nav me-auto my-2 my-lg-0">
+                <li
+                  className="px-2 py-2 text-center"
+                  style={{ listStyleType: "none" }}
+                >
+                  <Link className="px-2 py-1 " to="/registracija">
+                    Registracija
+                  </Link>
+                </li>
+                <li
+                  className="px-2 py-2 text-center"
+                  style={{ listStyleType: "none" }}
+                >
+                  <Link className="px-2 py-1 " to="/prisijungimas">
+                    Prisijungimas
+                  </Link>
+                </li>
+              </ul>
+            )}
+          </form>
         </div>
-      </ul>
+      </nav>
     </>
   );
 };

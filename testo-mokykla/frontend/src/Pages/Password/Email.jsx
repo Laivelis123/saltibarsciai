@@ -15,8 +15,8 @@ function Email() {
 
     try {
       const response = await axios.post(ServerPaths.Auth.CHECK_EMAIL, {
-          email,
-          link: "http://localhost:5173/slaptazodis",
+        email,
+        link: "http://localhost:5173/slaptazodis",
       });
       console.log(response);
       setRegistrationSuccess(true);
@@ -82,9 +82,7 @@ function Email() {
           <div className="container mt-5">
             <div className="row justify-content-center">
               <div className={`col-md-6 ${styles.formColor}`}>
-                <h2 className="mb-4 text-center">
-                  Laiškas išsiūstas
-                </h2>
+                <h2 className="mb-4 text-center">Laiškas išsiūstas</h2>
               </div>
             </div>
           </div>

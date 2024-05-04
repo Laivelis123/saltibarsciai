@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }) => {
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     } else {
-      logout();
+      setUser(null);
     }
     setLoading(false);
   }, [logout]);
