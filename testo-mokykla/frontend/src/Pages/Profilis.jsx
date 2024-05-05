@@ -6,10 +6,10 @@ import { Card, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import defaultProfile from "../Images/default-profile-picture.jpg";
 import ServerPaths from "../context/ServerPaths";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 function Profilis() {
   const navigate = useNavigate();
-  const { user, userData, fetchUser } = useAuth();
+  const { user, userData, fetchUser, logout } = useAuth();
   useEffect(() => {
     if (user) {
       console.log("PROF", userData);
@@ -133,18 +133,20 @@ function Profilis() {
                   </Button>
                 </div>
                 <div className="text-right">
-                  <Button
-                    onClick={handleDeleteProfile}
-                    variant="danger"
-                    size="sm"
-                    style={{
-                      position: "absolute",
-                      bottom: "10px",
-                      left: "10px",
-                    }}
-                  >
-                    Ištrinti profilį
-                  </Button>
+                  <Link onClick={logout}>
+                    <Button
+                      onClick={handleDeleteProfile}
+                      variant="danger"
+                      size="sm"
+                      style={{
+                        position: "absolute",
+                        bottom: "10px",
+                        left: "10px",
+                      }}
+                    >
+                      Ištrinti profilį
+                    </Button>
+                  </Link>
                 </div>
                 {user && (
                   <div className="text-center">
