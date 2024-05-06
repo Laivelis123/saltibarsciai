@@ -20,14 +20,17 @@
   background-color: rgba(36, 97, 61, 0.63) !important;
   color: black !important;
 }
+
 .listItem {
   border-radius: 10px !important;
   margin-bottom: 5px;
 }
+
 .sideNav {
   width: calc(100% / 4);
   min-width: 200px;
 }
+
 .toggleButton {
   cursor: pointer !important;
 }
@@ -36,4 +39,11 @@
   background-color: #111 !important;
   color: rgb(60, 188, 113) !important;
   font-weight: bold !important;
+}
+
+@media (max-width: 769px) {
+  .sideNav {
+    width: 100%;
+    min-width: unset;
+  }
 }

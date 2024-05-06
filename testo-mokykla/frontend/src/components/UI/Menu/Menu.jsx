@@ -15,6 +15,8 @@ const Menu = ({ showSidebar, setShowSidebar }) => {
     const handleResize = () => {
       if (window.innerWidth > 768) {
         setShowSidebar(true);
+      } else {
+        setShowSidebar(false);
       }
     };
     window.addEventListener("resize", handleResize);

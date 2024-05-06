@@ -27,7 +27,13 @@ const UI = ({ children }) => {
             setShowSidebar={setShowSidebar}
           />
         )}
-        <div style={{ flex: 1, marginLeft: showSidebar ? 0 : "auto" }}>
+        <div
+          style={{
+            flex: 1,
+            marginLeft: showSidebar ? 0 : "auto",
+            width: showSidebar && 0,
+          }}
+        >
           <Header />
           <Menu showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
           {children}
