@@ -46,6 +46,7 @@ export const ServerPaths = {
   ProfileRoutes: {
     UPLOAD_IMAGE: `${SERVER_PATH}/${PROFILE}/upload`,
     DELETE_IMAGE: `${SERVER_PATH}/${PROFILE}/delete`,
+    DELETE_PROFILE: `${SERVER_PATH}/${PROFILE}/remove`,
   },
   GroupRoutes: {
     CREATE_GROUP: `${SERVER_PATH}/${GROUPS}/create`,

@@ -20,8 +20,8 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Grade.associate = (models) => {
-    Grade.belongsTo(models.User, { foreignKey: "userId" });
-    Grade.belongsTo(models.Quiz, { foreignKey: "quizId" });
+    Grade.belongsTo(models.User, { foreignKey: "userId", onDelete: "CASCADE" });
+    Grade.belongsTo(models.Quiz, { foreignKey: "quizId", onDelete: "CASCADE" });
   };
 
   return Grade;

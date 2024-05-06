@@ -6,8 +6,10 @@ import { Card, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import defaultProfile from "../Images/default-profile-picture.jpg";
 import ServerPaths from "../context/ServerPaths";
+import { Link, useNavigate } from "react-router-dom";
 function Profilis() {
-  const { user, userData, fetchUser } = useAuth();
+  const navigate = useNavigate();
+  const { user, userData, fetchUser, logout } = useAuth();
   useEffect(() => {
     if (user) {
       console.log("PROF", userData);
@@ -66,6 +68,24 @@ function Profilis() {
     document.getElementById("fileInput").click();
   };
 
+  const handleDeleteProfile = async () => {
+    const confirmDelete = window.confirm(
+      "Ar tikrai norite ištrinti šį profilį?"
+    );
+    if (confirmDelete) {
+      try {
+        await axios.post(ServerPaths.ProfileRoutes.DELETE_PROFILE, {
+          userId: userData.id,
+          userType: userData.accountType,
+        });
+        console.log("Profilis ištrintas.");
+        navigate("/");
+      } catch (error) {
+        console.error("Nepavyko ištrinti profilio: ", error);
+      }
+    }
+  };
+
   return (
     <UI>
       <div className="container my-5">
@@ -117,6 +137,22 @@ function Profilis() {
                   <Button variant="danger" onClick={deleteImage}>
                     Ištrinti nuotrauką
                   </Button>
+                </div>
+                <div className="text-right">
+                  <Link onClick={logout}>
+                    <Button
+                      onClick={handleDeleteProfile}
+                      variant="danger"
+                      size="sm"
+                      style={{
+                        position: "absolute",
+                        bottom: "10px",
+                        left: "10px",
+                      }}
+                    >
+                      Ištrinti profilį
+                    </Button>
+                  </Link>
                 </div>
                 {user && (
                   <div className="text-center">

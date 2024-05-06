@@ -19,7 +19,10 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
   Answer.associate = (models) => {
-    Answer.belongsTo(models.Question, { foreignKey: "questionId" });
+    Answer.belongsTo(models.Question, {
+      foreignKey: "questionId",
+      onDelete: "CASCADE",
+    });
   };
 
   return Answer;

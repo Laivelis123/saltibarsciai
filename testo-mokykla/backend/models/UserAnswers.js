@@ -26,10 +26,22 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   UserAnswer.associate = (models) => {
-    UserAnswer.belongsTo(models.User, { foreignKey: "userId" });
-    UserAnswer.belongsTo(models.Quiz, { foreignKey: "quizId" });
-    UserAnswer.belongsTo(models.Question, { foreignKey: "questionId" });
-    UserAnswer.belongsTo(models.Answer, { foreignKey: "answerId" });
+    UserAnswer.belongsTo(models.User, {
+      foreignKey: "userId",
+      onDelete: "CASCADE",
+    });
+    UserAnswer.belongsTo(models.Quiz, {
+      foreignKey: "quizId",
+      onDelete: "CASCADE",
+    });
+    UserAnswer.belongsTo(models.Question, {
+      foreignKey: "questionId",
+      onDelete: "CASCADE",
+    });
+    UserAnswer.belongsTo(models.Answer, {
+      foreignKey: "answerId",
+      onDelete: "CASCADE",
+    });
   };
 
   return UserAnswer;
