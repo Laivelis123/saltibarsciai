@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from "prop-types";
 import styles from "./searchBar.module.css";
 
 const SearchBar = ({ filterText, onChange }) => {
@@ -16,6 +16,11 @@ const SearchBar = ({ filterText, onChange }) => {
       </div>
     </div>
   );
+};
+
+SearchBar.propTypes = {
+  filterText: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default SearchBar;

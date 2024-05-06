@@ -1,11 +1,9 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import UI from "../../components/UI/UI";
 
 function NeraPuslapio() {
   return (
     <UI>
-      {" "}
       <div className="container">
         <div className="row justify-content-center mt-5">
           <div className="col-md-6 text-center">

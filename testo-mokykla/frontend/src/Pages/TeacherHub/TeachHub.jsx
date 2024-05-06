@@ -1,31 +1,67 @@
 import { Link } from "react-router-dom";
-import React, { useState, useEffect } from "react";
-import axios from "axios";
 import UI from "../../components/UI/UI";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBook,
+  faSchool,
+  faUserGroup,
+} from "@fortawesome/free-solid-svg-icons";
+
 function TeachHub() {
   return (
     <UI>
-      <div className="container mt-4">
-        <h2>Mokytojų tvarkyklė</h2>
-        <div className="d-grid gap-2">
-          <Link
-            to="/valdymas/mokytojas/tvarkyti/kategorijas"
-            className="btn btn-primary"
-          >
-            Tvarkyti Kategorijas
-          </Link>
-          <Link
-            to="/valdymas/mokytojas/tvarkyti/testus"
-            className="btn btn-primary"
-          >
-            Tvarkyti Testus
-          </Link>
-          <Link
-            to="/valdymas/mokytojas/tvarkyti/grupes"
-            className="btn btn-primary"
-          >
-            Tvarkyti Grupes
-          </Link>
+      <div className="container my-5">
+        <div className="row justify-content-center">
+          <div>
+            <h2 className="text-center">Mokytojų tvarkyklė</h2>
+            <ul
+              className="list-unstyled d-flex flex-wrap justify-content-center"
+              style={{ background: "none" }}
+            >
+              <li
+                className="mx-2 my-2 flex-grow-1"
+                style={{ minWidth: "250px", maxWidth: "300px" }}
+              >
+                <Link
+                  to="/valdymas/mokytojas/tvarkyti/kategorijas"
+                  className="card bg-primary d-block h-100"
+                >
+                  <div className="card-body text-center text-white">
+                    <FontAwesomeIcon icon={faBook} size="4x" />
+                    <h5>Tvarkyti Kategorijas</h5>
+                  </div>
+                </Link>
+              </li>
+              <li
+                className="mx-2 my-2 flex-grow-1"
+                style={{ minWidth: "250px", maxWidth: "300px" }}
+              >
+                <Link
+                  to="/valdymas/mokytojas/tvarkyti/testus"
+                  className="card bg-primary d-block h-100"
+                >
+                  <div className="card-body text-center text-white">
+                    <FontAwesomeIcon icon={faSchool} size="4x" />
+                    <h5>Tvarkyti Testus</h5>
+                  </div>
+                </Link>
+              </li>
+              <li
+                className="mx-2 my-2 flex-grow-1"
+                style={{ minWidth: "250px", maxWidth: "300px" }}
+              >
+                <Link
+                  to="/valdymas/mokytojas/tvarkyti/grupes"
+                  className="card bg-primary d-block h-100"
+                >
+                  <div className="card-body text-center text-white">
+                    <FontAwesomeIcon icon={faUserGroup} size="4x" />
+                    <h5>Tvarkyti Grupes</h5>
+                  </div>
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </UI>

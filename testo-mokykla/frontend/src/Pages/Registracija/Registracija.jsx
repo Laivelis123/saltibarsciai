@@ -1,14 +1,14 @@
-﻿﻿import React, { useState } from "react";
+﻿﻿import { useState } from "react";
 import { Link } from "react-router-dom";
 import UI from "../../components/UI/UI";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import styles from "./registracija.module.css";
 import * as Yup from "yup";
 import axios from "axios";
-
+import ServerPaths from "../../context/ServerPaths";
 function Registracija() {
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setErrors] = useState("");
 
   const validationSchema = Yup.object().shape({
     username: Yup.string()
@@ -36,15 +36,12 @@ function Registracija() {
     const { username, email, password, confirmPassword, accountType } = values;
 
     try {
-      const response = await axios.post(
-        "http://localhost:3001/api/auth/register",
-        {
-          username,
-          email,
-          password,
-          accountType,
-        }
-      );
+      const response = await axios.post(ServerPaths.Auth.REGISTER_PATH, {
+        username,
+        email,
+        password,
+        accountType,
+      });
       console.log(response);
       setRegistrationSuccess(true);
     } catch (error) {
@@ -67,8 +64,8 @@ function Registracija() {
 
   return (
     <UI>
-      {error && <div className="mb-3 text-danger">{error}</div>}
-      <div className="container mt-5">
+      {error && <div className="mb-3 text-danger ">{error}</div>}
+      <div className="container mt-5 py-4">
         {!registrationSuccess && (
           <Formik
             initialValues={{
@@ -94,7 +91,7 @@ function Registracija() {
                     type="text"
                     id="username"
                     name="username"
-                    className="form-control  bg-secondary text-light"
+                    className="form-control  bg-light text-dark"
                     placeholder="Petras"
                   />
                   <ErrorMessage
@@ -112,7 +109,7 @@ function Registracija() {
                     type="email"
                     id="email"
                     name="email"
-                    className="form-control bg-secondary text-light"
+                    className="form-control bg-light text-dark"
                     placeholder="El. paštas"
                   />
                   <ErrorMessage
@@ -130,7 +127,7 @@ function Registracija() {
                     type="password"
                     id="password"
                     name="password"
-                    className="form-control  bg-secondary text-light"
+                    className="form-control  bg-light text-dark"
                     placeholder="Slaptažodis"
                   />
                   <ErrorMessage
@@ -148,7 +145,7 @@ function Registracija() {
                     type="password"
                     id="confirmPassword"
                     name="confirmPassword"
-                    className="form-control bg-secondary text-light"
+                    className="form-control bg-light text-dark"
                     placeholder="Pakartokite slaptažodį"
                   />
                   <ErrorMessage

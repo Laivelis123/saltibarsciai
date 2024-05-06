@@ -1,16 +1,15 @@
-const express = require("express");
-const router = express.Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { User, Session } = require("../models");
 const { Op } = require("sequelize");
+const emailjs = require("@emailjs/browser");
 
 // Generuoja žetoną pagal vartotoją su nurodytu galiojimo laiku.
 const generateToken = (user) => {
   return jwt.sign(user, process.env.JWT_SECRET, { expiresIn: "2h" });
 };
 // Registruoja naują vartotoją.
-router.post("/register", async (req, res) => {
+const registerUser = async (req, res) => {
   try {
     const { username, email, password, accountType } = req.body;
 
@@ -39,10 +38,10 @@ router.post("/register", async (req, res) => {
     console.error("Klaida registruojant vartotoją:", error);
     res.status(500).json({ error: "Vidinė serverio klaida" });
   }
-});
+};
 
 // Prisijungia vartotoją.
-router.post("/login", async (req, res) => {
+const loginUser = async (req, res) => {
   try {
     const { username, password } = req.body;
 
@@ -88,8 +87,8 @@ router.post("/login", async (req, res) => {
     console.error("Klaida prisijungiant vartotoją:", error);
     res.status(500).json({ error: "Vidinė serverio klaida" });
   }
-});
-router.post("/logout", (req, res) => {
+};
+const logoutUser = async (req, res) => {
   try {
     res.clearCookie("refreshToken");
     res.sendStatus(204);
@@ -97,8 +96,8 @@ router.post("/logout", (req, res) => {
     console.error("Klaida atsijungiant:", error);
     res.status(500).json({ error: "Vidinė serverio klaida" });
   }
-});
-router.post("/refresh", async (req, res) => {
+};
+const refreshToken = async (req, res) => {
   const refreshToken = req.body.refreshToken;
   if (!refreshToken) return res.sendStatus(401);
 
@@ -122,9 +121,9 @@ router.post("/refresh", async (req, res) => {
     console.error("Klaida atnaujintant žetoną:", error);
     return res.sendStatus(500);
   }
-});
+};
 // Gauna vartotojo duomenis pagal žetoną.
-router.get("/user", async (req, res) => {
+const getUserData = async (req, res) => {
   try {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
@@ -170,6 +169,68 @@ router.get("/user", async (req, res) => {
     }
     res.status(500).json({ error: "Vidinė serverio klaida" });
   }
-});
+};
+const updatePassword = async (req, res) => {
+  try {
+    const { username, password } = req.body;
 
-module.exports = router;
+    const existingUser = await User.findOne({
+      where: {
+        [Op.or]: [{ username }],
+      },
+    });
+
+    if (existingUser) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      await User.update(
+        { password: hashedPassword },
+        { where: { id: existingUser.id } }
+      );
+    } else {
+      return res.status(404).json({ message: "Vartotojas neegzistuoja" });
+    }
+
+    res.status(201).json({ message: "Slaptažodis sėkmingai pakeistas" });
+  } catch (error) {
+    console.error("Klaida keičiant slaptažodį:", error);
+    res.status(500).json({ error: "Vidinė serverio klaida" });
+  }
+};
+const checkEmail = async (req, res) => {
+  try {
+    const { email, link } = req.body;
+    const existingUser = await User.findOne({
+      where: {
+        [Op.or]: [{ email }],
+      },
+    });
+
+    if (existingUser) {
+      emailjs.init(process.env.VITE_EMAIL_USER_ID);
+      emailjs.send(
+        process.env.VITE_EMAIL_SERVICE_ID,
+        process.env.VITE_EMAIL_TEMPLATE_ID,
+        {
+          link: "http://localhost:5173/slaptazodis",
+          to_email: email,
+        }
+      );
+    } else {
+      return res.status(404).json({ message: "Vartotojas neegzistuoja" });
+    }
+
+    res.status(201).json({ message: "Laiškas sėkmingai išsiūstas" });
+  } catch (error) {
+    console.error("Klaida siunčiant laišką:", error);
+    res.status(500).json({ error: "Vidinė serverio klaida" });
+  }
+};
+module.exports = {
+  registerUser,
+  loginUser,
+  logoutUser,
+  refreshToken,
+  getUserData,
+  updatePassword,
+  checkEmail,
+};

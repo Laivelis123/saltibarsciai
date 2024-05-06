@@ -1,24 +1,51 @@
-import React from "react";
 import UI from "../../../components/UI/UI";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCalculator,
+  faFileCirclePlus,
+} from "@fortawesome/free-solid-svg-icons";
 function ManageQuizes() {
   return (
     <UI>
-      <div className="container mt-4">
-        <h2>Testų tvarkyklė</h2>
-        <div className="d-grid gap-2">
-          <Link
-            to="/valdymas/mokytojas/tvarkyti/testai/kurti"
-            className="btn btn-primary"
-          >
-            Kurti Testą
-          </Link>
-          <Link
-            to="/valdymas/mokytojas/tvarkyti/testai/peržiūra"
-            className="btn btn-primary"
-          >
-            Redaguoti Testus
-          </Link>
+      <div className="container my-5">
+        <div className="row justify-content-center">
+          <div>
+            <h2 className="text-center">Testų tvarkyklė</h2>
+            <ul
+              className="list-unstyled d-flex flex-wrap justify-content-center"
+              style={{ background: "none" }}
+            >
+              <li
+                className="mx-2 my-2 flex-grow-1"
+                style={{ minWidth: "250px", maxWidth: "300px" }}
+              >
+                <Link
+                  to="/valdymas/mokytojas/tvarkyti/testai/kurti"
+                  className="card bg-primary d-block h-100"
+                >
+                  <div className="card-body text-center text-white">
+                    <FontAwesomeIcon icon={faFileCirclePlus} size="4x" />
+                    <h5>Kurti testus</h5>
+                  </div>
+                </Link>
+              </li>
+              <li
+                className="mx-2 my-2 flex-grow-1"
+                style={{ minWidth: "250px", maxWidth: "300px" }}
+              >
+                <Link
+                  to="/valdymas/mokytojas/tvarkyti/testai/peržiūra"
+                  className="card bg-primary d-block h-100"
+                >
+                  <div className="card-body text-center text-white">
+                    <FontAwesomeIcon icon={faCalculator} size="4x" />
+                    <h5>Redaguoti testus</h5>
+                  </div>
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </UI>

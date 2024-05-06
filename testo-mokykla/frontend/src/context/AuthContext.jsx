@@ -1,72 +1,70 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+} from "react";
 import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import ServerPaths from "./ServerPaths";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [userData, setUserData] = useState([{}]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  const logout = useCallback(async () => {
+    setLoading(true);
+    try {
+      await axios.post(ServerPaths.Auth.LOGOUT_PATH, {
+        withCredentials: true,
+      });
+      setUser(null);
+      localStorage.removeItem("token");
+      if (user && user.accessToken) {
+        navigate("/prisijungimas");
+      }
+    } catch (error) {
+      setError(error.response.data.error);
+      console.error("Klaida atjungiant vartotoją: ", error);
+    } finally {
+      setLoading(false);
+    }
+  }, [navigate]);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("token");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     } else {
-      logout();
+      setUser(null);
     }
     setLoading(false);
-  }, []);
-  const fetchCategories = async (categoryId, setCategories) => {
-    setLoading(true);
-    try {
-      if (user) {
-        let url = "http://localhost:3001/api/categories/filter";
-
-        if (categoryId) {
-          url = `http://localhost:3001/api/categories/${categoryId}/children`;
-        } else {
-          const pathname = window.location.pathname;
-          if (pathname === "/") {
-            url = "http://localhost:3001/api/categories/filter?parentId=null";
-          }
-        }
-
-        const response = await axios.get(url, {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        });
-        setCategories(response.data);
-      }
-    } catch (error) {
-      console.error("Klaida gaunant kategorijas:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, [logout]);
 
   const fetchUser = async () => {
     setLoading(true);
     try {
       if (user && user.accessToken) {
-        const response = await axios.get(
-          "http://localhost:3001/api/auth/user",
-          {
-            headers: {
-              Authorization: `Bearer ${user.accessToken}`,
-            },
-          }
-        );
+        const response = await axios.get(ServerPaths.Auth.USER_PATH, {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        });
         setUserData(response.data);
       } else {
-        logout();
+        setUserData(null);
       }
     } catch (error) {
-      console.error(error);
-      navigate("/prisijungimas");
+      setError(error.response.data.error);
+      console.error("Klaida gaunant vartotojo duomenis: ", error);
     } finally {
       setLoading(false);
     }
@@ -75,49 +73,29 @@ export const AuthProvider = ({ children }) => {
   const login = async (username, password) => {
     setLoading(true);
     try {
-      const response = await axios.post(
-        "http://localhost:3001/api/auth/login",
-        {
-          username,
-          password,
-        }
-      );
+      const response = await axios.post(ServerPaths.Auth.LOGIN_PATH, {
+        username,
+        password,
+      });
       setUser(response.data);
       localStorage.setItem("token", JSON.stringify(response.data));
       navigate("/");
     } catch (error) {
-      console.error(error);
+      setError(error.response.data.error);
+      console.error("Klaida prijungiant vartotoją: ", error);
+      console;
     } finally {
       setLoading(false);
     }
   };
 
-  const logout = async () => {
-    setLoading(true);
-    try {
-      await axios.post("http://localhost:3001/api/auth/logout", {
-        withCredentials: true,
-      });
-      setUser(null);
-      localStorage.removeItem("token");
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-      navigate("/prisijungimas");
-    }
-  };
-
-  const refreshToken = async () => {
+  const refreshToken = useCallback(async () => {
     setLoading(true);
     try {
       if (user) {
-        const response = await axios.post(
-          "http://localhost:3001/api/auth/refresh",
-          {
-            refreshToken: user.refreshToken,
-          }
-        );
+        const response = await axios.post(ServerPaths.Auth.REFRESH_PATH, {
+          refreshToken: user.refreshToken,
+        });
         setUser((prevUser) => ({
           ...prevUser,
           accessToken: response.data.accessToken,
@@ -126,40 +104,40 @@ export const AuthProvider = ({ children }) => {
         logout();
       }
     } catch (error) {
-      console.error(error);
+      setError(error.response.data.error);
+      console.error("Klaida atnaujinant tokeną: ", error);
       setUser(null);
     } finally {
       setLoading(false);
     }
-  };
+  }, [user, logout]);
 
-  let refreshTimeout;
+  let refreshTimeout = useRef(null);
+
   useEffect(() => {
-    if (user && user.accessToken) {
-      const tokenExp = new Date(jwtDecode(user.accessToken).exp * 1000);
-      const now = new Date();
-      if (tokenExp - now < 60 * 60 * 1000) {
-        refreshToken();
+    const tokenExp = user ? jwtDecode(user.accessToken).exp * 1000 : 0;
+    const now = new Date().getTime();
+    const handleUserActivity = () => {
+      if (!refreshTimeout.current) {
+        refreshTimeout.current = setTimeout(() => {
+          refreshToken();
+          refreshTimeout.current = null;
+        }, 1000 * 60 * 2);
       }
+    };
 
-      const handleUserActivity = () => {
-        if (!refreshTimeout) {
-          refreshTimeout = setTimeout(() => {
-            refreshToken();
-            refreshTimeout = null;
-          }, 1000 * 60 * 2);
-        }
-      };
-
-      window.addEventListener("click", handleUserActivity);
-      window.addEventListener("keydown", handleUserActivity);
-
-      return () => {
-        window.removeEventListener("click", handleUserActivity);
-        window.removeEventListener("keydown", handleUserActivity);
-      };
+    if (user && tokenExp - now < 60 * 60 * 1000) {
+      refreshToken();
     }
-  }, [user]);
+
+    window.addEventListener("click", handleUserActivity);
+    window.addEventListener("keydown", handleUserActivity);
+
+    return () => {
+      window.removeEventListener("click", handleUserActivity);
+      window.removeEventListener("keydown", handleUserActivity);
+    };
+  }, [user, refreshToken]);
 
   const contextValue = {
     user,
@@ -170,11 +148,17 @@ export const AuthProvider = ({ children }) => {
     loading,
     setLoading,
     refreshToken,
-    fetchCategories,
+    setError,
+    error,
   };
+
   return (
     <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
+};
+
+AuthProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export const useAuth = () => {

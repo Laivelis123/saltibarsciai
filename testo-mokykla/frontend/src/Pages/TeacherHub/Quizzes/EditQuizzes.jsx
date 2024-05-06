@@ -1,49 +1,54 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import UI from "../../../components/UI/UI";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
-
+import ServerPaths from "../../../context/ServerPaths";
 function EditQuizzes() {
   const [quizzes, setQuizzes] = useState([]);
   const [categories, setCategories] = useState([]);
   const [editedQuizNames, setEditedQuizNames] = useState({});
   const [editedQuizCategory, setEditedQuizCategory] = useState("");
-  const { user } = useAuth();
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:3001/api/categories/all",
-          { headers: { Authorization: `Bearer ${user.accessToken}` } }
-        );
-        setCategories(response.data);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
-
-    fetchQuizzes();
-    fetchCategories();
-  }, [user.accessToken]);
-  const fetchQuizzes = async () => {
+  const { user, setLoading, loading } = useAuth();
+  const fetchQuizzes = useCallback(async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:3001/api/quizzes/my-quizzes",
-        { headers: { Authorization: `Bearer ${user.accessToken}` } }
-      );
+      setLoading(true);
+      const response = await axios.get(ServerPaths.QuizRoutes.MY_QUIZZES, {
+        headers: { Authorization: `Bearer ${user.accessToken}` },
+      });
       setQuizzes(response.data.quizzes);
 
-      // Initialize editedQuizNames with the titles of the quizzes
       const initialEditedQuizNames = {};
       response.data.quizzes.forEach((quiz) => {
         initialEditedQuizNames[quiz.id] = quiz.title;
       });
       setEditedQuizNames(initialEditedQuizNames);
     } catch (error) {
-      console.error("Error fetching quizzes:", error);
+      console.error("Klaida gaunant testus:", error);
+    } finally {
+      setLoading(false);
     }
-  };
+  }, [user.accessToken, setLoading, setQuizzes, setEditedQuizNames]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(
+          ServerPaths.CategoryRoutes.ALL_CATEGORIES,
+          { headers: { Authorization: `Bearer ${user.accessToken}` } }
+        );
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Klaida gaunant kategorijas:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchQuizzes();
+    fetchCategories();
+  }, [user.accessToken, fetchQuizzes, setLoading]);
   const handleInputChange = (e, quizId) => {
     const newValue = e.target.value;
     setEditedQuizNames((prev) => ({
@@ -62,106 +67,133 @@ function EditQuizzes() {
 
   const handleRemoveQuiz = async (quizId) => {
     try {
-      await axios.delete(`http://localhost:3001/api/quizzes/${quizId}`, {
+      setLoading(true);
+      await axios.delete(ServerPaths.QuizRoutes.DELETE_QUIZ(quizId), {
         headers: { Authorization: `Bearer ${user.accessToken}` },
       });
-      // Refresh quizzes after removal
       fetchQuizzes();
     } catch (error) {
-      console.error("Error removing quiz:", error);
+      console.error("Klaida šalinant testą:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleEditQuiz = async (quizId, newName, newCategory) => {
-    // Check if both quiz name and category are empty
     if (!newName.trim() && !newCategory) {
-      console.error("New quiz name and category are empty");
+      console.error("Kategorija arba pavadinimas turi būti užpildyti.");
       return;
     }
 
     try {
+      setLoading(true);
       await axios.put(
-        `http://localhost:3001/api/quizzes/${quizId}`,
-        { name: newName, category: newCategory }, // Pass both name and category values
+        ServerPaths.QuizRoutes.UPDATE_QUIZ(quizId),
+        { name: newName, category: newCategory },
         { headers: { Authorization: `Bearer ${user.accessToken}` } }
       );
-      // Refresh quizzes after editing
-      fetchQuizzes();
     } catch (error) {
-      console.error("Error editing quiz:", error);
+      console.error("Klaida redaguojant testą:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <UI>
-      <div className="container mt-4">
-        <h2 className="text-center">Redaguoti testus</h2>
-        <div className="mt-3">
-          <ul className="list-group">
-            {quizzes.map((quiz) => (
-              <li key={quiz.id} className="list-group-item">
-                <div>
-                  {/* Input field to edit quiz name */}
-                  <p>Pavadinimas:</p>
-                  <input
-                    type="text"
-                    value={editedQuizNames[quiz.id]}
-                    className="form-control mb-2 bg-dark text-light"
-                    onChange={(e) => handleInputChange(e, quiz.id)}
-                  />
-                </div>
-                <div>
-                  {/* Select field to edit quiz category */}
-                  <p>Kategorija: </p>
-                  <p>
-                    <select
-                      value={editedQuizCategory[quiz.id] || quiz.categoryId}
-                      onChange={(e) => handleCategoryChange(e, quiz.id)}
+      <div className="container my-4 ">
+        <div className="row justify-content-center">
+          <div className="col-md-7">
+            <div
+              className="my-5 py-4 card"
+              style={{
+                borderRadius: "30px",
+                backgroundColor: "rgba(78, 174, 18, 0.878)",
+              }}
+            >
+              <h2 className="text-center">Redaguoti testus</h2>
+              <ul
+                className="list-group mx-2"
+                style={{
+                  backgroundColor: "rgba(78, 174, 18, 0.878)",
+                  border: "none",
+                  borderRadius: "30px",
+                }}
+              >
+                {!loading &&
+                  quizzes &&
+                  quizzes.map((quiz) => (
+                    <li
+                      key={quiz.id}
+                      className="list-group-item"
+                      style={{ background: "none", border: "none" }}
                     >
-                      <option disabled value="">
-                        Pasirinkite kategoriją
-                      </option>
-                      {categories.map((category) => (
-                        <option key={category.id} value={category.id}>
-                          {category.name}
-                        </option>
-                      ))}
-                    </select>
-                  </p>
+                      <div>
+                        <p>Pavadinimas:</p>
+                        <input
+                          type="text"
+                          value={editedQuizNames[quiz.id]}
+                          className="form-control mb-2 text-dark"
+                          onChange={(e) => handleInputChange(e, quiz.id)}
+                        />
+                      </div>
+                      <div>
+                        <p>Kategorija: </p>
+                        <p>
+                          <select
+                            value={
+                              editedQuizCategory[quiz.id] || quiz.categoryId
+                            }
+                            onChange={(e) => handleCategoryChange(e, quiz.id)}
+                            className="form-select"
+                          >
+                            <option disabled value="">
+                              Pasirinkite kategoriją
+                            </option>
+                            {categories.map((category) => (
+                              <option key={category.id} value={category.id}>
+                                {category.name}
+                              </option>
+                            ))}
+                          </select>
+                        </p>
 
-                  {/* Button to confirm changes */}
-                  <button
-                    onClick={() => {
-                      handleEditQuiz(
-                        quiz.id,
-                        editedQuizNames[quiz.id],
-                        editedQuizCategory[quiz.id]
-                      );
-                    }}
-                    className="btn btn-success mr-2"
-                  >
-                    Patvirtinti pakeitimus
-                  </button>
+                        <div className="m-2">
+                          <button
+                            onClick={() => {
+                              handleEditQuiz(
+                                quiz.id,
+                                editedQuizNames[quiz.id],
+                                editedQuizCategory[quiz.id]
+                              );
+                            }}
+                            className="btn btn-success mx-2 my-1 flex-grow-1"
+                            style={{ minWidth: "200px", maxWidth: "400px" }}
+                          >
+                            Patvirtinti pakeitimus
+                          </button>
+                          <Link
+                            to={`/valdymas/mokytojas/tvarkyti/testai/redaguoti/${quiz.id}`}
+                            className="btn btn-primary mx-2 my-1 flex-grow-1"
+                            style={{ minWidth: "200px", maxWidth: "400px" }}
+                          >
+                            Platesnis regavimas
+                          </Link>
 
-                  {/* Button to navigate to the quiz for different editing */}
-                  <Link
-                    to={`/valdymas/mokytojas/tvarkyti/testai/redaguoti/${quiz.id}`}
-                    className="btn btn-primary mr-2"
-                  >
-                    Platesnis regavimas
-                  </Link>
-
-                  {/* Button to remove the quiz */}
-                  <button
-                    onClick={() => handleRemoveQuiz(quiz.id)}
-                    className="btn btn-danger"
-                  >
-                    Pašalinti testą
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
+                          <button
+                            onClick={() => handleRemoveQuiz(quiz.id)}
+                            className="btn btn-danger mx-2 my-1 flex-grow-1"
+                            style={{ minWidth: "200px", maxWidth: "400px" }}
+                          >
+                            Pašalinti testą
+                          </button>
+                        </div>
+                      </div>
+                    </li>
+                  ))}
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </UI>

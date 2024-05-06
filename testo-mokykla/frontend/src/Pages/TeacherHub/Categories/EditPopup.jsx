@@ -1,30 +1,60 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../../../context/AuthContext";
 import "./EditPopup.css";
-
+import PropTypes from "prop-types";
+import ServerPaths from "../../../context/ServerPaths";
 const EditPopup = ({ category, onClose }) => {
-  const { user, fetchCategories, loading } = useAuth();
+  const { user, loading, setLoading } = useAuth();
   const [categories, setCategories] = useState([]);
   const [editedCategory, setEditedCategory] = useState({});
   const [categoryName, setCategoryName] = useState("");
+
+  const [catNameError, setCatNameError] = useState("");
   const [bulletPoints, setBulletPoints] = useState([]);
   const [newBulletPoint, setNewBulletPoint] = useState("");
   const [parentCategory, setParentCategory] = useState("");
 
   useEffect(() => {
-    fetchCategories(null, setCategories);
+    const fetchCategories = async () => {
+      setLoading(true);
+      try {
+        if (user) {
+          let url = ServerPaths.CategoryRoutes.FILTER_CATEGORIES;
+          const pathname = window.location.pathname;
+          if (pathname === "/") {
+            url = ServerPaths.CategoryRoutes.FILTER_CATEGORIES_NO_PARENT;
+          }
+          const response = await axios.get(url, {
+            headers: {
+              Authorization: `Bearer ${user.accessToken}`,
+            },
+          });
+          setCategories(response.data);
+        }
+      } catch (error) {
+        console.error("Klaida gaunant kategorijas:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCategories();
     setEditedCategory(category);
     setParentCategory(category.parentId);
     setCategoryName(category.name);
     setBulletPoints(
       category.bulletPoints ? JSON.parse(category.bulletPoints) : []
     );
-  }, [user.accessToken, category]);
+  }, [user.accessToken, category, setLoading, user]);
 
   const handleCategoryNameChange = (value) => {
     setCategoryName(value);
     setEditedCategory({ ...editedCategory, name: value });
+    if (!value.trim()) {
+      setCatNameError("Pavadinimas negali būti tuščias");
+    } else {
+      setCatNameError("");
+    }
   };
 
   const handleAddBulletPoint = () => {
@@ -41,9 +71,13 @@ const EditPopup = ({ category, onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!categoryName) {
+      setCatNameError("Pavadinimas negali būti tuščias");
+      return;
+    }
     try {
       await axios.put(
-        `http://localhost:3001/api/categories/${category.id}/update`,
+        ServerPaths.CategoryRoutes.UPDATE_CATEGORY(category.id),
         {
           name: categoryName,
           parentId: parentCategory,
@@ -57,13 +91,19 @@ const EditPopup = ({ category, onClose }) => {
       );
       onClose();
     } catch (error) {
-      console.error("Error editing category:", error);
+      console.error("Klaida redaguojant kategoriją:", error);
     }
   };
 
   return (
     <div className="popup-overlay">
-      <div className="popup-container">
+      <div
+        className="popup-container m-3"
+        style={{
+          borderRadius: "30px",
+          backgroundColor: "rgba(78, 174, 18, 0.878)",
+        }}
+      >
         <button className="close-btn" onClick={onClose}>
           &times;
         </button>
@@ -77,11 +117,13 @@ const EditPopup = ({ category, onClose }) => {
               type="text"
               id="name"
               name="name"
-              className="form-control"
+              className={`form-control ${catNameError ? "is-invalid" : ""}`}
               value={categoryName}
               onChange={(e) => handleCategoryNameChange(e.target.value)}
-              required
             />
+            {catNameError && (
+              <div className="invalid-feedback">{catNameError}</div>
+            )}
           </div>
           <div className="mb-3">
             <label htmlFor="parentId" className="form-label">
@@ -106,13 +148,16 @@ const EditPopup = ({ category, onClose }) => {
             <label htmlFor="bulletPoints" className="form-label">
               Punktai:
             </label>
-            <ul className="list-group mt-2 text-black bg-white">
+            <ul
+              className="list-group mt-2 text-black"
+              style={{ background: "none" }}
+            >
               {!loading &&
                 bulletPoints.length > 0 &&
                 bulletPoints.map((point, index) => (
                   <li
                     key={index}
-                    className="nav-item text-black bg-white"
+                    className="nav-item text-black bg-white my-2"
                     style={{ display: "flex", alignItems: "center" }}
                   >
                     <input
@@ -143,7 +188,7 @@ const EditPopup = ({ category, onClose }) => {
                   />
                   <button
                     type="button"
-                    className="btn btn-outline-primary"
+                    className="btn btn-primary"
                     onClick={handleAddBulletPoint}
                   >
                     Pridėti
@@ -162,5 +207,13 @@ const EditPopup = ({ category, onClose }) => {
     </div>
   );
 };
-
+EditPopup.propTypes = {
+  category: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    parentId: PropTypes.number,
+    bulletPoints: PropTypes.string,
+  }).isRequired,
+  onClose: PropTypes.func.isRequired,
+};
 export default EditPopup;

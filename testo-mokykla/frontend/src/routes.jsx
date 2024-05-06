@@ -1,9 +1,9 @@
-import { lazy } from "react";
-import { Route } from "react-router-dom";
 import PrivateRoutes from "./utils/PrivateRoutes";
 import PublicRoutes from "./utils/PublicRoutes";
 
 import {
+  Email,
+  Slaptazodis,
   Prisijungimas,
   Registracija,
   Pagrindinis,
@@ -11,12 +11,12 @@ import {
   Apie,
   Kontaktai,
   Profilis,
-  Kategorija,
+  CategoryCreate,
   TeachHub,
   ManageCategories,
   ManageQuizes,
   ManageGroups,
-  Grupė,
+  Group,
   EditGroups,
   EditGroup,
   StudentHub,
@@ -56,7 +56,9 @@ export const allPrivateRoutes = [
 export const allPublicRoutes = [
   {
     element: <PublicRoutes />,
-    children: [
+      children: [
+      { path: "email", element: <Email /> },
+      { path: "slaptazodis", element: <Slaptazodis /> },
       { path: "prisijungimas", element: <Prisijungimas /> },
       { path: "registracija", element: <Registracija /> },
     ],
@@ -70,7 +72,7 @@ export const allTeacherRoutes = [
       { path: "/valdymas/mokytojas", element: <TeachHub /> },
       {
         path: "/valdymas/mokytojas/tvarkyti/kategorijas/kurti",
-        element: <Kategorija />,
+        element: <CategoryCreate />,
       },
       {
         path: "/valdymas/mokytojas/tvarkyti/kategorijas",
@@ -90,7 +92,7 @@ export const allTeacherRoutes = [
       },
       {
         path: "/valdymas/mokytojas/tvarkyti/grupes/kurti",
-        element: <Grupė />,
+        element: <Group />,
       },
       {
         path: "/valdymas/mokytojas/tvarkyti/grupes/redaguoti",

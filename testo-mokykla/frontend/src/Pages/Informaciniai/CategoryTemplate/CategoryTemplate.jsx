@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import UI from "../../../components/UI/UI";
 import styles from "./categoryTemplate.module.css";
 import { useAuth } from "../../../context/AuthContext";
+import ServerPaths from "../../../context/ServerPaths";
 const CategoryTemplate = () => {
   const { user } = useAuth();
   const { categoryId } = useParams();
@@ -16,7 +17,7 @@ const CategoryTemplate = () => {
       try {
         setLoading(true);
         const response = await axios.get(
-          `http://localhost:3001/api/categories/${categoryId}`,
+          ServerPaths.CategoryRoutes.GET_CATEGORY(categoryId),
           {
             headers: {
               Authorization: `Bearer ${user.accessToken}`,
@@ -44,7 +45,7 @@ const CategoryTemplate = () => {
   return (
     <UI>
       {!loading && category ? (
-        <div className={`container ${styles.containerColor}`}>
+        <div className={`container ${styles.containerColor} p-4 m-4`}>
           <p>Kategorijos pavadinimas: {category.name}</p>
           <p>Šią kategorija sukūrė: {category.User.username}</p>
           {category.bulletPoints &&
@@ -52,7 +53,7 @@ const CategoryTemplate = () => {
               <>
                 <ul className={`nav flex-column ${styles.categoryColor}`}>
                   {JSON.parse(category.bulletPoints).map((point, index) => (
-                    <li key={index} className="nav-item">
+                    <li key={index} className="nav-item px-2">
                       • {point}
                     </li>
                   ))}
@@ -60,8 +61,11 @@ const CategoryTemplate = () => {
               </>
             )}
 
-          <div className={`container text-dark ${styles.containerColor}`}>
-            <button onClick={handleGoBack} className={`btn ${styles.backBtn}`}>
+          <div className={`container text-dark py-2`}>
+            <button
+              onClick={handleGoBack}
+              className={`btn ${styles.backBtn} my-1`}
+            >
               Atgal
             </button>
           </div>

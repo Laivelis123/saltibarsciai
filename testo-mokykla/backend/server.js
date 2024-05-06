@@ -2,9 +2,17 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const session = require("express-session");
+const morgan = require("morgan");
 const dotenv = require("dotenv");
 const db = require("./models");
 
+const authRoutes = require("./routes/authRoutes");
+const categoryRoutes = require("./routes/categoryRoutes");
+const groupRoutes = require("./routes/groupRoutes");
+const quizRoutes = require("./routes/quizRoutes");
+const questionRoutes = require("./routes/questionRoutes");
+const profileRoutes = require("./routes/profileRoutes");
+const assignedRoutes = require("./routes/assignedRoutes");
 dotenv.config();
 
 const app = express();
@@ -25,14 +33,14 @@ app.use(
     saveUninitialized: false,
   })
 );
-
-app.use("/api/auth", require("./routes/auth"));
-app.use("/api/categories", require("./routes/category"));
-app.use("/api/groups", require("./routes/group"));
-app.use("/api/quizzes", require("./routes/quiz"));
-app.use("/api/quizzes/questions", require("./routes/quest"));
-app.use("/api/quizzes/assigned", require("./routes/assigned"));
-app.use("/api/profile", require("./routes/profile"));
+app.use(morgan("dev"));
+app.use("/api/auth", authRoutes);
+app.use("/api/categories", categoryRoutes);
+app.use("/api/groups", groupRoutes);
+app.use("/api/quizzes", quizRoutes);
+app.use("/api/quizzes/questions", questionRoutes);
+app.use("/api/quizzes/assigned", assignedRoutes);
+app.use("/api/profile", profileRoutes);
 
 db.sequelize.sync().then(() => {
   console.log("Database connected");

@@ -1,9 +1,6 @@
-const express = require("express");
 const axios = require("axios");
 const { User } = require("../models");
-const router = express.Router();
-
-router.post("/upload", async (req, res) => {
+const uploadPicture = async (req, res) => {
   try {
     const imgData = req.body.image;
     const userId = req.body.userId;
@@ -50,6 +47,25 @@ router.post("/upload", async (req, res) => {
     console.error("Error:", error.response.data);
     res.status(500).json({ error: "Vidinė serverio klaida" });
   }
-});
+};
 
-module.exports = router;
+const deletePicture = async (req, res) => {
+  try {
+    const userId = req.body.userId;
+
+    // Patikrinti reiksmes
+    if (!userId) {
+      return res.status(400).json({ error: "Nenusiustas user id" });
+    }
+
+    // Istrinama nuotraukos url is duomenu bazes
+    await User.update({ pictureUrl: null }, { where: { id: userId } });
+
+    res.status(200).json({ message: "Nuotrauka ištrinta sėkmingai" });
+  } catch (error) {
+    console.error("Error:", error.response.data);
+    res.status(500).json({ error: "Vidinė serverio klaida" });
+  }
+};
+
+module.exports = { uploadPicture, deletePicture };
