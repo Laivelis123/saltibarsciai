@@ -117,6 +117,7 @@ in backend/config/config.json change the username, password and host to yours
 | + Users Table      |
 | + Results Table    |
 +--------------------+
+```
   ## Contributors
   >Justina Ivoškaitė: jusivo@ktu.lt </br>
   >Gvidas Valionis: gvival@ktu.lt</br>
