@@ -43,6 +43,80 @@ in backend/config/config.json change the username, password and host to yours
     "logging": false
   },
   ```
+## UML Architecture Diagram
+
+### Components:
+
+1. **Frontend**:
+   - **Technologies**: ReactJS, Vite, Bootstrap
+   - **Functionality**: User Interface for students and teachers to take and give quizzes.
+
+2. **Backend**:
+   - **Technologies**: NodeJS, ExpressJS
+   - **Functionality**: API endpoints to manage quizzes, users, and other related data.
+
+3. **Database**:
+   - **Technology**: MySQL
+   - **Functionality**: Stores data related to users, quizzes, scores, etc.
+
+### Relationships:
+
+- **Frontend to Backend**:
+  - The frontend communicates with the backend via RESTful API calls.
+  
+- **Backend to Database**:
+  - The backend performs CRUD operations on the MySQL database.
+
+### UML Diagram Elements:
+
+1. **Classes/Components**:
+   - **Frontend Component**: Handles user interactions and displays data.
+   - **Backend Component**: Manages business logic and API endpoints.
+   - **Database Component**: Stores persistent data.
+
+2. **Interfaces**:
+   - **API Interface**: Defines endpoints for the frontend to interact with the backend.
+   - **Database Interface**: Defines queries and interactions with the MySQL database.
+
+### Sample UML Diagram (Class Diagram):
+
+```plaintext
++--------------------+
+|    Frontend        |
+|--------------------|
+| - ReactJS          |
+| - Vite             |
+| - Bootstrap        |
+|--------------------|
+| + fetchQuizzes()   |
+| + submitQuiz()     |
+| + viewResults()    |
++---------+----------+
+          |
+          | REST API Calls
+          v
++--------------------+
+|    Backend         |
+|--------------------|
+| - NodeJS           |
+| - ExpressJS        |
+|--------------------|
+| + getQuizzes()     |
+| + postQuiz()       |
+| + getResults()     |
++---------+----------+
+          |
+          | SQL Queries
+          v
++--------------------+
+|    Database        |
+|--------------------|
+| - MySQL            |
+|--------------------|
+| + Quizzes Table    |
+| + Users Table      |
+| + Results Table    |
++--------------------+
   ## Contributors
   >Justina Ivoškaitė: jusivo@ktu.lt </br>
   >Gvidas Valionis: gvival@ktu.lt</br>
